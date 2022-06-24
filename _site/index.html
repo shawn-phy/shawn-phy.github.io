@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>shawn-phy</title>
+  <meta name="description" content="Personal website built with jekyll">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
+  <link rel="manifest" href="/assets/favicon/site.webmanifest">
+
+  <link rel="stylesheet" href="/assets/css/main.min.css">
+  <link rel="stylesheet" href="/assets/css/vendors.min.css">
+
+  <script src="/assets/js/vendors.min.js"></script>
+  <script src="/assets/js/app.min.js"></script>
+</head>
+
+<body>
+  <div id="preloader">
+    <div class="load">
+      <hr />
+      <hr />
+      <hr />
+      <hr />
+    </div>
+  </div>
+  <div id="landing">
+  <div class="landing-title">
+    <h1>Hi, I&#39;m
+      <span class="highlight-title">shawn-phy</span>,
+    </h1>
+    <h1>
+      <span id="txt-rotate" data-period="2000"
+        data-rotate='["Student Engineer", "scroll down for more."]'
+      >
+      </span>
+    </h1>
+    <div class="landing-icons">
+      
+        <a class="social-link email" aria-label="My E-Mail" href="mailto:philipoyuga14@gmail.com">
+          <svg viewBox="0 0 200 200" class="circle">
+            <circle cx="100" cy="100" r="80" />
+          </svg>
+          <div class="social">
+            <svg class="social-svg" viewBox="0 0 48 48">
+              <use x="12" y="12" width="24" height="24" viewBox="0 0 48 48" xlink:href="/assets/img/solid.svg#envelope""></use>
+            </svg>
+          </div>
+          <span class="label">E-Mail</span>
+        </a>
+      
+
+      
+        <a class="social-link" aria-label="My GitHub" target="_blank" rel="noreferrer"
+          href="https://github.com/shawn-phy"
+        >
+          <svg viewBox="0 0 200 200" class="circle">
+            <circle cx="100" cy="100" r="80" />
+          </svg>
+          <div class="social">
+            <svg class="social-svg" viewBox="0 0 48 48">
+              <use x="12" y="12" width="24" height="24" viewBox="0 0 48 48" xlink:href="/assets/img/brands.svg#github"></use>
+            </svg>
+          </div>
+          <span class="label">GitHub</span>
+        </a>
+      
+
+      
+        <a class="social-link" aria-label="My Codepen" target="_blank" rel="noreferrer"
+          href="https://codepen.io/shawn-phy"
+        >
+          <svg viewBox="0 0 200 200" class="circle">
+            <circle cx="100" cy="100" r="80" />
+          </svg>
+          <div class="social">
+            <svg class="social-svg" viewBox="0 0 48 48">
+              <use x="12" y="12" width="24" height="24" viewBox="0 0 48 48" xlink:href="/assets/img/brands.svg#codepen"></use>
+            </svg>
+          </div>
+          <span class="label">CodePen</span>
+        </a>
+      
+
+      
+        <a class="social-link" aria-label="My DEV" target="_blank" rel="noreferrer"
+          href="https://dev.to/shawn_phy"
+        >
+          <svg viewBox="0 0 200 200" class="circle">
+            <circle cx="100" cy="100" r="80" />
+          </svg>
+          <div class="social">
+            <svg class="social-svg" viewBox="0 0 48 48">
+              <use x="12" y="12" width="24" height="24" viewBox="0 0 48 48" xlink:href="/assets/img/brands.svg#dev"></use>
+            </svg>
+          </div>
+          <span class="label">DEV</span>
+        </a>
+      
+
+      
+        <a class="social-link linkedin" aria-label="My LinkedIn" target="_blank"
+          rel="noreferrer" href="https://www.linkedin.com/in/shawn-philip-31361a210"
+        >
+          <svg viewBox="0 0 200 200" class="circle">
+            <circle cx="100" cy="100" r="80" />
+          </svg>
+          <div class="social">
+            <svg class="social-svg" viewBox="0 0 48 48">
+              <use x="12" y="12" width="24" height="24" viewBox="0 0 48 48" xlink:href="/assets/img/brands.svg#linkedin-in"></use>
+            </svg>
+          </div>
+          <span class="label">LinkedIn</span>
+        </a>
+      
+
+      
+        <a class="social-link twitter" aria-label="My Twitter" target="_blank"
+          rel="noreferrer" href="https://twitter.com/OyugaPhilip"
+        >
+          <svg viewBox="0 0 200 200" class="circle">
+            <circle cx="100" cy="100" r="80" />
+          </svg>
+          <div class="social">
+            <svg class="social-svg" viewBox="0 0 48 48">
+              <use x="12" y="12" width="24" height="24" viewBox="0 0 48 48" xlink:href="/assets/img/brands.svg#twitter"></use>
+            </svg>
+          </div>
+          <span class="label">Twitter</span>
+        </a>
+      
+    </div>
+  </div>
+</div>
+  <div class="layout">
+    
+      <section class="card neumorphism-card-big">
+        <h1 class="title">About Me</h1>
+<p class="description" data-aos="fade-down">My name is Philip Shawn a student at JKUAT studying Electronic And Computer Engineering.</p>
+
+      </section>
+    
+    
+      <section class="card neumorphism-card-big">
+        <h1 class="title">Skills</h1>
+
+<div id="skills">
+  <input type="radio" id="all" name="filter" checked />
+  <label class="filter-button neumorphism-button" for="all">All</label>
+  <input type="radio" id="language" name="filter" />
+  <label class="filter-button neumorphism-button" for="language">Languages</label>
+  <input type="radio" id="framework" name="filter" />
+  <label class="filter-button neumorphism-button" for="framework">Frameworks</label>
+  <input type="radio" id="tool" name="filter" />
+  <label class="filter-button neumorphism-button" for="tool">Tools</label>
+
+  
+    <div skill-type="language" skill-weight="2" data-aos="zoom-in">
+      Python
+    </div>
+  
+    <div skill-type="language" skill-weight="4" data-aos="zoom-in">
+      HTML5
+    </div>
+  
+    <div skill-type="language" skill-weight="3" data-aos="zoom-in">
+      CSS3
+    </div>
+  
+    <div skill-type="language" skill-weight="2" data-aos="zoom-in">
+      C++
+    </div>
+  
+    <div skill-type="language" skill-weight="2" data-aos="zoom-in">
+      Ruby
+    </div>
+  
+  
+    <div skill-type="framework" skill-weight="4" data-aos="zoom-in">
+      React
+    </div>
+  
+    <div skill-type="framework" skill-weight="1" data-aos="zoom-in">
+      Node
+    </div>
+  
+    <div skill-type="framework" skill-weight="3" data-aos="zoom-in">
+      Django
+    </div>
+  
+    <div skill-type="framework" skill-weight="2" data-aos="zoom-in">
+      Rails
+    </div>
+  
+  
+    <div skill-type="tool" skill-weight="5" data-aos="zoom-in">
+      Git
+    </div>
+  
+    <div skill-type="tool" skill-weight="3" data-aos="zoom-in">
+      Bash
+    </div>
+  
+    <div skill-type="tool" skill-weight="1" data-aos="zoom-in">
+      Jekyll
+    </div>
+  
+    <div skill-type="tool" skill-weight="2" data-aos="zoom-in">
+      npm
+    </div>
+  
+    <div skill-type="tool" skill-weight="3" data-aos="zoom-in">
+      VS Code
+    </div>
+  
+</div>
+
+      </section>
+    
+    
+      <section class="card neumorphism-card-big">
+        <h1 class="title">Education & Experience</h1>
+<p class="subtitle">
+  For more information, have a look at my
+  <a class="highlight-link" href="https://www.dropbox.com/s/tr6twmvxa92hig4/resume.pdf?dl=0" target="_blank" rel="noreferrer">
+    curriculum vitae
+  </a>.
+</p>
+
+<div class="timeline-wrapper">
+  <ul class="timeline">
+    
+      
+
+      
+        <li>
+          <div class="direction-r">
+            <div class="flag-wrapper">
+              <span class="hexagon"></span>
+              <span class="flag neumorphism-button" data-aos="zoom-in-left">
+                <a href="" target="_blank" rel="noreferrer">
+                  <span>Migori Teachers Training College</span>
+                </a>
+              </span>
+              <span class="time-wrapper" data-aos="zoom-in-left">
+                <span class="time neumorphism-card">Mar 2020 - Jun 2020</span>
+              </span>
+            </div>
+            <div class="desc neumorphism-card" data-aos="zoom-in-left">
+              Survey analyst
+              
+                <div class="tag-wrapper">
+                  
+                    <span class="tag neumorphism-card">Pandas</span>
+                  
+                    <span class="tag neumorphism-card">SPSS</span>
+                  
+                    <span class="tag neumorphism-card">R</span>
+                  
+                </div>
+              
+            </div>
+          </div>
+        </li>
+      
+    
+      
+        <li>
+          <div class="direction-l">
+            <div class="flag-wrapper">
+              <span class="hexagon"></span>
+              <span class="flag neumorphism-button" data-aos="zoom-in-right">
+                <a href="" target="_blank" rel="noreferrer">
+                  <span>Maranda High School</span>
+                </a>
+              </span>
+              <span class="time-wrapper" data-aos="zoom-in-right">
+                <span class="time neumorphism-card">2017 - 2019</span>
+              </span>
+            </div>
+            <div class="desc neumorphism-card" data-aos="zoom-in-right">
+              My High school
+              
+            </div>
+          </div>
+        </li>
+      
+
+      
+    
+      
+
+      
+        <li>
+          <div class="direction-r">
+            <div class="flag-wrapper">
+              <span class="hexagon"></span>
+              <span class="flag neumorphism-button" data-aos="zoom-in-left">
+                <a href="https://www.gearbox.co.ke/" target="_blank" rel="noreferrer">
+                  <span>Gearbox industries</span>
+                </a>
+              </span>
+              <span class="time-wrapper" data-aos="zoom-in-left">
+                <span class="time neumorphism-card">May 2022 - Jul 2022</span>
+              </span>
+            </div>
+            <div class="desc neumorphism-card" data-aos="zoom-in-left">
+              junior machine learning intern
+              
+                <div class="tag-wrapper">
+                  
+                    <span class="tag neumorphism-card">Python</span>
+                  
+                    <span class="tag neumorphism-card">Keras</span>
+                  
+                    <span class="tag neumorphism-card">Tensorflow</span>
+                  
+                    <span class="tag neumorphism-card">Web Development</span>
+                  
+                </div>
+              
+            </div>
+          </div>
+        </li>
+      
+    
+      
+        <li>
+          <div class="direction-l">
+            <div class="flag-wrapper">
+              <span class="hexagon"></span>
+              <span class="flag neumorphism-button" data-aos="zoom-in-right">
+                <a href="https://www.jkuat.ac.ke/" target="_blank" rel="noreferrer">
+                  <span>JKUAT</span>
+                </a>
+              </span>
+              <span class="time-wrapper" data-aos="zoom-in-right">
+                <span class="time neumorphism-card">2020 - present</span>
+              </span>
+            </div>
+            <div class="desc neumorphism-card" data-aos="zoom-in-right">
+              B.Sc in Electronic And Computer Engineering
+              
+                <div class="tag-wrapper">
+                  
+                    <span class="tag neumorphism-card">Electronic And Computer Engineering</span>
+                  
+                </div>
+              
+            </div>
+          </div>
+        </li>
+      
+
+      
+    
+  </ul>
+</div>
+
+      </section>
+    
+    
+      <section class="card neumorphism-card-big">
+        
+  <h1 class="title"><span>Projects</span></h1>
+  <div class="projects-wrapper">
+    
+      <div class="project neumorphism-card" data-aos="zoom-in-down">
+        <div class="name-link-wrapper">
+          <h3>nakuja project</h3>
+        </div>
+        <p class="project-desc">Nakuja project aims to build a liquid-fuel rocket to bring small satellites into the orbit.</p>
+        
+          <a class="highlight-link" href="https://github.com/nakujaproject/reaction-wheel" target="_blank" rel="noreferrer">
+            Demo
+          </a>
+        
+        
+          <div class="tag-wrapper">
+            
+              <span class="tag neumorphism-card">MongoDB</span>
+            
+              <span class="tag neumorphism-card">Express</span>
+            
+              <span class="tag neumorphism-card">AngularJS</span>
+            
+              <span class="tag neumorphism-card">Node</span>
+            
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+
+  <h1 class="title">Open Source Projects</h1>
+  
+
+  
+
+  <div class="projects-wrapper">
+    
+      
+        <div class="project neumorphism-card" data-aos="zoom-in-down">
+          <div class="name-link-wrapper">
+            <h3>machine-learning-projects</h3>
+            <div class="links">
+              
+                
+            </div>
+          </div>
+          <p class="project-desc">All projects related to machine learning go in here</p>
+          
+          <a class="highlight-link" href="https://github.com/shawn-phy/machine-learning-projects" target="_blank" rel="noreferrer">
+            Github
+          </a>
+          
+            <div class="tag-wrapper">
+              
+            </div>
+          
+        </div>
+      
+    
+      
+        <div class="project neumorphism-card" data-aos="zoom-in-down">
+          <div class="name-link-wrapper">
+            <h3>sengi</h3>
+            <div class="links">
+              
+                
+            </div>
+          </div>
+          <p class="project-desc">Mastodon & Pleroma Multi-account Desktop Client</p>
+          
+          <a class="highlight-link" href="https://github.com/shawn-phy/sengi" target="_blank" rel="noreferrer">
+            Github
+          </a>
+          
+            <div class="tag-wrapper">
+              
+            </div>
+          
+        </div>
+      
+    
+      
+        <div class="project neumorphism-card" data-aos="zoom-in-down">
+          <div class="name-link-wrapper">
+            <h3>shawn-phy.github.io</h3>
+            <div class="links">
+              
+                
+            </div>
+          </div>
+          <p class="project-desc">my personal portfolio built with jekyll </p>
+          
+          <a class="highlight-link" href="https://github.com/shawn-phy/shawn-phy.github.io" target="_blank" rel="noreferrer">
+            Github
+          </a>
+          
+            <div class="tag-wrapper">
+              
+            </div>
+          
+        </div>
+      
+    
+      
+        <div class="project neumorphism-card" data-aos="zoom-in-down">
+          <div class="name-link-wrapper">
+            <h3>masakhane-mt</h3>
+            <div class="links">
+              
+                
+            </div>
+          </div>
+          <p class="project-desc">Machine Translation for Africa</p>
+          
+          <a class="highlight-link" href="https://github.com/shawn-phy/masakhane-mt" target="_blank" rel="noreferrer">
+            Github
+          </a>
+          
+            <div class="tag-wrapper">
+              
+            </div>
+          
+        </div>
+      
+    
+      
+        <div class="project neumorphism-card" data-aos="zoom-in-down">
+          <div class="name-link-wrapper">
+            <h3>philipoyuga</h3>
+            <div class="links">
+              
+                
+            </div>
+          </div>
+          <p class="project-desc">Config files for my GitHub profile.</p>
+          
+            <a class="highlight-link" href="https://github.com/philipoyuga" target="_blank" rel="noreferrer">
+              Demo
+            </a>
+          
+          <a class="highlight-link" href="https://github.com/shawn-phy/philipoyuga" target="_blank" rel="noreferrer">
+            Github
+          </a>
+          
+            <div class="tag-wrapper">
+              
+                <span class="tag neumorphism-card">config</span>
+              
+                <span class="tag neumorphism-card">github-config</span>
+              
+            </div>
+          
+        </div>
+      
+    
+      
+        <div class="project neumorphism-card" data-aos="zoom-in-down">
+          <div class="name-link-wrapper">
+            <h3>emojos.in</h3>
+            <div class="links">
+              
+                
+            </div>
+          </div>
+          <p class="project-desc">Shows custom emoji for Mastodon/Pleroma instances and addition of themes for the pleroma-FE</p>
+          
+            <a class="highlight-link" href="https://emojos.in" target="_blank" rel="noreferrer">
+              Demo
+            </a>
+          
+          <a class="highlight-link" href="https://github.com/shawn-phy/emojos.in" target="_blank" rel="noreferrer">
+            Github
+          </a>
+          
+            <div class="tag-wrapper">
+              
+            </div>
+          
+        </div>
+      
+    
+  </div>
+
+
+
+
+      </section>
+    
+    
+    <section class="card neumorphism-card-big">
+      <h1 class="title">Contact</h1>
+<p class="subtitle">Reach out via any of the following and Lets connect to build beautiful things ❤️!</p>
+
+<div class="contact-icons">
+  
+  <a class="social-link" aria-label="My E-Mail" href="mailto:philipoyuga14@gmail.com">
+    <div class="social">
+      <svg class="social-svg" viewBox="0 0 48 48">
+        <use x="12" y="12" width="24" height="24" viewBox="0 0 48 48" xlink:href="/assets/img/solid.svg#envelope"></use>
+      </svg>
+    </div>
+  </a>
+  
+
+  
+  <a class="social-link" aria-label="My GitHub" target="_blank" rel="noreferrer"
+    href="https://github.com/shawn-phy">
+    <div class="social">
+      <svg class="social-svg" viewBox="0 0 48 48">
+        <use x="12" y="12" width="24" height="24" viewBox="0 0 48 48" xlink:href="/assets/img/brands.svg#github"></use>
+      </svg>
+    </div>
+  </a>
+  
+
+  
+  <a class="social-link black" aria-label="My Codepen" target="_blank" rel="noreferrer"
+    href="https://codepen.io/shawn-phy">
+    <div class="social">
+      <svg class="social-svg" viewBox="0 0 48 48">
+        <use x="12" y="12" width="24" height="24" viewBox="0 0 48 48" xlink:href="/assets/img/brands.svg#codepen"></use>
+      </svg>
+    </div>
+  </a>
+  
+
+  
+  <a class="social-link black" aria-label="My DEV" target="_blank" rel="noreferrer"
+    href="https://dev.to/shawn_phy">
+    <div class="social">
+      <svg class="social-svg" viewBox="0 0 48 48">
+        <use x="12" y="12" width="24" height="24" viewBox="0 0 48 48" xlink:href="/assets/img/brands.svg#dev"></use>
+      </svg>
+    </div>
+  </a>
+  
+
+  
+  <a class="social-link linkedin" aria-label="My LinkedIn" target="_blank" rel="noreferrer"
+    href="https://www.linkedin.com/in/shawn-philip-31361a210">
+    <div class="social">
+      <svg class="social-svg" viewBox="0 0 48 48">
+        <use x="12" y="12" width="24" height="24" viewBox="0 0 48 48" xlink:href="/assets/img/brands.svg#linkedin-in"></use>
+      </svg>
+    </div>
+  </a>
+  
+
+  
+  <a class="social-link twitter" aria-label="My Twitter" target="_blank" rel="noreferrer"
+    href="https://twitter.com/OyugaPhilip">
+    <div class="social">
+      <svg class="social-svg" viewBox="0 0 48 48">
+        <use x="12" y="12" width="24" height="24" viewBox="0 0 48 48" xlink:href="/assets/img/brands.svg#twitter"></use>
+      </svg>
+    </div>
+  </a>
+  
+</div>
+
+    </section>
+    
+  </div>
+  <footer class="footer">
+  <p>
+    &copy; 2020 Designed & Developed by
+    <a class="highlight-link" href="https://shawn-phy.github.io/" target="_blank" rel="noreferrer">
+      Shawn-phy
+    </a>
+  </p>
+  <p>
+    Built with
+    <a class="highlight-link" href="https://jekyllrb.com/"target="_blank" rel="noreferrer">
+      Jekyll
+    </a>
+    and powered by
+    <a class="highlight-link" href="https://pages.github.com/" target="_blank" rel="noreferrer">
+      Github Pages
+    </a>
+  </p>
+</footer>
+
+<!-- Google Analytics -->
+
+<script>
+  var dnt = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+  if (dnt != "1" && dnt != "yes") {
+    (function (i, s, o, g, r, a, m) {
+      i["GoogleAnalyticsObject"] = r;
+      (i[r] =
+        i[r] ||
+        function () {
+          (i[r].q = i[r].q || []).push(arguments);
+        }),
+        (i[r].l = 1 * new Date());
+      (a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
+      a.async = 1;
+      a.src = g;
+      m.parentNode.insertBefore(a, m);
+    })(
+      window,
+      document,
+      "script",
+      "https://www.google-analytics.com/analytics.js",
+      "ga"
+    );
+    ga("create", "UA-158757509-2", "auto");
+    ga("send", "pageview");
+  }
+</script>
+
+
+</body>
+</html>
