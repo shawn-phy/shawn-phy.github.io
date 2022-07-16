@@ -1,4 +1,4 @@
- - name: nakuja project 
+- name: nakuja project 
    descr: "Nakuja project aims to build a liquid-fuel rocket to bring small satellites into the orbit."
    demo: https://github.com/nakujaproject/reaction-wheel
    tags:
