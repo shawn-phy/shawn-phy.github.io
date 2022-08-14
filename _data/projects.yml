@@ -1,12 +1,11 @@
-- name: nakuja project 
-   descr: "Nakuja project aims to build a liquid-fuel rocket to bring small satellites into the orbit."
+
+- name: Nakuja project 
+   descr : "Nakuja project aims to build a liquid-fuel rocket to bring small satellites into the orbit."
    demo: https://github.com/nakujaproject/reaction-wheel
    tags:
-     - tag: MongoDB
-     - tag: Express
-     - tag: AngularJS
-     - tag: Node
+     - tag: Avionics 
 
+     
 - name: converting a 24 year old pc into a media server 
   descr: "this is the project I'm most proud of and the end result involved eventually upgrading our digital tv to a smart tv"
  # demo: https://example.com/
