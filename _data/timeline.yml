@@ -1,20 +1,4 @@
 
-- title: Migori Teachers Training College 
-  # title-url: 
-  date: Mar 2020 - Jun 2020
-  subtitle: Survey analyst
-  tags:
-    - tag: Pandas
-    - tag: SPSS
-    - tag: R 
-  timeline-side: right
-
-- title: Maranda High School
- # title-url: 
-  date: 2017 - 2019
-  subtitle: My High school 
-  timeline-side: left
-
 - title: Gearbox industries 
   title-url: https://www.gearbox.co.ke/
   date: May 2022 - Jul 2022
@@ -32,4 +16,21 @@
   subtitle: B.Sc in Electronic And Computer Engineering
   tags: 
     - tag: Electronic And Computer Engineering
+  timeline-side: left
+
+
+- title: Migori Teachers Training College 
+  # title-url: 
+  date: Mar 2020 - Jun 2020
+  subtitle: Survey analyst
+  tags:
+    - tag: Pandas
+    - tag: SPSS
+    - tag: R 
+  timeline-side: right
+
+- title: Maranda High School
+ # title-url: 
+  date: 2017 - 2019
+  subtitle: My High school 
   timeline-side: left

@@ -5,12 +5,6 @@
 - name: Bash
   weight: 3
 
-#- name: Scrum
-#  weight: 3
-
-#- name: Travis CI
-#  weight: 1
-
 - name: Jekyll
   weight: 1
 
