@@ -1,13 +1,13 @@
 
 - name: Nakuja project 
-   descr : "Nakuja project aims to build a liquid-fuel rocket to bring small satellites into the orbit."
-   demo: https://github.com/nakujaproject/reaction-wheel
-   tags:
+  descr: "Nakuja project aims to build a liquid-fuel rocket to bring small satellites into the orbit."
+  demo: https://github.com/nakujaproject/reaction-wheel
+  tags:
      - tag: Avionics 
 
      
 - name: converting a 24 year old pc into a media server 
-  descr: "this is the project I'm most proud of and the end result involved eventually upgrading our digital tv to a smart tv"
+  descr: "The end result involved eventually upgrading our digital tv to a smart tv by using Plex"
  # demo: https://example.com/
   tags:
     - tag: Github
@@ -21,11 +21,11 @@
   tags:
     - tag: Python
     - tag: Django
-    - tag: Figma
+    - tag: Raspberry PI
     - tag: UX/UI design
 
 - name: just another modd(JAM)
-  descr: "this was a very intensive project that involved the modding of whatsapp and rooting my phone to enbale chatting with people via the CLI on android! and as if that wasnt already wild enough it was also implemented on android studio emulator"
+  descr: "Involved the modding of whatsapp and rooting my phone to enbale chatting with people via the CLI on android! It was also implemented on android studio emulator"
 
 - name: Door authentication using RFID and Arduino  
   descr: "User authentication to grant access to only specific people with specific RFID cards. Each user had their own unique card"
