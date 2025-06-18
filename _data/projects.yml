@@ -35,3 +35,12 @@
     - tag: arduino
     - tag: Controll access
     - tag: Arduino IDE
+
+- name: Robodojo bot
+  descr: This was a part of the robodojo competition at JKUAT 2023. It was a bot that was able to navigate a maze and collect objects.
+  demo: https://roboticsdojo.github.io/member.html
+  tags:
+    - tag: ROS
+    - tag: Arduino
+    - tag: Robotics
+    - tag: Inverse Kinematics
