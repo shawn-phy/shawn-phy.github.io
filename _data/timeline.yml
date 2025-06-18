@@ -1,3 +1,40 @@
+- title: Wezeshanet Technologies  
+  title-url: https://www.wezeshanet.com/
+  date: Aug 2024 - Mar 2025  
+  subtitle:  Junior Software Engineer
+  tags: 
+    - tag: Mikrotik
+    - tag: Python
+    - tag: FastAPI
+    - tag: React
+    - tag: Node
+    - tag: Typescript
+  timeline-side: left
+
+- title: MCB
+  title-url: https://www.mcb.co.ke/
+  date: May 2024 - Aug 2024 
+  subtitle: Software Engineer Intern
+  tags: 
+    - tag: Backend
+    - tag: Flutter
+    - tag: Dart
+    - tag: C#
+    - tag: Typescript
+    - tag: dotnet
+  timeline-side: right
+
+- title: Novek Technologies 
+  title-url: https://www.novek.io
+  date: May 2023 - Sept 2023 
+  subtitle: Embedded Systems Intern
+  tags: 
+    - tag: Embedded Systems
+    - tag: C++
+    - tag: Python
+    - tag: STM32
+    - tag: Raspberry Pi pico
+  timeline-side: left
 
 - title: Gearbox industries 
   title-url: https://www.gearbox.co.ke/
