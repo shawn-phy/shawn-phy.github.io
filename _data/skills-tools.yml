@@ -8,17 +8,26 @@
 - name: Jekyll
   weight: 1
 
-#- name: Chrome DevTools
-#  weight: 2
-
 - name: npm
   weight: 2
-
-#- name: gulp
-#  weight: 4
 
 - name: VS Code
   weight: 3
 
-#- name: Postman
-#  weight: 4
+- name: Postman
+  weight: 4
+
+- name: Arduino IDE
+  weight: 2
+
+- name: Raspberry Pi
+  weight: 2
+
+- name: ROS
+  weight: 2
+
+- name: Azure
+  weight: 2
+
+- name: Docker
+  weight: 2
