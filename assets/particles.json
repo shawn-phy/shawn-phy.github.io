@@ -13,11 +13,11 @@
     "shape": {
       "type": "polygon",
       "stroke": {
-        "width": 1,
+        "width": 0,
         "color": "#000000"
       },
       "polygon": {
-        "nb_sides": 6
+        "nb_sides": 8
       }
     },
     "opacity": {
@@ -41,7 +41,7 @@
       }
     },
     "line_linked": {
-      "enable": true
+      "enable": false
     },
     "move": {
       "enable": true,
