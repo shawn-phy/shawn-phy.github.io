@@ -1,6 +1,7 @@
 ---
 import Arrow from './Arrow.astro';
 import Charm from './Charm.astro';
+import CvLink from './CvLink.astro';
 import '@fontsource/mochiy-pop-one/400.css';
 import { site, features, layers } from '../data/site';
 
@@ -77,6 +78,7 @@ const focusLines = Array.from({ length: 64 }, (_, i) => {
           Email Philip
           <span class="btn__dot"><Arrow /></span>
         </a>
+        <CvLink />
         <a class="hero__link" href={site.github}>See the code on GitHub</a>
       </div>
     </div>
@@ -228,7 +230,7 @@ const focusLines = Array.from({ length: 64 }, (_, i) => {
 
   .hero__line {
     max-width: 38rem;
-    font: 700 var(--step-2) / 1.2 var(--font-display);
+    font: 700 var(--step-1) / 1.5 var(--font-body);
   }
 
   .features {
@@ -397,6 +399,13 @@ const focusLines = Array.from({ length: 64 }, (_, i) => {
 
   .stack:global(.is-away) .callout {
     translate: 1rem 0;
+    pointer-events: none;
+  }
+
+  .stack:global(.is-away) .callout:focus-within {
+    opacity: 1;
+    translate: 0;
+    pointer-events: auto;
   }
 
   .callout--ml {

@@ -1,0 +1,14 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "built-site",
+      "runtimeExecutable": "/bin/sh",
+      "runtimeArgs": [
+        "-c",
+        "cd /private/tmp/claude-502/-Users-shawn-phy-Documents-code-shawn-phy-github-io/2254c6fc-1b11-45b8-8e7d-a33a822ca586/scratchpad/old-site && exec /usr/bin/python3 -m http.server 4000"
+      ],
+      "port": 4000
+    }
+  ]
+}

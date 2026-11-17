@@ -1,0 +1,24 @@
+---
+import { existsSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { site } from '../data/site';
+
+// Checked on each dev request and at build time, so an absent upload never
+// produces a broken download link. Keep the private source CV outside public/.
+const available = !!site.cvUrl && existsSync(resolve('public', site.cvUrl.slice(1)));
+---
+
+{available && (
+  <a class="cv-link" href={site.cvUrl} download="Philip-Oyuga-CV.pdf">
+    Download CV (PDF)
+  </a>
+)}
+
+<style>
+  .cv-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-weight: 700;
+  }
+</style>

@@ -41,6 +41,7 @@
 
   --z-scene: 5;
   --z-header: 10;
+  --header-height: 4.5rem;
 }
 
 *,
@@ -51,7 +52,7 @@
 
 html {
   -webkit-text-size-adjust: 100%;
-  scroll-padding-top: 5.5rem;
+  scroll-padding-top: calc(var(--header-height) + 1rem);
   scrollbar-color: var(--ink) var(--yuzu);
 }
 

@@ -14,6 +14,11 @@ const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const desktop = matchMedia('(min-width: 56.01rem)').matches;
 const header = document.querySelector<HTMLElement>('.bar');
 const headerH = () => header?.offsetHeight ?? 0;
+if (header) {
+  new ResizeObserver(() => {
+    document.documentElement.style.setProperty('--header-height', `${headerH()}px`);
+  }).observe(header);
+}
 
 // ---- Smooth scrolling ----------------------------------------------------------
 let lenis: Lenis | null = null;
@@ -28,7 +33,7 @@ if (!reduced) {
 function go(target: HTMLElement) {
   if (lenis) {
     lenis.scrollTo(target, {
-      offset: -headerH(),
+      // Lenis reads the same scroll-padding as native anchor navigation.
       duration: 1.5,
       easing: (t) => 1 - Math.pow(1 - t, 4),
     });
@@ -144,8 +149,6 @@ if (stage) {
                 [...document.querySelectorAll<HTMLElement>(`[data-perch-for="${id}"]`)],
               ]),
             ) as Record<LayerId, HTMLElement[]>,
-            bands: byLayer((id) => `#${id}`),
-            contact: document.querySelector<HTMLElement>('#contact'),
             heroRange,
             onPick: (id) => {
               const band = document.getElementById(id);
