@@ -1,5 +1,6 @@
 // Facts on this site come from the CV in docs/. Publishing rules are in PRODUCT.md:
-// Atomio may be named, other employers may not, and no phone numbers or referees appear.
+// Atomio, its confirmed client websites and Seniorpark may be named; other employers,
+// phone numbers and referees stay private.
 
 export type LayerId = 'hardware' | 'security' | 'ml';
 
@@ -59,10 +60,10 @@ export const layers: Layer[] = [
     tools: ['C', 'C++', 'STM32', 'Raspberry Pi Pico', 'Mbed OS', 'PCB design', 'JUCE'],
     entries: [
       {
-        title: 'AI smart greenhouse',
+        title: 'Smart greenhouse',
         projectId: 'smart-greenhouse',
         when: 'Jan – May 2025',
-        text: 'My final-year project. A greenhouse that runs its model on the microcontroller with STM32Cube.AI, designed and built in a team of five.',
+        text: 'A final-year team project for tomato monitoring and disease identification. I built the IoT network and contributed to parts of the ML pipeline.',
         also: 'ml',
       },
       {
@@ -195,6 +196,8 @@ export interface Flagship {
   tone: LayerId | 'yuzu';
   title: string;
   summary: string;
+  contribution?: string;
+  writeupUrl?: string;
   callouts: Callout[];
   specs: Spec[];
 }
@@ -206,7 +209,7 @@ export const flagships: Flagship[] = [
     tone: 'ml',
     title: 'Multi-agent extraction',
     summary:
-      'Cooperating agents that pull healthcare facilities out of state licensing websites, built in my current role.',
+      'A multi-agent workflow that extracts healthcare facility records from state licensing websites for Seniorpark.',
     callouts: [
       { n: 1, text: 'Agents hand the work along', anchor: [106, 114], marker: [122, 206] },
       { n: 2, text: 'Facility records come out', anchor: [183, 146], marker: [244, 202] },
@@ -244,7 +247,7 @@ export const flagships: Flagship[] = [
     figure: 'atomio',
     tone: 'yuzu',
     title: 'Atomio',
-    summary: 'A software company I co-founded to build construction-management software.',
+    summary: 'A software company I co-founded. We built construction-management software and client websites, including Laxmi Group and SafeHarbor Consulting.',
     callouts: [
       { n: 1, text: 'Construction-management software', anchor: [197, 112], marker: [294, 116] },
       { n: 2, text: 'Websites for clients', anchor: [69, 29], marker: [160, 12] },
@@ -253,25 +256,28 @@ export const flagships: Flagship[] = [
       { label: 'Dates', value: '2024 – Jan 2026' },
       { label: 'Role', value: 'Co-founder' },
       { label: 'Backend', value: 'C#, on servers I configured' },
-      { label: 'Also', value: 'Client websites and weekly progress reports' },
+      { label: 'Client websites', value: 'Laxmi Group and SafeHarbor Consulting' },
     ],
   },
   {
     id: 'smart-greenhouse',
     figure: 'greenhouse',
     tone: 'hardware',
-    title: 'AI smart greenhouse',
-    summary: 'My final-year project: a greenhouse whose model runs on the microcontroller itself.',
+    title: 'Smart greenhouse',
+    summary: 'A final-year team project combining greenhouse sensor monitoring with tomato-leaf disease identification.',
+    contribution: 'I built the IoT network and contributed to parts of the ML pipeline.',
+    writeupUrl: '/projects/smart-greenhouse/',
     callouts: [
-      { n: 1, text: 'Model runs on the STM32 with STM32Cube.AI', anchor: [165, 149], marker: [286, 204] },
-      { n: 2, text: 'AI-enabled greenhouse', anchor: [79, 117], marker: [24, 40] },
+      { n: 1, text: 'STM32 Discovery and ESP32-CAM', anchor: [165, 149], marker: [286, 204] },
+      { n: 2, text: 'Sensor-monitored greenhouse', anchor: [79, 117], marker: [24, 40] },
     ],
     specs: [
       { label: 'Dates', value: 'Jan – May 2025' },
       { label: 'Layers', layers: ['hardware', 'ml'] },
-      { label: 'Controller', value: 'STM32 with STM32Cube.AI' },
-      { label: 'Team', value: 'Five' },
-      { label: 'Context', value: 'Final-year project' },
+      { label: 'Hardware', value: 'STM32 Discovery and ESP32-CAM, connected over UART' },
+      { label: 'ML pipeline', value: 'SAM leaf segmentation and TensorFlow CNN disease classification' },
+      { label: 'Inference', value: 'Cloud-hosted, served through Flask' },
+      { label: 'Context', value: 'Final-year team project' },
     ],
   },
 ];
@@ -318,7 +324,7 @@ export const revisions: Revision[] = [
 
 export const medals: { place: string; title: string; detail: string; tone: LayerId | 'yuzu' }[] = [
   { place: '2nd', title: 'International Rungu CTF', detail: '2022', tone: 'security' },
-  { place: '2nd', title: 'National Cyberise CTF', detail: '2022', tone: 'security' },
+  { place: '2nd', title: 'National Cyberise CTF', detail: '2023', tone: 'security' },
   { place: '3rd', title: 'National Science Fair, regional', detail: '2018', tone: 'hardware' },
 ];
 

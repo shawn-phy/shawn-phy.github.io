@@ -1,0 +1,128 @@
+---
+// A project's illustrated figure: Philip's drawing on a plate in the layer's colour,
+// with numbered callouts and a legend. Used alone, or as the drawing card in a deck.
+import Figure from './Figure.astro';
+import Slot from './Slot.astro';
+import type { Flagship } from '../data/site';
+
+interface Props {
+  flagship: Flagship;
+  figNo: number;
+  perch?: string;
+  class?: string;
+  [key: string]: unknown;
+}
+
+const { flagship: f, figNo, perch, class: className, ...rest } = Astro.props;
+
+const alts: Record<Flagship['figure'], string> = {
+  car: 'Illustration of the autonomous 4WD robot car',
+  atomio: 'Illustration of construction-management software in a browser window',
+  agents: 'Illustration of cooperating agents passing a document along',
+  greenhouse: 'Illustration of a greenhouse with a seedling growing over a microchip',
+};
+
+// The figure is drawn at 70% scale in the middle of a 320 × 220 stage.
+const toStage = ([x, y]: [number, number]) => [48 + 0.7 * x, 33 + 0.7 * y];
+---
+
+<figure class:list={['sticker', 'face', className]} {...rest}>
+  <slot name="tab" />
+  <div class="plate-stage">
+    {perch && <span class="perch" data-perch-for={perch} aria-hidden="true" />}
+    <div class="face__art">
+      <Slot id={`figure-${f.figure}`} alt={alts[f.figure]}>
+        <Figure figure={f.figure} />
+      </Slot>
+    </div>
+    {
+      f.callouts.length > 0 && (
+        <svg class="face__marks" viewBox="0 0 320 220" aria-hidden="true">
+          {f.callouts.map((c) => {
+            const [ax, ay] = toStage(c.anchor);
+            const [mx, my] = c.marker;
+            return (
+              <g>
+                <line x1={mx} y1={my} x2={ax} y2={ay} />
+                <circle class="face__end" cx={ax} cy={ay} r="4" />
+                <circle class="face__num" cx={mx} cy={my} r="11" />
+                <text x={mx} y={my}>
+                  {c.n}
+                </text>
+              </g>
+            );
+          })}
+        </svg>
+      )
+    }
+  </div>
+  <figcaption class="plate-legend">
+    <span class="data plate-pill">Fig. {figNo}</span>
+    <ol>
+      {f.callouts.map((c) => (
+        <li>
+          <span class="data plate-n" aria-hidden="true">
+            {c.n}
+          </span>
+          {c.text}
+        </li>
+      ))}
+    </ol>
+  </figcaption>
+</figure>
+
+<style>
+  .face {
+    --shade: var(--yuzu);
+    color: var(--ink);
+  }
+
+  .face__art {
+    position: absolute;
+    left: 15%;
+    top: 15%;
+    width: 70%;
+  }
+
+  .face__marks {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  .face__marks line {
+    stroke: var(--ink);
+    stroke-width: 2.4;
+    stroke-linecap: round;
+  }
+
+  .face__end {
+    fill: var(--stock);
+    stroke: var(--ink);
+    stroke-width: 2.4;
+  }
+
+  .face__num {
+    fill: var(--ink);
+  }
+
+  .face__marks text {
+    font: 700 12px var(--font-data);
+    fill: var(--stock);
+    text-anchor: middle;
+    dominant-baseline: central;
+  }
+
+  /* A character stands on the plate's floor in its lower-left corner. */
+  .perch {
+    position: absolute;
+    left: 2%;
+    bottom: 0;
+    z-index: 1;
+    width: 25%;
+    height: 38%;
+    pointer-events: none;
+  }
+</style>

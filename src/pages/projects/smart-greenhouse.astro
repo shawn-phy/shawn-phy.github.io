@@ -1,0 +1,174 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/Header.astro';
+import GreenhouseDiagrams from '../../components/GreenhouseDiagrams.astro';
+import interior from '../../assets/projects/greenhouse/greenhouse-interior.jpg';
+import { Content, frontmatter } from '../../content/projects/greenhouse.md';
+
+const sections = [
+  { id: 'the-greenhouse-and-sensor-network', label: 'Sensor network' },
+  { id: 'identifying-disease-from-leaf-images', label: 'Disease identification' },
+  { id: 'testing-power-and-irrigation', label: 'Power and irrigation' },
+  { id: 'my-contribution', label: 'My contribution' },
+  { id: 'report-diagrams', label: 'Diagrams' },
+];
+---
+
+<Base title="Smart greenhouse project | Philip Shawn Oyuga" description={frontmatter.description}>
+  <Header />
+  <main id="main" class="project" tabindex="-1">
+    <article class="project__paper" aria-labelledby="project-title">
+      <a class="project__back" href="/#smart-greenhouse">Back to projects</a>
+      <header class="project__head">
+        <h1 id="project-title">{frontmatter.title}</h1>
+        <p class="project__intro">{frontmatter.description}</p>
+        <p class="data project__date">Final-year team project · JKUAT · May 2025</p>
+      </header>
+
+      <nav class="project__contents" aria-label="In this summary">
+        <ul>{sections.map((section) => <li><a href={`#${section.id}`}>{section.label}</a></li>)}</ul>
+      </nav>
+
+      <Image class="project__photo" src={interior} format="webp" widths={[400, 800, 1200]}
+        sizes="(max-width: 896px) calc(100vw - 32px), 800px" loading="eager"
+        alt="Tomato plants inside the greenhouse, with timber supports, translucent walls and overhead wiring." />
+
+      <div class="project__prose"><Content /></div>
+
+      <section class="project__diagrams" aria-labelledby="report-diagrams">
+        <h2 id="report-diagrams">Report diagrams</h2>
+        <GreenhouseDiagrams headingLevel="h3" />
+      </section>
+
+      <footer class="project__footer">
+        <a href="/#smart-greenhouse">Back to the greenhouse project</a>
+        <span>Philip Shawn Oyuga</span>
+      </footer>
+    </article>
+  </main>
+</Base>
+
+<style>
+  .project {
+    min-height: 100vh;
+    padding-block: clamp(2rem, 5vw, 4rem) clamp(3rem, 7vw, 6rem);
+    color: var(--ink);
+    background: var(--stock);
+  }
+
+  .project:focus {
+    outline: none;
+  }
+
+  .project__paper {
+    width: min(100% - 2 * var(--gutter), 50rem);
+    margin-inline: auto;
+  }
+
+  .project__back {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    margin-bottom: 1.75rem;
+    font-weight: 700;
+  }
+
+  .project__head {
+    display: grid;
+    gap: 1.2rem;
+  }
+
+  h1 {
+    font-size: var(--step-3);
+    line-height: 1.2;
+  }
+
+  .project__intro {
+    max-width: 48ch;
+    font-size: var(--step-1);
+    font-weight: 700;
+    line-height: 1.5;
+  }
+
+  .project__date {
+    font-size: var(--step--1);
+    line-height: 1.6;
+  }
+
+  .project__contents {
+    margin-block: 1.75rem 2rem;
+  }
+
+  .project__contents ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 1.5rem;
+  }
+
+  .project__contents a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-weight: 700;
+  }
+
+  .project__photo {
+    width: 100%;
+    height: auto;
+    border-radius: var(--r-md);
+    outline: 1px solid rgb(0 0 0 / 0.1);
+    outline-offset: -1px;
+  }
+
+  .project__prose {
+    max-width: 70ch;
+    margin: 3rem auto 0;
+    font-size: var(--step-0);
+    line-height: 1.7;
+  }
+
+  .project__prose :global(h2),
+  .project__diagrams > h2 {
+    margin-block: 3rem 1rem;
+    font: 700 var(--step-2) / 1.3 var(--font-display);
+    text-wrap: balance;
+  }
+
+  .project__prose :global(h2:first-child) {
+    margin-top: 0;
+  }
+
+  .project__prose :global(p + p) {
+    margin-top: 1.1em;
+  }
+
+  .project__prose :global(strong) {
+    font-weight: 900;
+  }
+
+  .project__diagrams {
+    --diagram-heading: var(--ink);
+    margin-top: 3rem;
+  }
+
+  .project__diagrams > h2 {
+    margin-bottom: 2rem;
+  }
+
+  .project__footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem 2rem;
+    margin-top: 3rem;
+    font-weight: 700;
+  }
+
+  .project__footer a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+</style>

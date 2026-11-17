@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import HomeMotion from '../components/HomeMotion.astro';
 import Header from '../components/Header.astro';
 import Hero from '../components/Hero.astro';
 import About from '../components/About.astro';
@@ -20,6 +21,7 @@ const prevOf = {
 ---
 
 <Base>
+  <HomeMotion slot="motion" />
   <Header />
   <main id="main" tabindex="-1">
     <Hero />

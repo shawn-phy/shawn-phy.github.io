@@ -1,0 +1,75 @@
+---
+import { Image } from 'astro:assets';
+import interior from '../assets/projects/greenhouse/greenhouse-interior.jpg';
+import display from '../assets/projects/greenhouse/electronics-display.jpg';
+import pipework from '../assets/projects/greenhouse/growing-bed-pipework.jpg';
+import tomatoes from '../assets/projects/greenhouse/tomatoes-on-vine.jpg';
+
+const photos = [
+  { image: interior, name: 'Greenhouse interior', alt: 'Tomato plants inside the timber-framed greenhouse, with translucent walls and overhead wiring.' },
+  { image: display, name: 'Electronics and display', alt: 'A wired electronics assembly with a display labelled temperature and humidity.' },
+  { image: pipework, name: 'Growing bed and pipework', alt: 'Young plants in a soil bed beside black pipework and fittings along the greenhouse wall.' },
+  { image: tomatoes, name: 'Tomatoes on the vine', alt: 'A hand holding a cluster of green tomatoes still attached to the plant.' },
+];
+---
+
+<div class="photos" role="group" aria-label="Greenhouse project photographs">
+  {photos.map((photo, i) => (
+    <a class:list={['photo', { 'photo--lead': i === 0, 'photo--display': i === 1 }]}
+      href={photo.image.src} aria-label={`View full-size photo: ${photo.name}`}>
+      <Image src={photo.image} alt={photo.alt} format="webp"
+        widths={i === 0 ? [400, 800, 1200] : [240, 480, 800]}
+        sizes={i === 0 ? '(max-width: 960px) calc(100vw - 32px), 800px' : '(max-width: 640px) 100vw, 400px'}
+        loading="lazy" decoding="async" />
+    </a>
+  ))}
+</div>
+
+<style>
+  .photos {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .photo {
+    display: block;
+    overflow: hidden;
+    border-radius: var(--r-md);
+  }
+
+  .photo--lead {
+    grid-column: 1 / -1;
+  }
+
+  .photo :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    outline: 1px solid rgb(255 255 255 / 0.1);
+    outline-offset: -1px;
+  }
+
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .photo :global(img) {
+      transition: transform 600ms var(--ease-out);
+    }
+
+    .photo:hover :global(img) {
+      transform: scale(1.025);
+    }
+  }
+
+  @media (max-width: 40rem) {
+    .photos {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.75rem;
+    }
+
+    .photo--display {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

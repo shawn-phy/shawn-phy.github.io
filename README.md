@@ -19,6 +19,12 @@ Most text comes from `src/data/site.ts`: features, the three layers and their en
 
 The About section is yours to write, in `src/content/about.md`. While its frontmatter says `draft: true`, the section shows only on your local preview and is left out of the live site. Set `draft: false` to publish it.
 
+The greenhouse report summary is in `src/content/projects/greenhouse.md`, rendered
+at `/projects/smart-greenhouse/`. Its project entry links to that page through
+`writeupUrl` in `src/data/site.ts`. The summary keeps prototype results separate
+from simulations and proposed features; source references are in
+`design/greenhouse/claims.md`.
+
 ## CV download
 
 Save the public PDF as `public/Philip-Oyuga-CV.pdf`. The hero and Contact section

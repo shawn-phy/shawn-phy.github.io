@@ -36,6 +36,15 @@ const links = [
   </nav>
 </header>
 
+<script>
+  const header = document.querySelector<HTMLElement>('.bar');
+  if (header) {
+    new ResizeObserver(() => {
+      document.documentElement.style.setProperty('--header-height', `${header.offsetHeight}px`);
+    }).observe(header);
+  }
+</script>
+
 <style>
   .bar {
     position: sticky;

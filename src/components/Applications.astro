@@ -1,114 +1,174 @@
 ---
-// Flagship work, each set out as a datasheet application note with its own
-// composition: the layout follows what the project is, not a repeated template.
-import Figure from './Figure.astro';
-import Slot from './Slot.astro';
+// Flagship work, each set out as a datasheet application note. A project with real
+// proof (live sites, build photographs, report diagrams) shows it on a deck under its
+// drawing: the drawing leads, and the proof arrives on top as the note scrolls into
+// view (see src/scripts/proof-deck.ts).
 import BopText from './BopText.astro';
-import Charm from './Charm.astro';
+import FigurePlate from './FigurePlate.astro';
+import ProofCard, { type Proof } from './ProofCard.astro';
 import { flagships, layerNames } from '../data/site';
+import laxmi from '../assets/projects/atomio/laxmi-group-website.png';
+import safeharbor from '../assets/projects/atomio/safeharbor-website.png';
+import seniorpark from '../assets/projects/seniorpark/seniorpark-website.png';
+import interior from '../assets/projects/greenhouse/greenhouse-interior.jpg';
+import display from '../assets/projects/greenhouse/electronics-display.jpg';
+import pipework from '../assets/projects/greenhouse/growing-bed-pipework.jpg';
+import tomatoes from '../assets/projects/greenhouse/tomatoes-on-vine.jpg';
+import blockDiagram from '../assets/projects/greenhouse/system-block-diagram.png';
 
-const alts: Record<string, string> = {
-  car: 'Illustration of the autonomous 4WD robot car',
-  atomio: 'Illustration of construction-management software in a browser window',
-  agents: 'Illustration of cooperating agents passing a document along',
-  greenhouse: 'Illustration of a greenhouse with a seedling growing over a microchip',
+// Proof per project. Sources and limits are recorded in design/website-evidence.md
+// and design/greenhouse/claims.md.
+const proofs: Record<string, Proof[]> = {
+  agents: [
+    {
+      key: 'seniorpark',
+      label: 'Live site',
+      kind: 'site',
+      title: 'Seniorpark public website',
+      url: 'https://seniorpark.io',
+      image: seniorpark,
+      alt: 'Seniorpark public homepage with its senior care facility search.',
+    },
+  ],
+  atomio: [
+    {
+      key: 'laxmi',
+      label: 'Laxmi Group',
+      kind: 'site',
+      title: 'Client site',
+      url: 'https://www.laxmigroup.co.ke/',
+      image: laxmi,
+      alt: 'Laxmi Group website About page, with team, construction and community project photographs.',
+    },
+    {
+      key: 'safeharbor',
+      label: 'SafeHarbor',
+      kind: 'site',
+      title: 'Client site',
+      url: 'https://safeharbor.co.ke/',
+      image: safeharbor,
+      alt: 'SafeHarbor Consulting website homepage, with its health, safety and risk management services.',
+    },
+  ],
+  greenhouse: [
+    {
+      key: 'photos',
+      label: 'Build photos',
+      kind: 'photos',
+      photos: [
+        { image: interior, alt: 'Tomato plants inside the timber-framed greenhouse, with translucent walls and overhead wiring.' },
+        { image: display, alt: 'A wired electronics assembly with a display labelled temperature and humidity.' },
+        { image: pipework, alt: 'Young plants in a soil bed beside black pipework and fittings along the greenhouse wall.' },
+        { image: tomatoes, alt: 'A hand holding a cluster of green tomatoes still attached to the plant.' },
+      ],
+    },
+    {
+      key: 'diagram',
+      label: 'Block diagram',
+      kind: 'diagram',
+      title: 'From the project report',
+      image: blockDiagram,
+      alt: 'System block diagram showing power distribution, sensors and camera, a processing unit, actuators, a knowledge database, IoT communication, machine learning models and a multimodal user interface.',
+      more: { href: '/projects/smart-greenhouse/', text: 'All diagrams' },
+    },
+  ],
 };
 
-// The figure is drawn at 70% scale in the middle of a 320 × 220 stage.
-const toStage = ([x, y]: [number, number]) => [48 + 0.7 * x, 33 + 0.7 * y];
-
-// Reserved spaces keep the characters inside the project figures.
-const perches: Record<string, string> = { agents: 'ml', car: 'hardware', greenhouse: 'ml' };
+// The 3D chip stands on the car's drawing; it is the one note without a deck.
+const perches: Record<string, string> = { car: 'hardware' };
 ---
 
 <section id="applications" class="apps on-ink" aria-labelledby="apps-title">
   <div class="seam" aria-hidden="true" style="--prev: var(--yuzu)"></div>
   <div class="wrap">
     <h2 id="apps-title" class="h-section"><BopText text="Selected projects" /></h2>
-    <p class="lede apps__lede">Multi-agent extraction, autonomous robotics, construction software and embedded AI.</p>
+    <p class="lede apps__lede">Multi-agent extraction, autonomous robotics, construction software and greenhouse monitoring.</p>
 
     <div class="notes">
       {
-        flagships.map((f, i) => (
-          <article id={f.id} class={`note note--${i} tone-${f.tone}`} aria-labelledby={`note-${f.id}`}>
-            <figure class="sticker plate">
-              <div class="plate__stage">
-                {perches[f.figure] && <span class="perch" data-perch-for={perches[f.figure]} aria-hidden="true" />}
-                <div class="plate__art">
-                  <Slot id={`figure-${f.figure}`} alt={alts[f.figure]}>
-                    <Figure figure={f.figure} />
-                  </Slot>
-                </div>
-                <svg class="plate__marks" viewBox="0 0 320 220" aria-hidden="true">
-                  {f.callouts.map((c) => {
-                    const [ax, ay] = toStage(c.anchor);
-                    const [mx, my] = c.marker;
-                    return (
-                      <g>
-                        <line x1={mx} y1={my} x2={ax} y2={ay} />
-                        <circle class="plate__end" cx={ax} cy={ay} r="4" />
-                        <circle class="plate__num" cx={mx} cy={my} r="11" />
-                        <text x={mx} y={my}>
-                          {c.n}
-                        </text>
-                      </g>
-                    );
-                  })}
-                </svg>
+        flagships.map((f, i) => {
+          const deck = proofs[f.figure] ?? [];
+          return (
+            <article id={f.id} class={`note note--${i} tone-${f.tone}`} aria-labelledby={`note-${f.id}`}>
+              <div class="note__head">
+                <h3 id={`note-${f.id}`} class="note__title">
+                  {f.title}
+                </h3>
+                <p class="note__summary">{f.summary}</p>
+                {f.contribution && <p class="note__contribution">{f.contribution}</p>}
+                {f.writeupUrl && (
+                  <a class="note__read" href={f.writeupUrl}>
+                    Read the project summary<span class="sr-only">: {f.title}</span>
+                  </a>
+                )}
               </div>
-              <figcaption class="plate__legend">
-                <span class="data plate__fig">Fig. {i + 3}</span>
-                <ol>
-                  {f.callouts.map((c) => (
-                    <li>
-                      <span class="data plate__n" aria-hidden="true">
-                        {c.n}
+
+              {deck.length > 0 ? (
+                <div class="plate deck" data-deck data-front={deck[0].key}>
+                  <div class="deck__switch" role="group" aria-label={`${f.title}: what to show`}>
+                    <button type="button" class="deck__btn" data-show="drawing" aria-pressed="false">
+                      Drawing
+                    </button>
+                    {deck.map((p, k) => (
+                      <button type="button" class="deck__btn" data-show={p.key} aria-pressed={k === 0 ? 'true' : 'false'}>
+                        {p.label}
+                      </button>
+                    ))}
+                  </div>
+                  <div class="deck__cards">
+                    <FigurePlate
+                      class="deck__card"
+                      flagship={f}
+                      figNo={i + 2}
+                      data-card="drawing"
+                      data-depth="1"
+                      style="--depth:1"
+                      aria-hidden="true"
+                    >
+                      <span slot="tab" class="deck__tab" aria-hidden="true">
+                        Drawing
                       </span>
-                      {c.text}
-                    </li>
-                  ))}
-                </ol>
-              </figcaption>
-            </figure>
+                    </FigurePlate>
+                    {deck.map((p, k) => (
+                      <ProofCard proof={p} depth={k === 0 ? 0 : k + 1} order={k + 1} />
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <FigurePlate class="plate" flagship={f} figNo={i + 2} perch={perches[f.figure]} />
+              )}
 
-            <div class="note__head">
-              <h3 id={`note-${f.id}`} class="note__title">
-                {f.title}
-              </h3>
-              <p class="note__summary">{f.summary}</p>
-            </div>
-
-            <div class="sticker note__spec">
-              {i === 0 && <Charm kind="capacitor" class="spec__charm" />}
-              <table class="table">
-                <caption class="sr-only">{f.title}: characteristics</caption>
-                <thead>
-                  <tr>
-                    <th scope="col">Parameter</th>
-                    <th scope="col">Value</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {f.specs.map((s) => (
+              <div class="sticker note__spec">
+                <table class="table">
+                  <caption class="sr-only">{f.title}: characteristics</caption>
+                  <thead>
                     <tr>
-                      <th scope="row">{s.label}</th>
-                      <td>
-                        {s.layers
-                          ? s.layers.map((id) => (
-                              <span class={`spec__layer tone-${id}`}>
-                                <span class="dot" aria-hidden="true" />
-                                {layerNames[id]}
-                              </span>
-                            ))
-                          : s.value}
-                      </td>
+                      <th scope="col">Parameter</th>
+                      <th scope="col">Value</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </article>
-        ))
+                  </thead>
+                  <tbody>
+                    {f.specs.map((s) => (
+                      <tr>
+                        <th scope="row">{s.label}</th>
+                        <td>
+                          {s.layers
+                            ? s.layers.map((id) => (
+                                <span class={`spec__layer tone-${id}`}>
+                                  <span class="dot" aria-hidden="true" />
+                                  {layerNames[id]}
+                                </span>
+                              ))
+                            : s.value}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </article>
+          );
+        })
       }
     </div>
   </div>
@@ -144,31 +204,24 @@ const perches: Record<string, string> = { agents: 'ml', car: 'hardware', greenho
     min-width: 0;
   }
 
-  /* Fig. 3, multi-agent extraction: a wide figure, its characteristics clipped over
-     the corner like an application circuit beside its part. */
-  .note--0 .plate {
-    grid-column: 1 / 9;
-    grid-row: 1 / 3;
-  }
-
+  /* Multi-agent extraction: the deck leads on the left, its numbers beside it. */
   .note--0 .note__head {
-    grid-column: 9 / 13;
+    grid-column: 1 / 9;
     grid-row: 1;
   }
 
-  .note--0 .note__spec {
-    grid-column: 8 / 13;
+  .note--0 .plate {
+    grid-column: 1 / 9;
     grid-row: 2;
-    z-index: 2;
-    margin-top: 1rem;
   }
 
-  /* Keep this figure's legend clear of the table clipped over its corner. */
-  .note--0 .plate__legend {
-    padding-right: 17%;
+  .note--0 .note__spec {
+    grid-column: 9 / 13;
+    grid-row: 2;
+    align-self: center;
   }
 
-  /* Fig. 4, the car: a small object, so the title runs large and the figure and its
+  /* The car: a small object, so the title runs large and the drawing and its
      numbers sit side by side beneath it. */
   .note--1 .note__head {
     grid-column: 1 / 13;
@@ -190,38 +243,24 @@ const perches: Record<string, string> = { agents: 'ml', car: 'hardware', greenho
     align-self: center;
   }
 
-  /* Fig. 5, Atomio: a company, introduced on a card laid over its product. */
+  /* Atomio: the company's two client sites on a deck at the right, its story and
+     numbers stacked at the left. */
+  .note--2 .note__head {
+    grid-column: 1 / 5;
+    grid-row: 1;
+  }
+
   .note--2 .plate {
     grid-column: 5 / 13;
     grid-row: 1 / 3;
   }
 
-  .note--2 .note__head {
-    --face: var(--stock);
-    grid-column: 1 / 7;
-    grid-row: 1;
-    z-index: 2;
-    margin-top: 2.5rem;
-    padding: 1.4rem 1.6rem 1.6rem;
-    color: var(--ink);
-    background: var(--stock);
-    border: var(--line) solid var(--ink);
-    border-radius: var(--r-lg);
-    box-shadow: 0 30px 50px -20px rgb(0 0 0 / 0.55);
-  }
-
-  .note--2 .note__title {
-    color: var(--ink);
-  }
-
   .note--2 .note__spec {
-    grid-column: 1 / 6;
+    grid-column: 1 / 5;
     grid-row: 2;
-    z-index: 2;
   }
 
-  /* Fig. 6, the greenhouse: hardware and ML in one build, set on a single centred
-     axis with the table resting on the figure's base. */
+  /* The greenhouse: hardware and ML in one build, on a single centred axis. */
   .note--3 {
     text-align: center;
   }
@@ -239,6 +278,7 @@ const perches: Record<string, string> = { agents: 'ml', car: 'hardware', greenho
   .note--3 .plate {
     grid-column: 3 / 11;
     grid-row: 2;
+    text-align: left;
   }
 
   .note--3 .note__spec {
@@ -246,112 +286,6 @@ const perches: Record<string, string> = { agents: 'ml', car: 'hardware', greenho
     grid-row: 3;
     margin-top: 0.75rem;
     text-align: left;
-  }
-
-  /* The figure plate: a sticker in the layer's colour with numbered callouts. */
-  .plate {
-    --shade: var(--yuzu);
-    color: var(--ink);
-  }
-
-  .plate__stage {
-    position: relative;
-    aspect-ratio: 320 / 220;
-    background: var(--tone);
-    border-bottom: var(--line) solid var(--ink);
-    border-radius: calc(var(--r-lg) - var(--line)) calc(var(--r-lg) - var(--line)) 0 0;
-  }
-
-  .plate__art {
-    position: absolute;
-    left: 15%;
-    top: 15%;
-    width: 70%;
-  }
-
-  /* A character stands on the plate's floor in its lower-left corner. */
-  .perch {
-    position: absolute;
-    left: 2%;
-    bottom: 0;
-    z-index: 1;
-    width: 25%;
-    height: 38%;
-    pointer-events: none;
-  }
-
-  .plate__marks {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    overflow: visible;
-  }
-
-  .plate__marks line {
-    stroke: var(--ink);
-    stroke-width: 2.4;
-    stroke-linecap: round;
-  }
-
-  .plate__end {
-    fill: var(--stock);
-    stroke: var(--ink);
-    stroke-width: 2.4;
-  }
-
-  .plate__num {
-    fill: var(--ink);
-  }
-
-  .plate__marks text {
-    font: 700 12px var(--font-data);
-    fill: var(--stock);
-    text-anchor: middle;
-    dominant-baseline: central;
-  }
-
-  .plate__legend {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: 0.5rem 1.25rem;
-    padding: 0.9rem 1.2rem 1rem;
-    font-size: var(--step--1);
-    font-weight: 700;
-    text-align: left;
-  }
-
-  .plate__fig {
-    padding: 0.1em 0.55em;
-    color: var(--stock);
-    background: var(--ink);
-    border-radius: 999px;
-  }
-
-  .plate__legend ol {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem 1.1rem;
-  }
-
-  .plate__legend li {
-    display: inline-flex;
-    align-items: baseline;
-    gap: 0.45rem;
-  }
-
-  .plate__n {
-    display: inline-grid;
-    place-items: center;
-    width: 1.35rem;
-    height: 1.35rem;
-    font-size: 0.75rem;
-    font-weight: 700;
-    color: var(--stock);
-    background: var(--ink);
-    border-radius: 50%;
-    translate: 0 0.15em;
   }
 
   .note__head {
@@ -370,16 +304,26 @@ const perches: Record<string, string> = { agents: 'ml', car: 'hardware', greenho
     line-height: 1.45;
   }
 
+  .note__contribution {
+    max-width: 48ch;
+    margin-inline: auto;
+    font-size: var(--step-0);
+    font-weight: 700;
+    line-height: 1.6;
+    color: var(--yuzu);
+  }
+
+  .note__read {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-weight: 700;
+  }
+
   /* Characteristic tables. */
   .note__spec {
     --shade: var(--yuzu);
     color: var(--ink);
-  }
-
-  .note__spec :global(.spec__charm) {
-    top: -2.6rem;
-    right: 2rem;
-    rotate: -10deg;
   }
 
   .note__spec tbody th,
@@ -408,7 +352,7 @@ const perches: Record<string, string> = { agents: 'ml', car: 'hardware', greenho
     translate: 0 0.05em;
   }
 
-  /* Narrow screens: every note reads figure, then heading, then table. */
+  /* Narrow screens: heading, project visuals, then specifications. */
   @media (max-width: 60rem) {
     .note,
     .note--3 {
@@ -437,12 +381,12 @@ const perches: Record<string, string> = { agents: 'ml', car: 'hardware', greenho
       order: 3;
     }
 
-    .note--1 .note__title {
-      font-size: var(--step-3);
+    .note__contribution {
+      margin-inline: 0;
     }
 
-    .note--0 .plate__legend {
-      padding-right: 1.2rem;
+    .note--1 .note__title {
+      font-size: var(--step-3);
     }
 
     .note--3 .note__summary {

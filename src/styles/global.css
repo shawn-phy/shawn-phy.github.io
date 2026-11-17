@@ -378,6 +378,185 @@ canvas {
   pointer-events: none;
 }
 
+/* Plates share one construction: a coloured stage over a legend bar, inside a sticker.
+   Project drawings and project proof (sites, photographs, diagrams) both use it. */
+.plate-stage {
+  position: relative;
+  aspect-ratio: 320 / 220;
+  overflow: hidden;
+  background: var(--tone, var(--stock));
+  border-bottom: var(--line) solid var(--ink);
+  border-radius: calc(var(--r-lg) - var(--line)) calc(var(--r-lg) - var(--line)) 0 0;
+}
+
+.plate-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem 1.25rem;
+  padding: 0.9rem 1.2rem 1rem;
+  font-size: var(--step--1);
+  font-weight: 700;
+  text-align: left;
+}
+
+.plate-legend ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.1rem;
+}
+
+.plate-legend li {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.45rem;
+}
+
+.plate-pill {
+  padding: 0.1em 0.55em;
+  color: var(--stock);
+  background: var(--ink);
+  border-radius: 999px;
+}
+
+.plate-n {
+  display: inline-grid;
+  place-items: center;
+  width: 1.35rem;
+  height: 1.35rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--stock);
+  background: var(--ink);
+  border-radius: 50%;
+  translate: 0 0.15em;
+}
+
+/* Proof decks (src/scripts/proof-deck.ts): a project's drawing over cards of real
+   proof. Cards behind the top one step up and to the right and show a labelled tab,
+   so there is visibly more; a peeking card can be clicked to the top. */
+@property --grain {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 0px;
+}
+
+.deck {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.deck__switch {
+  display: none;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.js-decks .deck__switch {
+  display: flex;
+}
+
+.deck__btn {
+  min-height: 44px;
+  padding: 0.35rem 0.95rem;
+  font: 700 var(--step--1) / 1.1 var(--font-body);
+  color: var(--ink);
+  background: var(--stock);
+  border: 2px solid var(--ink);
+  border-radius: 3px;
+  cursor: pointer;
+  transition:
+    background-color 160ms var(--ease-out),
+    translate 260ms var(--ease-spring);
+}
+
+.deck__btn[aria-pressed='true'] {
+  background: var(--tone, var(--yuzu));
+}
+
+@media (hover: hover) {
+  .deck__btn:hover {
+    translate: 0 -2px;
+  }
+}
+
+.deck__btn:active {
+  translate: 0 1px;
+}
+
+.deck__cards {
+  display: grid;
+  padding: 2.6rem 2.4rem 0 0;
+}
+
+.deck__card {
+  grid-area: 1 / 1;
+  z-index: calc(10 - var(--depth, 0));
+  translate: calc(var(--depth, 0) * 18px + var(--pull-x, 0px)) calc(var(--depth, 0) * -24px);
+  rotate: calc(var(--depth, 0) * 1.4deg + var(--pull-r, 0deg));
+  transition:
+    translate 600ms var(--ease-out),
+    rotate 600ms var(--ease-out),
+    filter 300ms var(--ease-out);
+}
+
+/* While a card is being pulled by hand, the script moves it directly. */
+.deck.is-settling .deck__card,
+.deck__card.is-pulled {
+  transition: filter 300ms var(--ease-out);
+}
+
+.deck__card:not([data-depth='0']) {
+  cursor: pointer;
+  filter: saturate(0.85) brightness(0.96);
+}
+
+/* A peeking card is one target: clicks land on the card, not on what is inside it. */
+.deck__card:not([data-depth='0']) * {
+  pointer-events: none;
+}
+
+.deck__tab {
+  position: absolute;
+  top: -2.05rem;
+  right: var(--tab-right, 1.2rem);
+  z-index: 1;
+  padding: 0.3rem 0.85rem 0.45rem;
+  font: 700 0.875rem / 1.1 var(--font-display);
+  color: var(--ink);
+  white-space: nowrap;
+  background: var(--yuzu);
+  border: 2px solid var(--ink);
+  border-bottom: 0;
+  border-radius: 8px 8px 0 0;
+  transition: opacity 300ms var(--ease-out);
+}
+
+.deck__card[data-depth='0'] .deck__tab {
+  opacity: 0;
+}
+
+/* The print comes up: on a fixed dot grid, dots grow until they merge. */
+.deck__media.is-developing {
+  -webkit-mask: radial-gradient(circle, #000 var(--grain), transparent calc(var(--grain) + 0.6px)) 0 0 / 12px 12px;
+  mask: radial-gradient(circle, #000 var(--grain), transparent calc(var(--grain) + 0.6px)) 0 0 / 12px 12px;
+}
+
+@media (max-width: 36rem) {
+  .deck__cards {
+    padding: 2.3rem 1.4rem 0 0;
+  }
+
+  .deck__card {
+    translate: calc(var(--depth, 0) * 10px + var(--pull-x, 0px)) calc(var(--depth, 0) * -18px);
+    rotate: calc(var(--depth, 0) * 1deg + var(--pull-r, 0deg));
+  }
+
+  .deck__tab {
+    font-size: 0.8rem;
+  }
+}
+
 /* Datasheet tables share one construction: ink head row, ruled body, round corners. */
 .table {
   width: 100%;
