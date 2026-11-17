@@ -12,8 +12,8 @@ export const site = {
   email: 'philipoyuga14@gmail.com',
   github: 'https://github.com/shawn-phy',
   linkedin: 'https://www.linkedin.com/in/shawn-philip-31361a210',
-  // Leave empty until a public CV without phone numbers and referees is added to public/.
-  cvUrl: '',
+  // Download links appear when this file exists in public/ at build time.
+  cvUrl: '/Philip-Oyuga-CV.pdf',
 };
 
 export const features: { tone: LayerId | 'yuzu'; text: string }[] = [
@@ -29,6 +29,7 @@ export interface Entry {
   when: string;
   text: string;
   also?: LayerId;
+  projectId?: string;
 }
 
 export interface Layer {
@@ -59,6 +60,7 @@ export const layers: Layer[] = [
     entries: [
       {
         title: 'AI smart greenhouse',
+        projectId: 'smart-greenhouse',
         when: 'Jan – May 2025',
         text: 'My final-year project. A greenhouse that runs its model on the microcontroller with STM32Cube.AI, designed and built in a team of five.',
         also: 'ml',
@@ -70,6 +72,7 @@ export const layers: Layer[] = [
       },
       {
         title: 'Autonomous 4WD car',
+        projectId: 'autonomous-car',
         when: 'Feb – Apr 2024',
         text: 'A four-wheel-drive robot that avoids obstacles and locates its target, running on a Raspberry Pi Pico.',
       },
@@ -145,6 +148,7 @@ export const layers: Layer[] = [
       },
       {
         title: 'Multi-agent extraction',
+        projectId: 'multi-agent-extraction',
         when: 'Sep 2025 – now',
         text: 'A multi-agent workflow that pulls healthcare facilities out of state licensing websites. I am filing a patent on the architecture.',
       },

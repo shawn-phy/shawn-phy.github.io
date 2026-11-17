@@ -210,7 +210,9 @@ A single long page on a 78rem wrap with a fluid gutter (clamp 1rem to 3rem). Eve
 
 Each section sets its own density. The hardware and security bands run a 4 to 8 split with the character and its clay toolkit in a sticky column, alternating sides from band to band. The ML band drops the side column for a full-width graph (48rem tall) with the character at the hub. Application notes are laid on a 12-column grid with a different composition for each project: wide figure with the table clipped over its corner, oversized title above figure and table side by side, a stock card laid over the product figure, and a centred axis with the table resting on the figure.
 
-Breakpoints are content-led: 56rem collapses the hero and the bands to one column (the character stack moves directly under the headline on a phone), 60rem stacks application notes as heading, figure, table, and 36 to 48rem turns tables into stacked blocks with ink rules between rows. The header nav hides below 56rem; the clay email button stays.
+Selected projects follow the hero, before About, layers, tools and experience. Layer entries link back to selected projects instead of repeating their summaries. The hero introduction uses the body face at lede size and 1.5 line-height, leaving the name as the expressive focal point.
+
+Breakpoints are content-led: 56rem collapses the hero and the bands to one column, 60rem stacks application notes as heading, figure, table, and 36 to 48rem turns tables into stacked blocks. The ML graph uses a two-column flow below 70rem of available container width and a single column below 40rem. Below 56rem, section links occupy a second header row. Scroll padding follows the measured header height.
 
 ## Elevation & Depth
 
@@ -250,7 +252,7 @@ Clay pills that squash when pressed.
 - **Comic panel:** cream, 3px ink border, 4px corners, a yuzu caption box with the date in the top-left corner and an ichigo Ben-Day fade from one corner. Panels tile on a 12-column comic grid with 14px gutters.
 
 ### Navigation
-A sticky cream bar 4.5rem tall whose lower edge is a fringe of cream dots instead of a rule. The name sits left in DynaPuff; section links are bold body-face pills (44px) that fill yuzu on hover; the yuzu clay email button sits right. Below 56rem only the name and the button remain.
+A sticky cream bar whose lower edge is a fringe of cream dots instead of a rule. The name sits left in DynaPuff; section links are bold body-face pills (44px) that fill yuzu on hover; the yuzu clay email button sits right. Below 56rem, Projects, Layers, Experience and Contact remain visible in a second row. The name can wrap at narrow widths.
 
 ### Datasheet Table
 The shared table construction: ink head row in the data face with cream text, body rows divided by 2px ink rules, round outer corners from the sticker around it. Dates sit in a fixed column in the data face; row titles and parameter names go bold in the body face. On narrow screens rows become stacked blocks.
@@ -265,7 +267,7 @@ Small clay electronic parts (an ichigo LED, a resistor banded in the layer colou
 A band the height of the section padding, in the previous section's colour, masked by a repeating halftone edge so the colour breaks into dots. The seam settles into place as it scrolls in.
 
 ### Character Stack and Motion
-The three clay characters (rendered in 3D, with drawn stand-ins and the supplied illustrations as fallbacks) are the page's signature. Scroll drives one story: the assembled stack, an exploded view under a dolly zoom with a manga focus-line burst and ドン！, each character falling into its band, perching on project figures, and regrouping at the close. Characters blink on irregular rhythms and turn their gaze toward the cursor; dragging the stack turns it and an elastic spring returns it to face the reader.
+The three clay characters (rendered in 3D, with drawn stand-ins and the supplied illustrations as fallbacks) are the page's signature. The hero stack separates under a dolly zoom with a manga focus-line burst and ドン！. After the hero, characters settle with one squash inside reserved project, layer and closing slots. They stay hidden between slots instead of flying across content. Hero callouts remain visible whenever they contain keyboard focus, including during the exploded view. Characters blink on irregular rhythms and turn their gaze toward the cursor; dragging the stack turns it and an elastic spring returns it to face the reader.
 
 Text effects run once, on first view, and each is tied to meaning: the hardware heading powers on like LEDs in stepped flicker, the security heading decrypts out of hex bytes, the ML heading generates token by token behind a caret, dates roll like a split-flap board, and the closing headline waves once as the characters land.
 

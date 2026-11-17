@@ -11,10 +11,9 @@ import Contact from '../components/Contact.astro';
 import { layers } from '../data/site';
 import { frontmatter as about } from '../content/about.md';
 
-// The colour each layer's halftone seam dissolves from: the section above it.
 const aboutShown = about.draft === false || import.meta.env.DEV;
 const prevOf = {
-  hardware: aboutShown ? 'var(--sakura)' : 'var(--yuzu)',
+  hardware: aboutShown ? 'var(--sakura)' : 'var(--ink)',
   security: 'var(--matcha)',
   ml: 'var(--ichigo)',
 };
@@ -24,12 +23,12 @@ const prevOf = {
   <Header />
   <main id="main" tabindex="-1">
     <Hero />
+    <Applications />
     <About />
     <div id="layers">
       {layers.map((layer, i) => <LayerBand layer={layer} flip={i % 2 === 1} prev={prevOf[layer.id]} />)}
     </div>
     <Pins />
-    <Applications />
     <History />
     <Contact />
   </main>

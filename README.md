@@ -19,9 +19,17 @@ Most text comes from `src/data/site.ts`: features, the three layers and their en
 
 The About section is yours to write, in `src/content/about.md`. While its frontmatter says `draft: true`, the section shows only on your local preview and is left out of the live site. Set `draft: false` to publish it.
 
+## CV download
+
+Save the public PDF as `public/Philip-Oyuga-CV.pdf`. The hero and Contact section
+show **Download CV (PDF)** when this file is present. Keep the private original
+outside `public/`; the public copy should omit phone numbers and referee details.
+Replace the same file to update the CV without changing its URL, then rebuild and
+deploy the site. While using `npm run dev`, refresh the page after adding the file.
+
 ## How the page moves
 
-- `src/scripts/scene.ts` draws the three clay characters in one fixed WebGL canvas. They stand in the hero, come apart into an exploded view as you scroll, drop into their own sections and regroup at the end. Each character lands on the element marked `data-slot-for` or `data-crew` in its section.
+- `src/scripts/scene.ts` draws the three clay characters in one fixed WebGL canvas. They stand in the hero and come apart into an exploded view as you scroll. After the hero, they settle inside reserved project, layer and closing slots, staying hidden between them so they never travel across headings or copy.
 - `src/scripts/app.ts` sets up smooth scrolling (Lenis), pins the hero on wide screens, and settles the halftone seams between sections.
 - `src/scripts/text-fx.ts` runs the heading effects: power-on, decrypt, generate and wave, plus the date flips.
 

@@ -110,7 +110,9 @@ const spokes = nodePos.map((p) => `M${hub.x} ${hub.y} L${p.x} ${p.y}`);
                     </td>
                     <td>
                       <h3 class="sheet__title">{entry.title}</h3>
-                      <p>{entry.text}</p>
+                      {entry.projectId ? (
+                        <p><a href={`#${entry.projectId}`}>View project details<span class="sr-only">: {entry.title}</span></a></p>
+                      ) : <p>{entry.text}</p>}
                       {entry.also && (
                         <p class={`sheet__also tone-${entry.also}`}>
                           <span class="dot" aria-hidden="true" />
@@ -171,7 +173,11 @@ const spokes = nodePos.map((p) => `M${hub.x} ${hub.y} L${p.x} ${p.y}`);
                   style={`--x:${nodePos[i].x}%;--y:${nodePos[i].y}%`}
                 >
                   <h3 class="node__title">{entry.title}</h3>
-                  <p class="node__text">{entry.text}</p>
+                  <p class="node__text">
+                    {entry.projectId ? (
+                      <a href={`#${entry.projectId}`}>View project details<span class="sr-only">: {entry.title}</span></a>
+                    ) : entry.text}
+                  </p>
                   <p class="node__foot">
                     <span class="data" data-flap>
                       {entry.when}
@@ -274,7 +280,7 @@ const spokes = nodePos.map((p) => `M${hub.x} ${hub.y} L${p.x} ${p.y}`);
   .band__host {
     grid-area: host;
     position: sticky;
-    top: 6.5rem;
+    top: calc(var(--header-height) + 2rem);
     display: grid;
     gap: 1.5rem;
     justify-items: center;
@@ -560,6 +566,57 @@ const spokes = nodePos.map((p) => `M${hub.x} ${hub.y} L${p.x} ${p.y}`);
     margin-top: 0;
   }
 
+  .band--ml .band__work {
+    container-type: inline-size;
+  }
+
+  /* The graph needs room for its fixed-width nodes; compact layouts use flow. */
+  @container (max-width: 70rem) {
+    .graph {
+      height: auto;
+    }
+
+    .graph__lines {
+      display: none;
+    }
+
+    .graph__hub {
+      position: static;
+      width: min(60%, 13rem);
+      margin: 0 auto 1.75rem;
+      translate: none;
+    }
+
+    .graph__nodes {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.2rem;
+      padding-left: 1.6rem;
+    }
+
+    .graph__nodes::before {
+      content: '';
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 4px;
+      background: radial-gradient(circle, var(--ramune-deep) 2px, transparent 2.5px) 0 0 / 4px 12px;
+    }
+
+    .node,
+    .node--lead {
+      position: static;
+      width: auto;
+      translate: none;
+    }
+  }
+
+  @container (max-width: 40rem) {
+    .graph__nodes {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
   /* Narrow screens: heading first, then the character, then a full-width toolkit,
      then the work. */
   @media (max-width: 56rem) {
@@ -594,44 +651,6 @@ const spokes = nodePos.map((p) => `M${hub.x} ${hub.y} L${p.x} ${p.y}`);
     .band--ml .band__head {
       grid-template-columns: minmax(0, 1fr);
       align-items: start;
-    }
-
-    .graph {
-      height: auto;
-    }
-
-    .graph__lines {
-      display: none;
-    }
-
-    .graph__hub {
-      position: static;
-      width: min(60%, 13rem);
-      margin: 0 auto 1.75rem;
-      translate: none;
-    }
-
-    /* On a phone the learning path runs as a dotted line down the left. */
-    .graph__nodes {
-      position: relative;
-      display: grid;
-      gap: 1.2rem;
-      padding-left: 1.6rem;
-    }
-
-    .graph__nodes::before {
-      content: '';
-      position: absolute;
-      inset: 0 auto 0 0;
-      width: 4px;
-      background: radial-gradient(circle, var(--ramune-deep) 2px, transparent 2.5px) 0 0 / 4px 12px;
-    }
-
-    .node,
-    .node--lead {
-      position: static;
-      width: auto;
-      translate: none;
     }
   }
 

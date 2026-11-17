@@ -3,8 +3,8 @@ import Arrow from './Arrow.astro';
 import { site } from '../data/site';
 
 const links = [
-  { href: '/#layers', label: 'Layers' },
   { href: '/#applications', label: 'Projects' },
+  { href: '/#layers', label: 'Layers' },
   { href: '/#history', label: 'Experience' },
   { href: '/#contact', label: 'Contact' },
 ];
@@ -27,6 +27,13 @@ const links = [
       <span class="btn__dot"><Arrow /></span>
     </a>
   </div>
+  <nav class="bar__mobile wrap" aria-label="Sections">
+    <ul>
+      {links.map((link) => (
+        <li><a href={link.href}>{link.label}</a></li>
+      ))}
+    </ul>
+  </nav>
 </header>
 
 <style>
@@ -66,7 +73,12 @@ const links = [
     gap: clamp(0.25rem, 1.2vw, 1rem);
   }
 
-  .bar__nav a {
+  .bar__mobile {
+    display: none;
+  }
+
+  .bar__nav a,
+  .bar__mobile a {
     display: inline-flex;
     align-items: center;
     min-height: 44px;
@@ -78,7 +90,8 @@ const links = [
   }
 
   @media (hover: hover) {
-    .bar__nav a:hover {
+    .bar__nav a:hover,
+    .bar__mobile a:hover {
       background: var(--yuzu);
     }
   }
@@ -92,11 +105,28 @@ const links = [
     .bar__nav {
       display: none;
     }
+
+    .bar__mobile {
+      display: block;
+      padding-bottom: 0.25rem;
+    }
+
+    .bar__mobile ul {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .bar__mobile a {
+      font-size: var(--step--1);
+      padding-inline: 0.5em;
+    }
   }
 
   @media (max-width: 30rem) {
     .bar__name {
       font-size: 1.0625rem;
+      white-space: normal;
+      line-height: 1.2;
     }
 
     .bar__cta {

@@ -3,7 +3,7 @@
 //   assembled   in the hero, stacked like a block diagram;
 //   exploded    the hero pins and the stack separates into an exploded view while the
 //               camera dolly-zooms, and the callouts follow the parts;
-//   explained   each character flies off, then drops into its own section;
+//   explained   each character settles inside a reserved project or layer slot;
 //   reassembled all three land together beside the closing email button.
 // The canvas is fixed over the page and maps CSS pixels to the z = 0 plane, so each
 // character can stand exactly where a placeholder element sits in the layout.
@@ -33,8 +33,6 @@ interface Key {
   pose: () => Pose;
   ease?: (t: number) => number;
   spin?: number; // full turns while arriving at this key
-  arc?: number; // lift, as a fraction of the viewport height
-  land?: boolean; // squash on arrival
 }
 
 export interface SceneOptions {
@@ -45,8 +43,6 @@ export interface SceneOptions {
   slots: Record<LayerId, HTMLElement | null>;
   crew: Record<LayerId, HTMLElement | null>;
   perches: Record<LayerId, HTMLElement[]>;
-  bands: Record<LayerId, HTMLElement | null>;
-  contact: HTMLElement | null;
   heroRange: () => { start: number; end: number };
   onPick: (id: LayerId) => void;
 }
@@ -74,8 +70,6 @@ const K = 0.02; // world units per CSS pixel on the z = 0 plane
 const ease = {
   inOut: gsap.parseEase('power2.inOut'),
   in: gsap.parseEase('power3.in'),
-  fall: gsap.parseEase('power2.in'),
-  none: (t: number) => t,
 };
 
 const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
@@ -285,11 +279,10 @@ export function mountScene(o: SceneOptions): boolean {
   const spin = { v: 0 }; // drag rotation of the assembled stack
   const intro = {} as Record<LayerId, { y: number }>;
   const gaze = {} as Record<LayerId, { x: number; y: number }>;
-  const landed = {} as Record<LayerId, number>;
+  const occupied = new Map<LayerId, HTMLElement>();
   for (const id of IDS) {
     intro[id] = { y: 0 };
     gaze[id] = { x: 0, y: 0 };
-    landed[id] = -1;
   }
   const pointer = { x: -1, y: -1, active: false };
   let W = window.innerWidth;
@@ -347,10 +340,9 @@ export function mountScene(o: SceneOptions): boolean {
 
   const above = (id: LayerId, p: Pose): Pose => ({ ...p, y: -SIZE[id].h * p.s - 90 });
 
-  function keys(id: LayerId, sy: number): Key[] {
+  function keys(id: LayerId): Key[] {
     const { start: A, end: C } = o.heroRange();
     const B = A + (C - A) * 0.5;
-    const docTop = (el: HTMLElement) => el.getBoundingClientRect().top + sy;
     const list: Key[] = [
       { at: A, pose: () => stackPose(id, 0) },
       { at: B, pose: () => stackPose(id, 1), ease: ease.inOut },
@@ -364,33 +356,33 @@ export function mountScene(o: SceneOptions): boolean {
         spin: 1,
       },
     ];
-    // Stations in page order: its own band, any project figures it perches on, then
-    // the closing reunion. It drops into each from above, and rides each one out of
-    // view as the page scrolls on.
-    const stations: { el: HTMLElement; land: number }[] = [];
-    const band = o.bands[id];
-    const slot = o.slots[id];
-    if (band && slot) stations.push({ el: slot, land: docTop(band) - H * 0.28 });
-    for (const el of o.perches[id]) stations.push({ el, land: docTop(el) - H * 0.62 });
-    const crewEl = o.crew[id];
-    if (o.contact && crewEl) {
-      stations.push({ el: crewEl, land: docTop(o.contact) - H * 0.32 + IDS.indexOf(id) * H * 0.05 });
-    }
-    let held: (() => Pose) | null = null;
-    for (const st of stations) {
-      if (held) list.push({ at: st.land - H * 0.56, pose: held, ease: ease.none });
-      list.push({ at: st.land - H * 0.55, pose: () => above(id, slotPose(id, st.el)), ease: ease.none });
-      list.push({ at: st.land, pose: () => slotPose(id, st.el), ease: ease.fall, land: true });
-      held = () => slotPose(id, st.el);
-    }
-    for (let i = 1; i < list.length; i++) {
-      if (list[i].at <= list[i - 1].at) list[i].at = list[i - 1].at + 1;
-    }
     return list;
   }
 
   function evaluate(id: LayerId, sy: number): Pose {
-    const list = keys(id, sy);
+    if (sy >= o.heroRange().end) {
+      // Pick a reserved slot currently in view, without travelling across copy.
+      // This also works when project sections are moved ahead of the layer bands.
+      const headerBottom = document.querySelector('header.bar')?.getBoundingClientRect().bottom ?? 0;
+      const candidates = [...o.perches[id], o.slots[id], o.crew[id]]
+        .filter((el): el is HTMLElement => !!el)
+        .map((el) => ({ el, rect: el.getBoundingClientRect() }))
+        .filter(({ rect }) => rect.bottom > headerBottom && rect.top < H)
+        .sort((a, b) => Math.abs(a.rect.top + a.rect.height / 2 - H / 2) - Math.abs(b.rect.top + b.rect.height / 2 - H / 2));
+      const target = candidates[0]?.el;
+      if (!target) {
+        occupied.delete(id);
+        return { x: 0, y: 0, s: 0, ry: 0, rx: 0 };
+      }
+      if (occupied.get(id) !== target) {
+        occupied.set(id, target);
+        pop(id);
+      }
+      return slotPose(id, target);
+    }
+
+    occupied.delete(id);
+    const list = keys(id);
     let k = -1;
     for (let i = 0; i < list.length; i++) if (list[i].at <= sy) k = i;
     if (k < 0) return list[0].pose();
@@ -403,19 +395,11 @@ export function mountScene(o: SceneOptions): boolean {
     const pb = b.pose();
     const pose: Pose = {
       x: lerp(pa.x, pb.x, te),
-      y: lerp(pa.y, pb.y, te) - (b.arc ?? 0) * Math.sin(Math.PI * t) * H,
+      y: lerp(pa.y, pb.y, te),
       s: lerp(pa.s, pb.s, te),
       ry: lerp(pa.ry, pb.ry, te) + (b.spin ?? 0) * Math.PI * 2 * te,
       rx: lerp(pa.rx, pb.rx, te),
     };
-    if (b.land) {
-      if (t > 0.985 && landed[id] !== k) {
-        landed[id] = k;
-        pop(id);
-      } else if (t < 0.85 && landed[id] === k) {
-        landed[id] = -1;
-      }
-    }
     return pose;
   }
 
@@ -548,6 +532,8 @@ export function mountScene(o: SceneOptions): boolean {
       const p = evaluate(id, sy);
       current[id] = p;
       const rig = rigs[id];
+      rig.root.visible = p.s > 0;
+      if (!rig.root.visible) continue;
       const h = SIZE[id].h * p.s;
       // Characters turn a little to look at the cursor.
       const g = gaze[id];

@@ -17,22 +17,20 @@ const alts: Record<string, string> = {
 // The figure is drawn at 70% scale in the middle of a 320 × 220 stage.
 const toStage = ([x, y]: [number, number]) => [48 + 0.7 * x, 33 + 0.7 * y];
 
-// After explaining its layer, a 3D character drops onto the printed figure of a
-// project it built: the chip onto the car, the ML character onto the agents and the
-// greenhouse. Each perch marks where it stands on the plate.
+// Reserved spaces keep the characters inside the project figures.
 const perches: Record<string, string> = { agents: 'ml', car: 'hardware', greenhouse: 'ml' };
 ---
 
 <section id="applications" class="apps on-ink" aria-labelledby="apps-title">
-  <div class="seam" aria-hidden="true" style="--prev: var(--stock)"></div>
+  <div class="seam" aria-hidden="true" style="--prev: var(--yuzu)"></div>
   <div class="wrap">
-    <h2 id="apps-title" class="h-section"><BopText text="Typical applications" /></h2>
-    <p class="lede apps__lede">Four builds that show the range in depth, each documented like a part.</p>
+    <h2 id="apps-title" class="h-section"><BopText text="Selected projects" /></h2>
+    <p class="lede apps__lede">Multi-agent extraction, autonomous robotics, construction software and embedded AI.</p>
 
     <div class="notes">
       {
         flagships.map((f, i) => (
-          <article class={`note note--${i} tone-${f.tone}`} aria-labelledby={`note-${f.id}`}>
+          <article id={f.id} class={`note note--${i} tone-${f.tone}`} aria-labelledby={`note-${f.id}`}>
             <figure class="sticker plate">
               <div class="plate__stage">
                 {perches[f.figure] && <span class="perch" data-perch-for={perches[f.figure]} aria-hidden="true" />}
