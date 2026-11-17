@@ -1,0 +1,33 @@
+Use case: illustration-story
+Asset type: production illustration for an existing Astro engineering portfolio.
+
+Pop-art print illustration for a personal engineering portfolio, like a panel from a 1960s comic or a vintage toy catalogue, with kawaii character design. Technical subject, playful treatment.
+
+Line: one uniform, thick, warm-black outline (#17130F) around every shape, the same weight everywhere, about 2.5% of the canvas width. Rounded joins and caps. No sketchy, doubled, tapered or broken lines.
+
+Colour: flat fills taken strictly from this palette and nothing else:
+- warm black #17130F (outlines, eyes, mouths)
+- off-white #FFFBF0 (highlights, pins, paper)
+- yuzu yellow #FFD23F
+- matcha green #6FD08C
+- strawberry pink #FF6B9A
+- ramune blue #5CC8F5
+- blush pink #FF8FB0 (cheeks only)
+Shading is printed, never painted: shadows are Ben-Day halftone dots in warm black (#17130F) on the shape's own colour, in a regular grid whose dots grow toward the shadow side. No gradients, glow, gloss, noise or soft airbrushed shading.
+
+Faces: two solid oval eyes, each with one small round off-white glint in the upper right; two flat blush ovals; a small simple mouth. The face is placed low on the body. Eyes and blush are the same size and spacing in every character.
+
+Light: a single light source from the upper left for every object.
+
+Composition: one subject, centred, three-quarter front view, filling about 75% of the canvas. Fully transparent background. A small flat warm-black contact shadow directly below, offset slightly down and to the right. Nothing cropped by the canvas edge.
+
+Do not include: text, letters, numbers, logos, watermarks or signatures; extra limbs, fingers or eyes; sparkles, stars, hearts, confetti or floating particles unless asked for below; photographic or 3D-rendered surfaces; lens blur, bokeh, depth of field or vignettes; background scenery; drop shadows other than the contact shadow.
+
+Subject:
+A cheerful microchip character. Its body is a rounded-square chip in matcha green #6FD08C with four short off-white pins on each side, standing on two short warm-black legs with small rounded feet. A tiny off-white dot sits in the top-left corner of the chip, like the pin-1 marker on a real IC. Happy, slightly proud expression with a closed-curve smile.
+
+Production constraints:
+Canvas: exactly 1024 x 1024 pixels, PNG with real alpha. Exactly four discrete pins on the LEFT edge and four on the RIGHT edge (eight pins total), all separately readable; no other pins. Exactly two short legs and feet. Keep the pin-1 marker OFF-WHITE. Crisp, deliberately authored print geometry. Make this the master style reference for a cohesive seven-image set.
+
+Print finish: mechanically clean silhouettes and smooth curves; strictly flat solid fills with NO gradients or glossy edge highlights. Shadows only use precise separate circular Ben-Day dots on a regular grid, clipped inside the object. No hand-drawn wobble, scratch texture, random stipple, flecks, sparkles, pseudo-text or additional ornament. Outside the subject and its small flat contact shadow every pixel is fully transparent. Preserve crisp alpha edges without a white or grey matte. Reference images, when supplied, establish style only and must never appear as an additional subject.
+REVISION — THE PROVIDED IMAGE IS THE EDIT TARGET. Preserve the chip identity, all eight pins (four each side), exactly two feet, pin marker, face layout and contact shadow. Remove EVERY bit of painterly texture, colour variation, gradient and paper grain. Render a mathematically flat digital spot-colour illustration. Large green areas must be a single solid #6FD08C colour; ink a single solid #17130F; cream a single solid #FFFBF0; cheeks a single solid #FF8FB0. Interior colours must be fully opaque. No highlights except the pin marker and eye glints. Rebuild the halftone as circular dots whose centres sit on one perfectly regular orthogonal grid with fixed spacing; vary diameter only, not centre position. Keep this as deliberately clean digital vector-like print artwork. No irregular dot scatter. Exact 1024 x 1024 PNG canvas, transparent background.

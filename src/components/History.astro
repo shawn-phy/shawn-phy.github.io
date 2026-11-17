@@ -1,0 +1,283 @@
+---
+import BopText from './BopText.astro';
+import Charm from './Charm.astro';
+import { revisions, medals, education, certificates, interests } from '../data/site';
+---
+
+<section id="history" class="history" aria-labelledby="history-title">
+  <div class="seam" aria-hidden="true" style="--prev: var(--ink)"></div>
+  <div class="wrap">
+    <h2 id="history-title" class="h-section"><BopText text="Experience" /></h2>
+    <p class="lede history__lede">Roles so far, logged like a datasheet's revision history. Newest first.</p>
+
+    <div class="sticker revs">
+      <Charm kind="led" class="revs__charm" />
+      <table class="table">
+      <caption class="sr-only">Revision history: roles, newest first</caption>
+      <thead>
+        <tr>
+          <th scope="col">Rev</th>
+          <th scope="col">Dates</th>
+          <th scope="col">Role</th>
+          <th scope="col">What changed</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          revisions.map((r) => (
+            <tr>
+              <td class="revs__rev" data-label="Rev">
+                <span>{r.rev}</span>
+              </td>
+              <td class="data revs__when" data-label="Dates" data-flap>
+                {r.when}
+              </td>
+              <th scope="row" class="revs__role">
+                {r.role}
+              </th>
+              <td class="revs__change">{r.change}</td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table></div>
+
+    <dl class="clay other">
+      <div class="other__row">
+        <dt>Awards</dt>
+        <dd>
+          <ul class="medals">
+            {
+              medals.map((m, i) => (
+                <li class={`medal tone-${m.tone}`} style={`--tilt:${[-6, 5, -3][i % 3]}deg`}>
+                  <span class="medal__place">{m.place}</span>
+                  <span>
+                    {m.title}, <span class="data">{m.detail}</span>
+                  </span>
+                </li>
+              ))
+            }
+          </ul>
+        </dd>
+      </div>
+      <div class="other__row">
+        <dt>Education</dt>
+        <dd>
+          <ul class="plain">
+            {
+              education.map((e) => (
+                <li>
+                  {e.what}, <span class="data">{e.when}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </dd>
+      </div>
+      <div class="other__row">
+        <dt>Certificates</dt>
+        <dd>
+          <ul class="plain">
+            {
+              certificates.map((c) => (
+                <li>
+                  {c.what}, <span class="data">{c.when}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </dd>
+      </div>
+      <div class="other__row">
+        <dt>Off the clock</dt>
+        <dd>
+          <ul class="interests">
+            {interests.map((item) => <li>{item}</li>)}
+          </ul>
+        </dd>
+      </div>
+    </dl>
+  </div>
+</section>
+
+<style>
+  .history {
+    padding-block: var(--band-pad);
+    background-color: var(--stock);
+    background-image: repeating-linear-gradient(
+      0deg,
+      transparent 0 38px,
+      var(--yuzu-soft) 38px 40px
+    );
+  }
+
+  .history__lede {
+    margin-top: 1rem;
+  }
+
+  .revs {
+    margin-top: clamp(2.5rem, 5vw, 3.5rem);
+  }
+
+  .revs :global(.revs__charm) {
+    top: -2.9rem;
+    left: 3rem;
+    rotate: -12deg;
+  }
+
+  .revs__rev {
+    width: 4.5rem;
+  }
+
+  .revs__rev span {
+    display: inline-grid;
+    place-items: center;
+    width: 2.2rem;
+    height: 2.2rem;
+    font: 700 1.1rem / 1 var(--font-display);
+    background: var(--yuzu);
+    border: var(--line) solid var(--ink);
+    border-radius: 50%;
+  }
+
+  .revs__when {
+    width: 12rem;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .revs__role {
+    width: 30%;
+    font-weight: 900;
+  }
+
+  .revs__change {
+    max-width: 52ch;
+  }
+
+  /* Other characteristics: one compact row each. */
+  .other {
+    --clay-bg: var(--stock);
+    margin-top: clamp(2rem, 4vw, 3rem);
+    padding: 0.4rem 0.6rem;
+  }
+
+  .other__row {
+    display: grid;
+    grid-template-columns: 12rem minmax(0, 1fr);
+    gap: 0.5rem 1.5rem;
+    align-items: baseline;
+    padding: 1rem 1.2rem;
+  }
+
+  .other__row + .other__row {
+    border-top: 2px dashed color-mix(in oklab, var(--stock), var(--ink) 22%);
+  }
+
+  .other dt {
+    font: 700 var(--step-1) / 1.2 var(--font-display);
+  }
+
+  .other dd {
+    margin: 0;
+  }
+
+  .plain {
+    display: grid;
+    gap: 0.25rem;
+  }
+
+  .medals {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.5rem;
+  }
+
+  .medal {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-weight: 700;
+  }
+
+  .medal__place {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 2.8rem;
+    height: 2.8rem;
+    font: 700 0.95rem / 1 var(--font-display);
+    background: var(--tone);
+    border: var(--line) solid var(--ink);
+    border-radius: 50%;
+    rotate: var(--tilt);
+  }
+
+  .interests {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+  }
+
+  .interests li {
+    padding: 0.2em 0.85em;
+    font-weight: 700;
+    background: var(--yuzu);
+    border: 2px solid var(--ink);
+    border-radius: 999px;
+  }
+
+  .interests li:nth-child(3n + 2) {
+    background: var(--matcha);
+  }
+
+  .interests li:nth-child(3n) {
+    background: var(--ramune);
+  }
+
+  /* On narrow screens each revision becomes a stacked block. */
+  @media (max-width: 48rem) {
+    .revs thead {
+      display: none;
+    }
+
+    .revs table,
+    .revs tbody,
+    .revs tr {
+      display: block;
+    }
+
+    .revs tr {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 0.3rem 0.9rem;
+      align-items: center;
+      padding: 1rem 1.1rem;
+    }
+
+    .revs tr + tr {
+      border-top: 2px solid var(--ink);
+    }
+
+    .revs tbody td,
+    .revs tbody th {
+      display: block;
+      width: auto;
+      padding: 0;
+      border-top: 0;
+    }
+
+    .revs__rev {
+      grid-row: span 3;
+      align-self: start;
+    }
+
+    .revs__when {
+      white-space: normal;
+    }
+
+    .other__row {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

@@ -1,0 +1,38 @@
+---
+// An illustration slot. If src/assets/illustrations/ holds an image whose file name
+// (without extension) equals the slot id, that image is shown. Otherwise the authored
+// stand-in passed as the default slot is shown.
+interface Props {
+  id: string;
+  alt: string;
+  class?: string;
+}
+
+const { id, alt, class: className } = Astro.props;
+
+const supplied = import.meta.glob<{ default: ImageMetadata }>(
+  '../assets/illustrations/*.{png,jpg,jpeg,webp,avif}',
+  { eager: true },
+);
+const found = Object.entries(supplied).find(
+  ([path]) => path.split('/').pop()?.replace(/\.[^.]+$/, '') === id,
+);
+const image = found?.[1].default;
+---
+
+<div class:list={['slot', className]} data-slot={id}>
+  {
+    image ? (
+      <img src={image.src} width={image.width} height={image.height} alt={alt} loading="lazy" decoding="async" />
+    ) : (
+      <slot />
+    )
+  }
+</div>
+
+<style>
+  .slot :global(img) {
+    width: 100%;
+    height: auto;
+  }
+</style>

@@ -103,3 +103,19 @@ dist
 
 # TernJS port file
 .tern-port
+
+# Astro
+dist/
+.astro/
+
+# Impeccable working files (the surface brief in .impeccable/surfaces is kept)
+.impeccable/questions/
+.impeccable/review/
+.impeccable/mocks/
+
+# Local secrets must never be committed
+*.env
+.env*
+
+# The full CV lists phone numbers and referees; keep it out of the public repo
+docs/Philip Oyuga*CV.pdf

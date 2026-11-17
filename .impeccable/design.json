@@ -1,0 +1,570 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-17T12:16:39+00:00",
+  "title": "Design System: Philip Shawn Oyuga",
+  "extensions": {
+    "colorMeta": {
+      "ink": {
+        "role": "neutral",
+        "displayName": "Warm Ink",
+        "canonical": "oklch(19.0% 0.010 67.1)",
+        "tonalRamp": [
+          "#0e0a07",
+          "#27231f",
+          "#443f3a",
+          "#625d58",
+          "#847f7a",
+          "#a9a39e",
+          "#cfc9c4",
+          "#f3ede7"
+        ]
+      },
+      "stock": {
+        "role": "neutral",
+        "displayName": "Cream Stock",
+        "canonical": "oklch(98.8% 0.015 90.2)",
+        "tonalRamp": [
+          "#0e0b05",
+          "#27241c",
+          "#434037",
+          "#615d54",
+          "#848076",
+          "#a8a49a",
+          "#cecac0",
+          "#f2eee3"
+        ]
+      },
+      "yuzu": {
+        "role": "primary",
+        "displayName": "Yuzu Yellow",
+        "canonical": "oklch(87.9% 0.162 90.9)",
+        "tonalRamp": [
+          "#120a00",
+          "#2e2200",
+          "#4f3e01",
+          "#725b03",
+          "#9b7c0f",
+          "#c7a007",
+          "#f2c52c",
+          "#ffeebe"
+        ]
+      },
+      "yuzu-deep": {
+        "role": "primary",
+        "displayName": "Deep Yuzu",
+        "canonical": "oklch(81.5% 0.165 85.8)",
+        "tonalRamp": [
+          "#140900",
+          "#302100",
+          "#523c00",
+          "#765800",
+          "#a07a07",
+          "#cc9d1b",
+          "#fac124",
+          "#ffedc6"
+        ]
+      },
+      "yuzu-soft": {
+        "role": "primary",
+        "displayName": "Soft Yuzu",
+        "canonical": "oklch(95.3% 0.079 95.9)",
+        "tonalRamp": [
+          "#110a00",
+          "#2c2300",
+          "#4c3f01",
+          "#6b5d23",
+          "#8e8047",
+          "#b3a56a",
+          "#dacb8f",
+          "#feefb2"
+        ]
+      },
+      "matcha": {
+        "role": "secondary",
+        "displayName": "Matcha Green",
+        "canonical": "oklch(78.1% 0.134 151.9)",
+        "tonalRamp": [
+          "#001102",
+          "#002d11",
+          "#004e23",
+          "#007137",
+          "#319656",
+          "#5bbc7a",
+          "#82e49e",
+          "#c7ffd4"
+        ]
+      },
+      "matcha-deep": {
+        "role": "secondary",
+        "displayName": "Deep Matcha",
+        "canonical": "oklch(69.0% 0.150 151.3)",
+        "tonalRamp": [
+          "#001102",
+          "#002d10",
+          "#004e22",
+          "#007135",
+          "#1f984f",
+          "#50bf73",
+          "#79e698",
+          "#c7ffd3"
+        ]
+      },
+      "ichigo": {
+        "role": "secondary",
+        "displayName": "Ichigo Strawberry",
+        "canonical": "oklch(72.3% 0.185 3.1)",
+        "tonalRamp": [
+          "#210008",
+          "#48001f",
+          "#790038",
+          "#a91153",
+          "#d34275",
+          "#fe6a99",
+          "#fdb2c5",
+          "#ffe8ed"
+        ]
+      },
+      "ichigo-deep": {
+        "role": "secondary",
+        "displayName": "Deep Ichigo",
+        "canonical": "oklch(65.0% 0.210 5.7)",
+        "tonalRamp": [
+          "#210007",
+          "#4a001c",
+          "#780234",
+          "#ac064e",
+          "#de306d",
+          "#fe6c94",
+          "#fdb3c2",
+          "#ffe8ec"
+        ]
+      },
+      "ramune": {
+        "role": "secondary",
+        "displayName": "Ramune Blue",
+        "canonical": "oklch(78.7% 0.117 228.4)",
+        "tonalRamp": [
+          "#000e18",
+          "#002838",
+          "#00475e",
+          "#0b6786",
+          "#018db7",
+          "#44b2de",
+          "#80d8ff",
+          "#dbf3fe"
+        ]
+      },
+      "ramune-deep": {
+        "role": "secondary",
+        "displayName": "Deep Ramune",
+        "canonical": "oklch(71.4% 0.134 232.6)",
+        "tonalRamp": [
+          "#000d19",
+          "#00283a",
+          "#004661",
+          "#01668c",
+          "#0c8bbc",
+          "#32b2ea",
+          "#8ad6fe",
+          "#dcf2ff"
+        ]
+      },
+      "ramune-ground": {
+        "role": "secondary",
+        "displayName": "Ramune Ground",
+        "canonical": "oklch(95.4% 0.025 225.3)",
+        "tonalRamp": [
+          "#010d13",
+          "#16272d",
+          "#31434a",
+          "#4f6169",
+          "#71848c",
+          "#95a8b1",
+          "#baced7",
+          "#def3fc"
+        ]
+      },
+      "sakura": {
+        "role": "tertiary",
+        "displayName": "Sakura Pink",
+        "canonical": "oklch(94.1% 0.033 356.3)",
+        "tonalRamp": [
+          "#16050b",
+          "#311d24",
+          "#4e3940",
+          "#6d565e",
+          "#917881",
+          "#b79da5",
+          "#ddc2cb",
+          "#fee8ef"
+        ]
+      },
+      "sakura-deep": {
+        "role": "tertiary",
+        "displayName": "Deep Sakura",
+        "canonical": "oklch(87.4% 0.074 357.3)",
+        "tonalRamp": [
+          "#20000b",
+          "#3e1124",
+          "#5e2e40",
+          "#7f4b5e",
+          "#a56e81",
+          "#cb92a5",
+          "#f3b7cb",
+          "#fee8ee"
+        ]
+      },
+      "blush": {
+        "role": "tertiary",
+        "displayName": "Blush Pink",
+        "canonical": "oklch(77.9% 0.139 2.0)",
+        "tonalRamp": [
+          "#210009",
+          "#490020",
+          "#750c3a",
+          "#993357",
+          "#c1587a",
+          "#ea7d9e",
+          "#feb2c6",
+          "#fee8ed"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "The two pop-art extruded headlines only: hero name (ichigo extrusion) and closing headline (ramune extrusion). Cream fill, 8px ink stroke, paint-order stroke fill; 6px stroke and a shorter extrusion below 30rem."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section headings on the bouncing baseline (fixed tilt/lift pattern per letter). Lead comic panel and application-note titles."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Hero line, comic panel titles, lead ML node."
+      },
+      "title-sm": {
+        "displayName": "Title Small",
+        "purpose": "Card titles, ML node titles, History row labels, speech balloons, clay button labels."
+      },
+      "lede": {
+        "displayName": "Lede",
+        "purpose": "One claim under each section heading, max 34rem."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Reading text, 40-62ch; weights 500, 700 and 900 (row titles, parameter names)."
+      },
+      "label": {
+        "displayName": "Data",
+        "purpose": "Dates, Fig. tags, callout numbers, table head rows; tabular numerals."
+      },
+      "sfx": {
+        "displayName": "Sound Effect",
+        "purpose": "The single manga ドン！ in the hero burst: ichigo fill, 7px ink stroke, 5px ink step shadow, rotated -12deg."
+      }
+    },
+    "shadows": [
+      {
+        "name": "halftone-print",
+        "value": "radial-gradient(circle, var(--shade, var(--ink)) 2.3px, transparent 2.8px) 0 0 / 6px 6px; translate: 16px 16px; mask: linear-gradient(135deg, transparent 18%, #000 62%)",
+        "purpose": "Printed Ben-Day shadow under every sticker, on a pseudo-element at z-index -2 inside an isolated stacking context. --shade is ink on light grounds, yuzu on the ink band."
+      },
+      {
+        "name": "clay-surface",
+        "value": "inset 0 5px 6px rgb(255 255 255 / 0.75), inset 0 -10px 18px color-mix(in oklab, var(--clay-bg), var(--ink) 12%), 0 24px 40px -18px color-mix(in oklab, var(--clay-bg), var(--ink) 55%), 0 6px 10px -4px color-mix(in oklab, var(--clay-bg), var(--ink) 28%)",
+        "purpose": "Clay cards and ML nodes, over a 170deg gradient from the clay colour mixed 45% toward white."
+      },
+      {
+        "name": "clay-button",
+        "value": "inset 0 3px 2px rgb(255 255 255 / 0.75), inset 0 -5px 8px color-mix(in oklab, var(--clay-bg), var(--ink) 16%), 0 14px 22px -10px color-mix(in oklab, var(--clay-bg), var(--ink) 60%), 0 3px 5px -1px color-mix(in oklab, var(--clay-bg), var(--ink) 30%)",
+        "purpose": "Clay buttons at rest."
+      },
+      {
+        "name": "clay-button-hover",
+        "value": "inset 0 3px 2px rgb(255 255 255 / 0.75), inset 0 -5px 8px color-mix(in oklab, var(--clay-bg), var(--ink) 16%), 0 20px 28px -12px color-mix(in oklab, var(--clay-bg), var(--ink) 60%), 0 4px 6px -1px color-mix(in oklab, var(--clay-bg), var(--ink) 30%)",
+        "purpose": "Clay button lifted 3px on hover."
+      },
+      {
+        "name": "clay-button-pressed",
+        "value": "inset 0 5px 10px color-mix(in oklab, var(--clay-bg), var(--ink) 18%), 0 4px 8px -4px color-mix(in oklab, var(--clay-bg), var(--ink) 50%)",
+        "purpose": "Clay button active: pressed inward, squashed 0.97 by 0.94."
+      },
+      {
+        "name": "text-extrusion-ichigo",
+        "value": "1px 1px 0 var(--ichigo), 2px 2px 0 var(--ichigo), 3px 3px 0 var(--ichigo), 4px 4px 0 var(--ichigo), 5px 5px 0 var(--ichigo), 6px 6px 0 var(--ichigo), 7px 7px 0 var(--ink), 8px 8px 0 var(--ink)",
+        "purpose": "Hero name only."
+      },
+      {
+        "name": "text-extrusion-ramune",
+        "value": "1px 1px 0 var(--ramune), 2px 2px 0 var(--ramune), 3px 3px 0 var(--ramune), 4px 4px 0 var(--ramune), 5px 5px 0 var(--ramune), 6px 6px 0 var(--ink), 7px 7px 0 var(--ink)",
+        "purpose": "Closing headline only."
+      },
+      {
+        "name": "charm-drop",
+        "value": "drop-shadow(0 6px 6px rgb(23 19 15 / 0.22))",
+        "purpose": "Decora charms only."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Default settle for state transitions, fades and the generate text effect (expo-out family)."
+      },
+      {
+        "name": "ease-spring",
+        "value": "cubic-bezier(0.34, 1.56, 0.64, 1)",
+        "purpose": "Short overshoot for pointer feedback (button lift, callout nudge, pin probe, letter squish) and the closing wave."
+      },
+      {
+        "name": "landing-fall",
+        "value": "gsap power2.in",
+        "purpose": "The fall into a landing (characters into bands; name letters, 0.34s)."
+      },
+      {
+        "name": "landing-squash",
+        "value": "scale 1.12 / 0.85 over 0.07-0.09s power2.out, then back to 1 over 0.5-0.6s expo.out",
+        "purpose": "The single squash that ends every landing."
+      },
+      {
+        "name": "scene-transition",
+        "value": "gsap power2.inOut",
+        "purpose": "Stack explode and dolly zoom (camera fov 30 to 50) between scroll beats."
+      },
+      {
+        "name": "drag-spring-back",
+        "value": "gsap elastic.out(1, 0.42), 1.6s",
+        "purpose": "The only elastic: the dragged stack springs back to face the reader."
+      },
+      {
+        "name": "blink",
+        "value": "eyes scaleY to 0.12 in 0.07s power1.in, back in 0.12s power1.out, on irregular intervals",
+        "purpose": "Character life instead of idle sway."
+      },
+      {
+        "name": "seam-settle",
+        "value": "--seam-shift -45% to 0%, scrubbed, top bottom to top 40%",
+        "purpose": "Halftone seams settle as they arrive."
+      },
+      {
+        "name": "smooth-scroll",
+        "value": "Lenis lerp 0.1, wheelMultiplier 0.9; anchor scroll 1.5s",
+        "purpose": "Smooth scrolling, off under reduced motion."
+      },
+      {
+        "name": "text-power",
+        "value": "340ms steps(6, end), 42ms stagger, opacity 0.18-1-0.35-1",
+        "purpose": "Hardware heading switches on like LEDs."
+      },
+      {
+        "name": "text-decrypt",
+        "value": "42ms ticks, hex glyphs 0-F, one letter solved every two ticks",
+        "purpose": "Security heading resolves out of a memory dump."
+      },
+      {
+        "name": "text-generate",
+        "value": "token chunks of 2-4 letters every 85ms, 220ms rise of 6px, behind a caret",
+        "purpose": "ML heading arrives token by token."
+      },
+      {
+        "name": "text-flap",
+        "value": "45ms ticks, digits roll before settling left to right",
+        "purpose": "Dates roll like a split-flap board."
+      },
+      {
+        "name": "text-wave",
+        "value": "620ms ease-spring, 30ms stagger, lift -0.28em",
+        "purpose": "Closing headline waves once as the characters land."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "phone",
+        "value": "30rem"
+      },
+      {
+        "name": "table-stack",
+        "value": "36rem"
+      },
+      {
+        "name": "history-stack",
+        "value": "48rem"
+      },
+      {
+        "name": "pins-compact",
+        "value": "52rem"
+      },
+      {
+        "name": "single-column",
+        "value": "56rem"
+      },
+      {
+        "name": "notes-stack",
+        "value": "60rem"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Clay Button",
+      "kind": "button",
+      "refersTo": "button-clay",
+      "description": "Cream clay pill with an ink arrow dot; the primary call to email Philip.",
+      "html": "<a class=\"ds-btn\" href=\"#\">Email Philip <span class=\"ds-btn__dot\"><svg viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3 8h10M9 4l4 4-4 4\"/></svg></span></a>",
+      "css": ".ds-btn{--clay-bg:var(--stock,#fffbf0);display:inline-flex;align-items:center;gap:.6em;min-height:48px;padding:.6em .65em .6em 1.3em;font:700 1.0625rem/1 'DynaPuff Variable',ui-rounded,sans-serif;color:var(--ink,#17130f);text-decoration:none;border:0;border-radius:999px;background:linear-gradient(180deg,color-mix(in oklab,var(--clay-bg),white 40%),var(--clay-bg) 55%);box-shadow:inset 0 3px 2px rgb(255 255 255/.75),inset 0 -5px 8px color-mix(in oklab,var(--clay-bg),#17130f 16%),0 14px 22px -10px color-mix(in oklab,var(--clay-bg),#17130f 60%),0 3px 5px -1px color-mix(in oklab,var(--clay-bg),#17130f 30%);transition:translate 260ms cubic-bezier(.34,1.56,.64,1),scale 260ms cubic-bezier(.34,1.56,.64,1),box-shadow 200ms cubic-bezier(.16,1,.3,1)}.ds-btn__dot{display:grid;place-items:center;width:2em;height:2em;color:#fffbf0;background:#17130f;border-radius:50%}.ds-btn__dot svg{width:1em;height:1em;transition:translate 260ms cubic-bezier(.34,1.56,.64,1)}.ds-btn:hover{translate:0 -3px;box-shadow:inset 0 3px 2px rgb(255 255 255/.75),inset 0 -5px 8px color-mix(in oklab,var(--clay-bg),#17130f 16%),0 20px 28px -12px color-mix(in oklab,var(--clay-bg),#17130f 60%),0 4px 6px -1px color-mix(in oklab,var(--clay-bg),#17130f 30%)}.ds-btn:hover .ds-btn__dot svg{translate:3px 0}.ds-btn:active{translate:0 2px;scale:.97 .94;box-shadow:inset 0 5px 10px color-mix(in oklab,var(--clay-bg),#17130f 18%),0 4px 8px -4px color-mix(in oklab,var(--clay-bg),#17130f 50%)}.ds-btn:focus-visible{outline:3px solid #17130f;outline-offset:4px}"
+    },
+    {
+      "name": "Yuzu Clay Button",
+      "kind": "button",
+      "refersTo": "button-clay-yuzu",
+      "description": "The header's compact clay call in yuzu.",
+      "html": "<a class=\"ds-btn-yuzu\" href=\"#\">Email Philip</a>",
+      "css": ".ds-btn-yuzu{--clay-bg:#ffd23f;display:inline-flex;align-items:center;min-height:44px;padding:.6em 1.15em;font:700 1rem/1 'DynaPuff Variable',ui-rounded,sans-serif;color:#17130f;text-decoration:none;border-radius:999px;background:linear-gradient(180deg,color-mix(in oklab,var(--clay-bg),white 40%),var(--clay-bg) 55%);box-shadow:inset 0 3px 2px rgb(255 255 255/.75),inset 0 -5px 8px color-mix(in oklab,var(--clay-bg),#17130f 16%),0 14px 22px -10px color-mix(in oklab,var(--clay-bg),#17130f 60%),0 3px 5px -1px color-mix(in oklab,var(--clay-bg),#17130f 30%);transition:translate 260ms cubic-bezier(.34,1.56,.64,1),scale 260ms cubic-bezier(.34,1.56,.64,1)}.ds-btn-yuzu:hover{translate:0 -3px}.ds-btn-yuzu:active{translate:0 2px;scale:.97 .94}.ds-btn-yuzu:focus-visible{outline:3px solid #17130f;outline-offset:4px}"
+    },
+    {
+      "name": "Header Navigation",
+      "kind": "nav",
+      "refersTo": "nav-link",
+      "description": "Sticky cream bar with a dotted fringe; pill links fill yuzu on hover.",
+      "html": "<header class=\"ds-bar\"><a class=\"ds-bar__name\" href=\"#\">Philip Shawn Oyuga</a><nav><a class=\"ds-bar__link\" href=\"#\">Layers</a><a class=\"ds-bar__link\" href=\"#\">Projects</a><a class=\"ds-bar__link\" href=\"#\">Experience</a></nav></header>",
+      "css": ".ds-bar{position:relative;display:flex;align-items:center;gap:1rem;min-height:4.5rem;padding:0 1.5rem;background:#fffbf0;color:#17130f;font:500 1.0625rem/1.6 'Zen Maru Gothic',ui-rounded,sans-serif}.ds-bar::after{content:'';position:absolute;inset:100% 0 auto;height:12px;background:radial-gradient(circle,#fffbf0 3.4px,transparent 3.9px) 0 -4px/11px 11px}.ds-bar__name{margin-right:auto;font:700 1.3125rem/1 'DynaPuff Variable',ui-rounded,sans-serif;color:inherit;text-decoration:none}.ds-bar nav{display:flex;gap:.5rem}.ds-bar__link{display:inline-flex;align-items:center;min-height:44px;padding:0 .7em;font-weight:700;color:inherit;text-decoration:none;border-radius:999px;transition:background-color 150ms cubic-bezier(.16,1,.3,1)}.ds-bar__link:hover{background:#ffd23f}.ds-bar__link:focus-visible{outline:3px solid #17130f;outline-offset:4px}"
+    },
+    {
+      "name": "Sticker Card",
+      "kind": "card",
+      "refersTo": "sticker-card",
+      "description": "Pop-art print card: ink outline, cream face, offset Ben-Day shadow on an isolated stacking context.",
+      "html": "<div class=\"ds-sticker\"><h3>Features</h3><ul><li><span class=\"ds-dot\" style=\"--dot:#6fd08c\"></span>Firmware for STM32 and Raspberry Pi Pico</li><li><span class=\"ds-dot\" style=\"--dot:#ff6b9a\"></span>Pentested a production fintech product</li><li><span class=\"ds-dot\" style=\"--dot:#5cc8f5\"></span>Patent filing on a multi-agent architecture</li></ul></div>",
+      "css": ".ds-sticker{position:relative;isolation:isolate;max-width:32rem;padding:1.1rem 1.4rem 1.3rem;color:#17130f;border:2.5px solid transparent;border-radius:26px;font:700 1.0625rem/1.35 'Zen Maru Gothic',ui-rounded,sans-serif}.ds-sticker::before,.ds-sticker::after{content:'';position:absolute;inset:-2.5px;border-radius:inherit;pointer-events:none}.ds-sticker::before{z-index:-2;translate:16px 16px;background:radial-gradient(circle,#17130f 2.3px,transparent 2.8px) 0 0/6px 6px;-webkit-mask:linear-gradient(135deg,transparent 18%,#000 62%);mask:linear-gradient(135deg,transparent 18%,#000 62%)}.ds-sticker::after{z-index:-1;background:#fffbf0;border:2.5px solid #17130f}.ds-sticker h3{margin:0 0 .6rem;font:700 1.3125rem/1.08 'DynaPuff Variable',ui-rounded,sans-serif}.ds-sticker ul{margin:0;padding:0;list-style:none;display:grid;gap:.45rem}.ds-sticker li{display:flex;align-items:baseline;gap:.7rem}.ds-dot{flex:none;width:.85em;height:.85em;background:var(--dot);border:2px solid #17130f;border-radius:50%;translate:0 .08em}"
+    },
+    {
+      "name": "Clay Card with Toolkit Chips",
+      "kind": "card",
+      "refersTo": "clay-card",
+      "description": "Soft pressed clay surface holding layer-tinted clay chips.",
+      "html": "<div class=\"ds-clay\" style=\"--tone:#ff6b9a\"><h3>Built with</h3><ul><li>Rust</li><li>Bash</li><li>Networking</li><li>Pentesting</li></ul></div>",
+      "css": ".ds-clay{--clay-bg:#fffbf0;max-width:20rem;padding:1.1rem 1.3rem 1.3rem;color:#17130f;border-radius:34px;background:linear-gradient(170deg,color-mix(in oklab,var(--clay-bg),white 45%),var(--clay-bg) 48%,color-mix(in oklab,var(--clay-bg),#17130f 4%));box-shadow:inset 0 5px 6px rgb(255 255 255/.75),inset 0 -10px 18px color-mix(in oklab,var(--clay-bg),#17130f 12%),0 24px 40px -18px color-mix(in oklab,var(--clay-bg),#17130f 55%),0 6px 10px -4px color-mix(in oklab,var(--clay-bg),#17130f 28%)}.ds-clay h3{margin:0 0 .7rem;font:700 1.3125rem/1.08 'DynaPuff Variable',ui-rounded,sans-serif}.ds-clay ul{margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:.45rem}.ds-clay li{padding:.15em .8em;font:700 1rem/1.6 'Zen Maru Gothic',ui-rounded,sans-serif;background:color-mix(in oklab,var(--tone),white 35%);border-radius:999px;box-shadow:inset 0 2px 1px rgb(255 255 255/.7),inset 0 -3px 4px color-mix(in oklab,var(--tone),#17130f 18%)}"
+    },
+    {
+      "name": "Datasheet Table",
+      "kind": "custom",
+      "refersTo": "table-head",
+      "description": "Ink head row in the data face, ruled body, round corners inside a sticker.",
+      "html": "<div class=\"ds-sheet\"><table><thead><tr><th>Parameter</th><th>Value</th></tr></thead><tbody><tr><th>Dates</th><td>Feb – Apr 2024</td></tr><tr><th>Controller</th><td>Raspberry Pi Pico</td></tr><tr><th>Drive</th><td>Four-wheel drive</td></tr></tbody></table></div>",
+      "css": ".ds-sheet{max-width:30rem;background:#fffbf0;color:#17130f;border:2.5px solid #17130f;border-radius:26px;overflow:hidden}.ds-sheet table{width:100%;border-collapse:separate;border-spacing:0;text-align:left;font:500 1.0625rem/1.6 'Zen Maru Gothic',ui-rounded,sans-serif}.ds-sheet thead th{padding:.55rem 1.3rem;font:700 .875rem/1.3 'M PLUS Code Latin Variable',ui-monospace,monospace;color:#fffbf0;background:#17130f}.ds-sheet tbody th,.ds-sheet tbody td{padding:.6rem 1.3rem;vertical-align:baseline;border-top:2px solid #17130f}.ds-sheet tbody tr:first-child th,.ds-sheet tbody tr:first-child td{border-top:0}.ds-sheet tbody th{width:36%;font-weight:900}"
+    },
+    {
+      "name": "Comic Panel",
+      "kind": "custom",
+      "refersTo": "comic-panel",
+      "description": "Security case as a comic panel: corner caption box with the date, Ben-Day corner fade, speech balloon.",
+      "html": "<div class=\"ds-panel\"><p class=\"ds-panel__cap\">2022</p><h3>National Cyberise CTF</h3><p class=\"ds-bubble\">First runner-up!</p></div>",
+      "css": ".ds-panel{position:relative;display:grid;align-content:start;gap:.55rem;max-width:26rem;min-height:13rem;padding:3.1rem 1.4rem 1.6rem;background:#fffbf0;color:#17130f;border:3px solid #17130f;border-radius:4px}.ds-panel::after{content:'';position:absolute;inset:0;background:radial-gradient(circle,#ff6b9a 2.6px,transparent 3.1px) 0 0/11px 11px;-webkit-mask:radial-gradient(circle at 100% 100%,#000,transparent 60%);mask:radial-gradient(circle at 100% 100%,#000,transparent 60%);pointer-events:none}.ds-panel>*{position:relative;z-index:1;margin:0}.ds-panel h3{font:700 clamp(1.6rem,1.25rem + 1.5vw,2.25rem)/1.08 'DynaPuff Variable',ui-rounded,sans-serif}.ds-panel__cap{position:absolute!important;z-index:2;top:0;left:0;padding:.35rem .8rem;font:700 .875rem/1.3 'M PLUS Code Latin Variable',ui-monospace,monospace;background:#ffd23f;border-right:3px solid #17130f;border-bottom:3px solid #17130f}.ds-bubble{position:relative;justify-self:start;margin-top:.4rem!important;padding:.7rem 1.3rem;font:700 1.3125rem/1.2 'DynaPuff Variable',ui-rounded,sans-serif;background:#fffbf0;border:3px solid #17130f;border-radius:50%/46%}.ds-bubble::before,.ds-bubble::after{content:'';position:absolute;width:0;height:0;border-style:solid}.ds-bubble::before{left:34%;bottom:-22px;border-width:22px 4px 0 16px;border-color:#17130f transparent transparent transparent}.ds-bubble::after{left:calc(34% + 4.5px);bottom:-14px;border-width:17px 2px 0 10px;border-color:#fffbf0 transparent transparent transparent}"
+    },
+    {
+      "name": "Fig. Tag and Numbered Callouts",
+      "kind": "chip",
+      "refersTo": "fig-tag",
+      "description": "Datasheet legend: ink Fig. N pill followed by numbered ink circles.",
+      "html": "<p class=\"ds-legend\"><span class=\"ds-fig\">Fig. 4</span><span class=\"ds-n\">1</span>Raspberry Pi Pico controller <span class=\"ds-n\">2</span>Obstacle sensing</p>",
+      "css": ".ds-legend{display:flex;flex-wrap:wrap;align-items:baseline;gap:.5rem;padding:.9rem 1.2rem 1rem;background:#fffbf0;color:#17130f;font:700 .875rem/1.4 'Zen Maru Gothic',ui-rounded,sans-serif}.ds-fig{padding:.1em .55em;font-family:'M PLUS Code Latin Variable',ui-monospace,monospace;font-variant-numeric:tabular-nums;color:#fffbf0;background:#17130f;border-radius:999px}.ds-n{display:inline-grid;place-items:center;width:1.35rem;height:1.35rem;font:700 .75rem/1 'M PLUS Code Latin Variable',ui-monospace,monospace;color:#fffbf0;background:#17130f;border-radius:50%;translate:0 .15em}"
+    },
+    {
+      "name": "Extruded Display Lettering",
+      "kind": "custom",
+      "refersTo": "display",
+      "description": "Pop-art extruded headline; reserved for the hero name and the closing headline.",
+      "html": "<h1 class=\"ds-bop\">Philip</h1>",
+      "css": ".ds-bop{margin:0;padding:.2em;font:700 clamp(2.6rem,1.1rem + 6.2vw,5.25rem)/1.14 'DynaPuff Variable',ui-rounded,sans-serif;letter-spacing:.035em;color:#fffbf0;-webkit-text-stroke:8px #17130f;paint-order:stroke fill;text-shadow:1px 1px 0 #ff6b9a,2px 2px 0 #ff6b9a,3px 3px 0 #ff6b9a,4px 4px 0 #ff6b9a,5px 5px 0 #ff6b9a,6px 6px 0 #ff6b9a,7px 7px 0 #17130f,8px 8px 0 #17130f;background:#ffd23f}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Pop-Art Toy Datasheet",
+    "overview": "The page documents one engineer the way a part is documented: features, block diagram, pinout, typical applications, revision history. Every datasheet convention survives (figure numbers, numbered callouts, parameter tables, an ink head row), but the whole sheet is printed as a 1960s pop-art toy catalogue in mochi flavours. Three clay characters, one per layer of the work (hardware, security, machine learning), carry the story: stacked, exploded, explained, regrouped.\n\nThe world is built from three materials that each keep their own job. **Pop-art print** is the documentation layer: ink-outlined stickers with Ben-Day halftone shadows, comic panels, caption boxes, speech balloons, extruded lettering. **Clay** is the touchable layer: buttons, toolkit chips, the About card, the ML graph nodes and the 3D characters, all soft pressed surfaces lit from above. **Decora** is the ornament layer: small clay electronic charms (LED, resistor, capacitor) clipped onto the edge of a card. Sections are joined by halftone seams in the colour of the section above, so a mix of materials still reads as one printed object.\n\nDensity follows meaning, not a template. Hardware is a dense table, security is a comic page, ML is a full-width hub-and-spoke graph, the flagship projects are four distinct application-note compositions, experience is a revision table. Motion is physical and deliberate: things fall, land, squash once and settle. The build rejects the dark terminal portfolio, the card grid with tag pills, the neobrutalist block-shadow look and decorative motion with no meaning.",
+    "keyCharacteristics": [
+      "Mochi palette at page scale: every band is a full-bleed ground in one flavour, patterned in its own dots or traces.",
+      "One warm ink (#17130f) for every outline, rule, table head and number; never pure black.",
+      "Three materials with separate jobs: print documents, clay is touched, decora decorates.",
+      "Datasheet devices (Fig. N tags, numbered callouts, parameter tables) structure every piece of proof.",
+      "One scroll story with 3D clay characters; every landing is a fall and a single squash."
+    ],
+    "rules": [
+      {
+        "name": "The One Flavour Per Layer Rule",
+        "body": "Hardware is matcha, security is ichigo, ML is ramune, and the tone travels with the work: a dot, a pin, a plate or a toolkit chip in a layer's colour means that layer, everywhere on the page. Yuzu belongs to Philip as a whole, never to one layer.",
+        "section": "colors"
+      },
+      {
+        "name": "The Warm Ink Rule",
+        "body": "Every line, rule, outline and dark ground is ink (#17130f). Pure black and grey borders do not exist in this world.",
+        "section": "colors"
+      },
+      {
+        "name": "The Seam Rule",
+        "body": "Two sections never meet at a hard edge. The upper section's colour dissolves into the next through a halftone seam, and the seam is always in the previous section's colour.",
+        "section": "colors"
+      },
+      {
+        "name": "The Bouncing Baseline Rule",
+        "body": "Section headings are set letter by letter on a fixed tilt and lift pattern (about ±3deg, ±3px), so the display voice wobbles like printed toy lettering while staying still. The pattern is fixed, never random.",
+        "section": "typography"
+      },
+      {
+        "name": "The Two Extrusions Rule",
+        "body": "Pop-art extrusion (cream fill, 8px ink stroke, a six-step stepped shadow in a layer colour finished with two ink steps) is used on exactly two headlines: the hero name in ichigo and the closing headline in ramune. Every other heading is flat ink.",
+        "section": "typography"
+      },
+      {
+        "name": "The Data Face Rule",
+        "body": "If it is a date, a number, a figure index or a table head, it is set in M PLUS Code with tabular numerals. Prose never uses the data face.",
+        "section": "typography"
+      },
+      {
+        "name": "The Printed Shadow Rule",
+        "body": "A documentation surface's shadow is made of dots, never a solid block. The offset dot field is the pop-art version of the datasheet card; a solid offset slab is the neobrutalist look this world replaced.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Clay Is Touchable Rule",
+        "body": "Soft light and squash belong to clay: things you press (buttons), things you read as objects (toolkit, About card, ML nodes) and the characters. Print surfaces never get gradients or soft drops.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Fall And Squash Rule",
+        "body": "Every landing is a fall on an accelerating curve followed by exactly one squash (about 1.12 by 0.85) that settles on expo-out. No bounce series, no idle sway, no left-right wobble.",
+        "section": "components"
+      },
+      {
+        "name": "The Elastic Is For Drag Rule",
+        "body": "Elastic easing appears only on the stack's drag spring-back. Pointer feedback (button lift, callout nudge, pin probe, letter squish) and the closing wave use the shorter overshoot spring; everything else settles on expo-out.",
+        "section": "components"
+      },
+      {
+        "name": "The Rest Rule",
+        "body": "Under reduced motion nothing moves: no smooth scrolling, no 3D scene, no text effects. The drawn characters and every final state are shown at rest.",
+        "section": "components"
+      }
+    ],
+    "dos": [
+      "Do give every section a full-bleed flavour ground with its own pattern, and join it to the previous section with a halftone seam in the previous section's colour.",
+      "Do mark layer membership with the layer's flavour (matcha hardware, ichigo security, ramune ML) on a dot, chip, pin or plate.",
+      "Do outline print surfaces in a single ink line (2.5px) and shade them with offset Ben-Day dots.",
+      "Do keep clay for what is pressed or held: buttons, toolkit chips, cards read as objects, nodes and characters.",
+      "Do document proof with datasheet devices: Fig. N pills, numbered callouts, parameter tables with an ink head row.",
+      "Do set dates, figure numbers and values in the data face with tabular numerals.",
+      "Do let each section choose its own density and composition when its subject calls for it.",
+      "Do tie every animation to an intention: a fall and one squash for landings, a text effect for what the words mean."
+    ],
+    "donts": [
+      "Don't use solid offset block shadows; the dotted print shadow is the only cast shadow on print surfaces.",
+      "Don't use pure black or grey for lines and dark grounds; ink (#17130f) is the only dark.",
+      "Don't extrude any headline other than the hero name and the closing headline.",
+      "Don't use Mochiy Pop One for anything but the manga sound effect.",
+      "Don't add idle sway, looping wobble or bounce series to characters or type.",
+      "Don't use elastic easing outside the drag spring-back.",
+      "Don't set proof as a uniform card grid with tag pills.",
+      "Don't put labels above headings; a section opens with its heading and one lede."
+    ]
+  }
+}

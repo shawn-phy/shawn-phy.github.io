@@ -1,0 +1,659 @@
+---
+// One layer of the work. Each layer is set at the density its subject has:
+// hardware as a dense datasheet table, security as a comic page of cases,
+// machine learning as a graph with the ML character as its hub.
+import Character from './Character.astro';
+import Slot from './Slot.astro';
+import BopText from './BopText.astro';
+import Charm from './Charm.astro';
+import { layerNames, type Layer } from '../data/site';
+
+interface Props {
+  layer: Layer;
+  flip?: boolean;
+  prev: string;
+}
+
+const { layer, flip = false, prev } = Astro.props;
+const fx = { hardware: 'power', security: 'decrypt', ml: 'generate' }[layer.id];
+const isMl = layer.id === 'ml';
+
+// ML graph, in percent of the graph box. The hub is where the ML character stands;
+// spokes join it to every project, and a dotted learning path runs through the
+// projects in time order, oldest first.
+const hub = { x: 13, y: 50 };
+const nodePos = [
+  { x: 84, y: 16 },
+  { x: 58, y: 47 },
+  { x: 85, y: 80 },
+  { x: 35, y: 20 },
+  { x: 37, y: 83 },
+];
+const pathOrder = [4, 3, 1, 2, 0];
+const curve = (a: { x: number; y: number }, b: { x: number; y: number }) => {
+  const my = (a.y + b.y) / 2;
+  return `C${a.x} ${my} ${b.x} ${my} ${b.x} ${b.y}`;
+};
+const pathD = pathOrder
+  .map((i, k) => {
+    const p = nodePos[i];
+    return k === 0 ? `M${p.x} ${p.y}` : curve(nodePos[pathOrder[k - 1]], p);
+  })
+  .join(' ');
+const spokes = nodePos.map((p) => `M${hub.x} ${hub.y} L${p.x} ${p.y}`);
+---
+
+<section
+  id={layer.id}
+  class:list={['band', `band--${layer.id}`, `tone-${layer.id}`, { 'band--flip': flip }]}
+  aria-labelledby={`${layer.id}-title`}
+>
+  <div class="seam" aria-hidden="true" style={`--prev: ${prev}`}></div>
+  <div class="wrap band__grid">
+    <header class="band__head">
+      <div class="band__titles">
+        <h2 id={`${layer.id}-title`} class="h-section" data-fx={fx}><BopText text={layer.title} /></h2>
+        <p class="lede">{layer.claim}</p>
+      </div>
+      {
+        isMl && (
+          <div class="clay toolkit">
+            <h3 class="toolkit__title">Built with</h3>
+            <ul class="toolkit__list">
+              {layer.tools.map((tool) => (
+                <li>{tool}</li>
+              ))}
+            </ul>
+          </div>
+        )
+      }
+    </header>
+
+    {
+      !isMl && (
+        <div class="band__host">
+          <div class="band__character" data-slot-for={layer.id}>
+            <Slot id={`character-${layer.id}`} alt={`The ${layerNames[layer.id].toLowerCase()} character`}>
+              <Character layer={layer.id} />
+            </Slot>
+          </div>
+          <div class="clay toolkit">
+            <h3 class="toolkit__title">Built with</h3>
+            <ul class="toolkit__list">
+              {layer.tools.map((tool) => (
+                <li>{tool}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      )
+    }
+
+    <div class="band__work">
+      {
+        layer.id === 'hardware' && (
+          <div class="sticker sheet">
+            <Charm kind="resistor" class="sheet__charm" />
+            <table class="table">
+              <caption class="sr-only">{layer.title}: dated work, most recent first</caption>
+              <thead>
+                <tr>
+                  <th scope="col">When</th>
+                  <th scope="col">What I built</th>
+                </tr>
+              </thead>
+              <tbody>
+                {layer.entries.map((entry) => (
+                  <tr>
+                    <td class="data sheet__when" data-flap>
+                      {entry.when}
+                    </td>
+                    <td>
+                      <h3 class="sheet__title">{entry.title}</h3>
+                      <p>{entry.text}</p>
+                      {entry.also && (
+                        <p class={`sheet__also tone-${entry.also}`}>
+                          <span class="dot" aria-hidden="true" />
+                          Also {layerNames[entry.also].toLowerCase()}
+                        </p>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )
+      }
+
+      {
+        layer.id === 'security' && (
+          <ol class="comic">
+            {layer.entries.map((entry, i) => (
+              <li class={`panel panel--${i}`}>
+                <p class="panel__cap">
+                  <span class="data" data-flap>
+                    {entry.when}
+                  </span>
+                </p>
+                <h3 class="panel__title">{entry.title}</h3>
+                {entry.text === 'First runner-up.' ? (
+                  <p class="panel__bubble">First runner-up!</p>
+                ) : (
+                  <p class="panel__text">{entry.text}</p>
+                )}
+              </li>
+            ))}
+          </ol>
+        )
+      }
+
+      {
+        isMl && (
+          <div class="graph">
+            <svg class="graph__lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+              {spokes.map((d) => (
+                <path class="graph__spoke" d={d} />
+              ))}
+              <path class="graph__path" d={pathD} />
+            </svg>
+            <div class="graph__hub" style={`--x:${hub.x}%;--y:${hub.y}%`}>
+              <div class="band__character" data-slot-for={layer.id}>
+                <Slot id={`character-${layer.id}`} alt={`The ${layerNames[layer.id].toLowerCase()} character`}>
+                  <Character layer={layer.id} />
+                </Slot>
+              </div>
+            </div>
+            <ol class="graph__nodes">
+              {layer.entries.map((entry, i) => (
+                <li
+                  class:list={['clay', 'node', { 'node--lead': entry.title === 'Multi-agent extraction' }]}
+                  style={`--x:${nodePos[i].x}%;--y:${nodePos[i].y}%`}
+                >
+                  <h3 class="node__title">{entry.title}</h3>
+                  <p class="node__text">{entry.text}</p>
+                  <p class="node__foot">
+                    <span class="data" data-flap>
+                      {entry.when}
+                    </span>
+                    {entry.also && (
+                      <span class={`node__also tone-${entry.also}`}>
+                        <span class="dot" aria-hidden="true" />
+                        Also {layerNames[entry.also].toLowerCase()}
+                      </span>
+                    )}
+                  </p>
+                </li>
+              ))}
+            </ol>
+          </div>
+        )
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .band {
+    padding-block: var(--band-pad);
+    background-color: var(--tone);
+  }
+
+  /* Each layer wears its own ground: circuit traces, Ben-Day dots, a field of nodes. */
+  .band--hardware {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='none' stroke='%2345b56a' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M0 30h30l20 20h30l20-20h20'/%3E%3Cpath d='M60 0v20l-10 10'/%3E%3Cpath d='M0 90h20l15-15h25v45'/%3E%3Cpath d='M120 90h-25l-15 15'/%3E%3C/g%3E%3Cg fill='%2345b56a'%3E%3Ccircle cx='50' cy='30' r='7'/%3E%3Ccircle cx='80' cy='50' r='7'/%3E%3Ccircle cx='35' cy='75' r='7'/%3E%3Ccircle cx='80' cy='105' r='7'/%3E%3C/g%3E%3Cg fill='%236fd08c'%3E%3Ccircle cx='50' cy='30' r='3'/%3E%3Ccircle cx='80' cy='50' r='3'/%3E%3Ccircle cx='35' cy='75' r='3'/%3E%3Ccircle cx='80' cy='105' r='3'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 120px 120px;
+  }
+
+  .band--security {
+    background-image: radial-gradient(circle, var(--ichigo-deep) 3px, transparent 3.5px);
+    background-size: 16px 16px;
+  }
+
+  .band--ml {
+    background-color: #dff4fd;
+    background-image: radial-gradient(circle, #b9e6fa 2px, transparent 2.5px);
+    background-size: 30px 30px;
+  }
+
+  /* Hardware and security: the character rides beside the work in its own column. */
+  .band__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+    grid-template-areas:
+      'host head'
+      'host work';
+    gap: 1.1rem clamp(1.5rem, 5vw, 5rem);
+    align-items: start;
+  }
+
+  .band--flip .band__grid {
+    grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
+    grid-template-areas:
+      'head host'
+      'work host';
+  }
+
+  .band--ml .band__grid {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      'head'
+      'work';
+  }
+
+  .band__head {
+    grid-area: head;
+  }
+
+  .band__titles {
+    display: grid;
+    gap: 1.1rem;
+  }
+
+  .band__titles .lede {
+    font-weight: 700;
+  }
+
+  /* The ML heading shares its row with the toolkit, leaving the graph to the hub. */
+  .band--ml .band__head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 22rem);
+    gap: 1.5rem clamp(1.5rem, 5vw, 5rem);
+    align-items: end;
+  }
+
+  .band--ml .band__head .toolkit {
+    width: 100%;
+  }
+
+  .band__work {
+    grid-area: work;
+    margin-top: 0.9rem;
+  }
+
+  .band__host {
+    grid-area: host;
+    position: sticky;
+    top: 6.5rem;
+    display: grid;
+    gap: 1.5rem;
+    justify-items: center;
+  }
+
+  .band__character {
+    width: min(100%, 17rem);
+  }
+
+  .toolkit {
+    --clay-bg: var(--stock);
+    width: min(100%, 20rem);
+    padding: 1.1rem 1.3rem 1.3rem;
+  }
+
+  .toolkit__title {
+    margin-bottom: 0.7rem;
+    font-size: var(--step-1);
+  }
+
+  .toolkit__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+
+  .toolkit__list li {
+    padding: 0.15em 0.8em;
+    font-weight: 700;
+    white-space: nowrap;
+    background: color-mix(in oklab, var(--tone), white 35%);
+    border-radius: 999px;
+    box-shadow:
+      inset 0 2px 1px rgb(255 255 255 / 0.7),
+      inset 0 -3px 4px color-mix(in oklab, var(--tone), var(--ink) 18%);
+  }
+
+  /* Hardware: the dense datasheet table, with a resistor clipped to its edge. */
+  .sheet :global(.sheet__charm) {
+    top: -1.1rem;
+    right: 2.5rem;
+    rotate: 7deg;
+  }
+
+  .sheet__when {
+    width: 12.5rem;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .sheet__title {
+    font: 900 var(--step-0) / 1.3 var(--font-body);
+    letter-spacing: 0;
+  }
+
+  .sheet td p {
+    max-width: 62ch;
+  }
+
+  .sheet__also,
+  .node__also {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.3rem;
+    font-size: var(--step--1);
+    font-weight: 700;
+  }
+
+  /* Security: a comic page, one case per panel. */
+  .comic {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-areas:
+      'a a a a a a a b b b b b'
+      'c c c c c d d d d d d d';
+    gap: 14px;
+  }
+
+  .panel {
+    position: relative;
+    display: grid;
+    align-content: start;
+    gap: 0.55rem;
+    min-height: 13rem;
+    padding: 3.1rem 1.4rem 1.6rem;
+    background: var(--stock);
+    border: 3px solid var(--ink);
+    border-radius: 4px;
+  }
+
+  .panel--0 {
+    grid-area: a;
+    min-height: 17rem;
+  }
+
+  .panel--1 {
+    grid-area: b;
+  }
+
+  .panel--2 {
+    grid-area: c;
+  }
+
+  .panel--3 {
+    grid-area: d;
+  }
+
+  /* Ben-Day dots fading out of one corner of each panel. */
+  .panel::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: radial-gradient(circle, var(--ichigo) 2.6px, transparent 3.1px) 0 0 / 11px 11px;
+    -webkit-mask: radial-gradient(circle at 100% 100%, #000, transparent 60%);
+    mask: radial-gradient(circle at 100% 100%, #000, transparent 60%);
+    pointer-events: none;
+  }
+
+  .panel--1::after,
+  .panel--2::after {
+    -webkit-mask: radial-gradient(circle at 0 100%, #000, transparent 60%);
+    mask: radial-gradient(circle at 0 100%, #000, transparent 60%);
+  }
+
+  .panel > :not(.panel__cap) {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* The caption box sits in the panel's corner, sharing its outer borders. */
+  .panel__cap {
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    padding: 0.35rem 0.8rem;
+    font-weight: 700;
+    background: var(--yuzu);
+    border-right: 3px solid var(--ink);
+    border-bottom: 3px solid var(--ink);
+  }
+
+  .panel__title {
+    font-size: var(--step-2);
+  }
+
+  .panel--0 .panel__title {
+    font-size: var(--step-3);
+  }
+
+  .panel__text {
+    max-width: 40ch;
+    font-weight: 700;
+  }
+
+  /* A speech balloon with a proper tail, drawn as two stacked triangles. */
+  .panel__bubble {
+    position: relative;
+    justify-self: start;
+    margin-top: 0.4rem;
+    padding: 0.7rem 1.3rem;
+    font: 700 var(--step-1) / 1.2 var(--font-display);
+    background: var(--stock);
+    border: 3px solid var(--ink);
+    border-radius: 50% / 46%;
+  }
+
+  .panel__bubble::before,
+  .panel__bubble::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-style: solid;
+  }
+
+  .panel__bubble::before {
+    left: 34%;
+    bottom: -22px;
+    border-width: 22px 4px 0 16px;
+    border-color: var(--ink) transparent transparent transparent;
+  }
+
+  .panel__bubble::after {
+    left: calc(34% + 4.5px);
+    bottom: -14px;
+    border-width: 17px 2px 0 10px;
+    border-color: var(--stock) transparent transparent transparent;
+  }
+
+  /* Machine learning: a graph across the whole band, the ML character at its hub. */
+  .graph {
+    position: relative;
+    height: 48rem;
+  }
+
+  .graph__lines {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  .graph__lines path {
+    fill: none;
+    vector-effect: non-scaling-stroke;
+    stroke-linecap: round;
+  }
+
+  .graph__spoke {
+    stroke: color-mix(in oklab, var(--ramune-deep), white 40%);
+    stroke-width: 2.5;
+  }
+
+  .graph__path {
+    stroke: var(--ramune-deep);
+    stroke-width: 4;
+    stroke-dasharray: 1 12;
+  }
+
+  .graph__hub {
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+    width: 15rem;
+    translate: -50% -50%;
+  }
+
+  .graph__hub .band__character {
+    width: 100%;
+  }
+
+  .node {
+    --clay-bg: var(--stock);
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+    display: grid;
+    gap: 0.35rem;
+    width: 16rem;
+    padding: 1.1rem 1.3rem 1.15rem;
+    translate: -50% -50%;
+  }
+
+  .node--lead {
+    --clay-bg: #fdf4d6;
+    width: 18.5rem;
+    padding: 1.4rem 1.5rem;
+  }
+
+  .node__title {
+    font-size: var(--step-1);
+  }
+
+  .node--lead .node__title {
+    font-size: var(--step-2);
+  }
+
+  .node__text {
+    font-size: var(--step--1);
+    line-height: 1.5;
+  }
+
+  .node__foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.25rem 0.9rem;
+    margin-top: 0.2rem;
+    padding-top: 0.55rem;
+    border-top: 2px dashed color-mix(in oklab, var(--stock), var(--ink) 18%);
+  }
+
+  .node__foot .data {
+    font-weight: 700;
+    color: color-mix(in oklab, var(--ramune-deep), var(--ink) 55%);
+  }
+
+  .node__also {
+    margin-top: 0;
+  }
+
+  /* Narrow screens: heading first, then the character, then a full-width toolkit,
+     then the work. */
+  @media (max-width: 56rem) {
+    .band__grid,
+    .band--flip .band__grid,
+    .band--ml .band__grid {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-areas:
+        'head'
+        'host'
+        'work';
+    }
+
+    .band__host {
+      position: static;
+      margin-top: 0.5rem;
+    }
+
+    .band__character {
+      width: min(60%, 13rem);
+    }
+
+    .toolkit {
+      width: 100%;
+    }
+
+    .comic {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-areas: 'a' 'b' 'c' 'd';
+    }
+
+    .band--ml .band__head {
+      grid-template-columns: minmax(0, 1fr);
+      align-items: start;
+    }
+
+    .graph {
+      height: auto;
+    }
+
+    .graph__lines {
+      display: none;
+    }
+
+    .graph__hub {
+      position: static;
+      width: min(60%, 13rem);
+      margin: 0 auto 1.75rem;
+      translate: none;
+    }
+
+    /* On a phone the learning path runs as a dotted line down the left. */
+    .graph__nodes {
+      position: relative;
+      display: grid;
+      gap: 1.2rem;
+      padding-left: 1.6rem;
+    }
+
+    .graph__nodes::before {
+      content: '';
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 4px;
+      background: radial-gradient(circle, var(--ramune-deep) 2px, transparent 2.5px) 0 0 / 4px 12px;
+    }
+
+    .node,
+    .node--lead {
+      position: static;
+      width: auto;
+      translate: none;
+    }
+  }
+
+  @media (max-width: 36rem) {
+    .sheet thead {
+      display: none;
+    }
+
+    .sheet tbody td {
+      display: block;
+      width: auto;
+      padding: 0 1.1rem;
+      border-top: 0;
+    }
+
+    .sheet tbody tr {
+      display: block;
+      padding: 0.9rem 0;
+    }
+
+    .sheet tbody tr + tr {
+      border-top: 2px solid var(--ink);
+    }
+  }
+</style>

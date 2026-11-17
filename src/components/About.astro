@@ -1,0 +1,102 @@
+---
+// About, in Philip's own words, from src/content/about.md. While that file is still
+// marked draft, the section appears only in local development, never on the live site.
+import BopText from './BopText.astro';
+import Charm from './Charm.astro';
+import { Content, frontmatter } from '../content/about.md';
+
+const draft = frontmatter.draft !== false;
+const show = !draft || import.meta.env.DEV;
+---
+
+{
+  show && (
+    <section id="about" class="about" aria-labelledby="about-title">
+      <div class="seam" aria-hidden="true" style="--prev: var(--yuzu)" />
+      <div class="wrap about__grid">
+        <h2 id="about-title" class="h-section about__title">
+          <BopText text="About me" />
+        </h2>
+        <div class="clay about__card">
+          <Charm kind="resistor" class="about__charm" />
+          {draft && (
+            <p class="about__draft">
+              Draft, only visible on your local preview. Write this in <code>src/content/about.md</code>, then set{' '}
+              <code>draft: false</code> to publish it.
+            </p>
+          )}
+          <div class="about__text">
+            <Content />
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .about {
+    padding-block: var(--band-pad);
+    background-color: var(--sakura);
+    background-image: radial-gradient(circle, var(--sakura-deep) 2px, transparent 2.5px);
+    background-size: 22px 22px;
+  }
+
+  .about__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+    gap: clamp(1.5rem, 5vw, 5rem);
+    align-items: start;
+  }
+
+  .about__card {
+    --clay-bg: var(--stock);
+    position: relative;
+    padding: clamp(1.75rem, 4vw, 3rem);
+  }
+
+  .about__card :global(.about__charm) {
+    top: -0.9rem;
+    right: 2.5rem;
+    rotate: -8deg;
+  }
+
+  .about__draft {
+    margin-bottom: 1.4rem;
+    padding: 0.7rem 1rem;
+    font-size: var(--step--1);
+    font-weight: 700;
+    background: var(--yuzu-soft);
+    border: 2px dashed var(--ink);
+    border-radius: var(--r-sm);
+  }
+
+  .about__text {
+    max-width: 62ch;
+    font-size: var(--step-1);
+    line-height: 1.6;
+  }
+
+  .about__text :global(p + p),
+  .about__text :global(p + ul),
+  .about__text :global(ul + p) {
+    margin-top: 1em;
+  }
+
+  .about__text :global(ul) {
+    display: grid;
+    gap: 0.35em;
+    padding-left: 1.2em;
+    list-style: disc;
+  }
+
+  .about__text :global(a) {
+    font-weight: 700;
+  }
+
+  @media (max-width: 56rem) {
+    .about__grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

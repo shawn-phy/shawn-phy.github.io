@@ -1,0 +1,48 @@
+---
+// Sets a heading's letters on a gently bouncing baseline, the page's display voice.
+// Screen readers get the plain text; the bouncing letters are hidden from them.
+interface Props {
+  text: string;
+  /** Strength of the tilt and lift, 1 is the section-heading default. */
+  amount?: number;
+}
+
+const { text, amount = 1 } = Astro.props;
+const tilt = [-3, 2, -1, 3, -2, 1, -3, 2];
+const lift = [0, -3, 2, -1, 3, -2, 1, -2];
+let n = 0;
+const words = text.split(' ').map((word) =>
+  [...word].map((ch) => {
+    const i = n++;
+    return { ch, r: tilt[i % tilt.length] * amount, y: lift[i % lift.length] * amount };
+  }),
+);
+---
+
+<span class="sr-only">{text}</span><span class="bt" aria-hidden="true">{
+  words.map((letters, wi) => (
+    <>
+      <span class="bt__w">
+        {letters.map((l) => (
+          <span class="bt__l" style={`--r:${l.r}deg;--y:${l.y}px`}>
+            {l.ch}
+          </span>
+        ))}
+      </span>
+      {wi < words.length - 1 ? ' ' : ''}
+    </>
+  ))
+}</span>
+
+<style>
+  .bt__w {
+    display: inline-block;
+    white-space: nowrap;
+  }
+
+  .bt__l {
+    display: inline-block;
+    rotate: var(--r);
+    translate: 0 var(--y);
+  }
+</style>
