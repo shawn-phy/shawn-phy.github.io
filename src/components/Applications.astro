@@ -1,0 +1,460 @@
+---
+// Flagship work, each set out as a datasheet application note with its own
+// composition: the layout follows what the project is, not a repeated template.
+import Figure from './Figure.astro';
+import Slot from './Slot.astro';
+import BopText from './BopText.astro';
+import Charm from './Charm.astro';
+import { flagships, layerNames } from '../data/site';
+
+const alts: Record<string, string> = {
+  car: 'Illustration of the autonomous 4WD robot car',
+  atomio: 'Illustration of construction-management software in a browser window',
+  agents: 'Illustration of cooperating agents passing a document along',
+  greenhouse: 'Illustration of a greenhouse with a seedling growing over a microchip',
+};
+
+// The figure is drawn at 70% scale in the middle of a 320 × 220 stage.
+const toStage = ([x, y]: [number, number]) => [48 + 0.7 * x, 33 + 0.7 * y];
+
+// After explaining its layer, a 3D character drops onto the printed figure of a
+// project it built: the chip onto the car, the ML character onto the agents and the
+// greenhouse. Each perch marks where it stands on the plate.
+const perches: Record<string, string> = { agents: 'ml', car: 'hardware', greenhouse: 'ml' };
+---
+
+<section id="applications" class="apps on-ink" aria-labelledby="apps-title">
+  <div class="seam" aria-hidden="true" style="--prev: var(--stock)"></div>
+  <div class="wrap">
+    <h2 id="apps-title" class="h-section"><BopText text="Typical applications" /></h2>
+    <p class="lede apps__lede">Four builds that show the range in depth, each documented like a part.</p>
+
+    <div class="notes">
+      {
+        flagships.map((f, i) => (
+          <article class={`note note--${i} tone-${f.tone}`} aria-labelledby={`note-${f.id}`}>
+            <figure class="sticker plate">
+              <div class="plate__stage">
+                {perches[f.figure] && <span class="perch" data-perch-for={perches[f.figure]} aria-hidden="true" />}
+                <div class="plate__art">
+                  <Slot id={`figure-${f.figure}`} alt={alts[f.figure]}>
+                    <Figure figure={f.figure} />
+                  </Slot>
+                </div>
+                <svg class="plate__marks" viewBox="0 0 320 220" aria-hidden="true">
+                  {f.callouts.map((c) => {
+                    const [ax, ay] = toStage(c.anchor);
+                    const [mx, my] = c.marker;
+                    return (
+                      <g>
+                        <line x1={mx} y1={my} x2={ax} y2={ay} />
+                        <circle class="plate__end" cx={ax} cy={ay} r="4" />
+                        <circle class="plate__num" cx={mx} cy={my} r="11" />
+                        <text x={mx} y={my}>
+                          {c.n}
+                        </text>
+                      </g>
+                    );
+                  })}
+                </svg>
+              </div>
+              <figcaption class="plate__legend">
+                <span class="data plate__fig">Fig. {i + 3}</span>
+                <ol>
+                  {f.callouts.map((c) => (
+                    <li>
+                      <span class="data plate__n" aria-hidden="true">
+                        {c.n}
+                      </span>
+                      {c.text}
+                    </li>
+                  ))}
+                </ol>
+              </figcaption>
+            </figure>
+
+            <div class="note__head">
+              <h3 id={`note-${f.id}`} class="note__title">
+                {f.title}
+              </h3>
+              <p class="note__summary">{f.summary}</p>
+            </div>
+
+            <div class="sticker note__spec">
+              {i === 0 && <Charm kind="capacitor" class="spec__charm" />}
+              <table class="table">
+                <caption class="sr-only">{f.title}: characteristics</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Parameter</th>
+                    <th scope="col">Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {f.specs.map((s) => (
+                    <tr>
+                      <th scope="row">{s.label}</th>
+                      <td>
+                        {s.layers
+                          ? s.layers.map((id) => (
+                              <span class={`spec__layer tone-${id}`}>
+                                <span class="dot" aria-hidden="true" />
+                                {layerNames[id]}
+                              </span>
+                            ))
+                          : s.value}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .apps {
+    padding-block: var(--band-pad);
+    color: var(--stock);
+    background-color: var(--ink);
+    background-image: radial-gradient(#3a3128 2.5px, transparent 3px);
+    background-size: 30px 30px;
+  }
+
+  .apps__lede {
+    margin-top: 1rem;
+  }
+
+  .notes {
+    display: grid;
+    gap: clamp(4.5rem, 10vw, 8rem);
+    margin-top: clamp(3rem, 6vw, 5rem);
+  }
+
+  .note {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 1.25rem clamp(1rem, 2.5vw, 2rem);
+    align-items: start;
+  }
+
+  .note > * {
+    min-width: 0;
+  }
+
+  /* Fig. 3, multi-agent extraction: a wide figure, its characteristics clipped over
+     the corner like an application circuit beside its part. */
+  .note--0 .plate {
+    grid-column: 1 / 9;
+    grid-row: 1 / 3;
+  }
+
+  .note--0 .note__head {
+    grid-column: 9 / 13;
+    grid-row: 1;
+  }
+
+  .note--0 .note__spec {
+    grid-column: 8 / 13;
+    grid-row: 2;
+    z-index: 2;
+    margin-top: 1rem;
+  }
+
+  /* Keep this figure's legend clear of the table clipped over its corner. */
+  .note--0 .plate__legend {
+    padding-right: 17%;
+  }
+
+  /* Fig. 4, the car: a small object, so the title runs large and the figure and its
+     numbers sit side by side beneath it. */
+  .note--1 .note__head {
+    grid-column: 1 / 13;
+    grid-row: 1;
+  }
+
+  .note--1 .note__title {
+    font-size: var(--step-4);
+  }
+
+  .note--1 .plate {
+    grid-column: 1 / 7;
+    grid-row: 2;
+  }
+
+  .note--1 .note__spec {
+    grid-column: 7 / 12;
+    grid-row: 2;
+    align-self: center;
+  }
+
+  /* Fig. 5, Atomio: a company, introduced on a card laid over its product. */
+  .note--2 .plate {
+    grid-column: 5 / 13;
+    grid-row: 1 / 3;
+  }
+
+  .note--2 .note__head {
+    --face: var(--stock);
+    grid-column: 1 / 7;
+    grid-row: 1;
+    z-index: 2;
+    margin-top: 2.5rem;
+    padding: 1.4rem 1.6rem 1.6rem;
+    color: var(--ink);
+    background: var(--stock);
+    border: var(--line) solid var(--ink);
+    border-radius: var(--r-lg);
+    box-shadow: 0 30px 50px -20px rgb(0 0 0 / 0.55);
+  }
+
+  .note--2 .note__title {
+    color: var(--ink);
+  }
+
+  .note--2 .note__spec {
+    grid-column: 1 / 6;
+    grid-row: 2;
+    z-index: 2;
+  }
+
+  /* Fig. 6, the greenhouse: hardware and ML in one build, set on a single centred
+     axis with the table resting on the figure's base. */
+  .note--3 {
+    text-align: center;
+  }
+
+  .note--3 .note__head {
+    grid-column: 3 / 11;
+    grid-row: 1;
+    justify-items: center;
+  }
+
+  .note--3 .note__summary {
+    margin-inline: auto;
+  }
+
+  .note--3 .plate {
+    grid-column: 3 / 11;
+    grid-row: 2;
+  }
+
+  .note--3 .note__spec {
+    grid-column: 4 / 10;
+    grid-row: 3;
+    margin-top: 0.75rem;
+    text-align: left;
+  }
+
+  /* The figure plate: a sticker in the layer's colour with numbered callouts. */
+  .plate {
+    --shade: var(--yuzu);
+    color: var(--ink);
+  }
+
+  .plate__stage {
+    position: relative;
+    aspect-ratio: 320 / 220;
+    background: var(--tone);
+    border-bottom: var(--line) solid var(--ink);
+    border-radius: calc(var(--r-lg) - var(--line)) calc(var(--r-lg) - var(--line)) 0 0;
+  }
+
+  .plate__art {
+    position: absolute;
+    left: 15%;
+    top: 15%;
+    width: 70%;
+  }
+
+  /* A character stands on the plate's floor in its lower-left corner. */
+  .perch {
+    position: absolute;
+    left: 2%;
+    bottom: 0;
+    z-index: 1;
+    width: 25%;
+    height: 38%;
+    pointer-events: none;
+  }
+
+  .plate__marks {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  .plate__marks line {
+    stroke: var(--ink);
+    stroke-width: 2.4;
+    stroke-linecap: round;
+  }
+
+  .plate__end {
+    fill: var(--stock);
+    stroke: var(--ink);
+    stroke-width: 2.4;
+  }
+
+  .plate__num {
+    fill: var(--ink);
+  }
+
+  .plate__marks text {
+    font: 700 12px var(--font-data);
+    fill: var(--stock);
+    text-anchor: middle;
+    dominant-baseline: central;
+  }
+
+  .plate__legend {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5rem 1.25rem;
+    padding: 0.9rem 1.2rem 1rem;
+    font-size: var(--step--1);
+    font-weight: 700;
+    text-align: left;
+  }
+
+  .plate__fig {
+    padding: 0.1em 0.55em;
+    color: var(--stock);
+    background: var(--ink);
+    border-radius: 999px;
+  }
+
+  .plate__legend ol {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.1rem;
+  }
+
+  .plate__legend li {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.45rem;
+  }
+
+  .plate__n {
+    display: inline-grid;
+    place-items: center;
+    width: 1.35rem;
+    height: 1.35rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--stock);
+    background: var(--ink);
+    border-radius: 50%;
+    translate: 0 0.15em;
+  }
+
+  .note__head {
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  .note__title {
+    font-size: var(--step-3);
+    color: var(--stock);
+  }
+
+  .note__summary {
+    max-width: 40ch;
+    font-size: var(--step-1);
+    line-height: 1.45;
+  }
+
+  /* Characteristic tables. */
+  .note__spec {
+    --shade: var(--yuzu);
+    color: var(--ink);
+  }
+
+  .note__spec :global(.spec__charm) {
+    top: -2.6rem;
+    right: 2rem;
+    rotate: -10deg;
+  }
+
+  .note__spec tbody th,
+  .note__spec td {
+    padding-block: 0.6rem;
+  }
+
+  .note__spec tbody th {
+    width: 36%;
+    font-weight: 900;
+  }
+
+  .note__spec td {
+    font-weight: 500;
+  }
+
+  .spec__layer {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin-right: 1rem;
+    font-weight: 700;
+  }
+
+  .spec__layer .dot {
+    translate: 0 0.05em;
+  }
+
+  /* Narrow screens: every note reads figure, then heading, then table. */
+  @media (max-width: 60rem) {
+    .note,
+    .note--3 {
+      grid-template-columns: minmax(0, 1fr);
+      text-align: left;
+    }
+
+    .note .plate,
+    .note .note__head,
+    .note .note__spec {
+      grid-column: 1 / -1;
+      grid-row: auto;
+      margin-top: 0;
+    }
+
+    .note .note__head {
+      order: 1;
+      justify-items: start;
+    }
+
+    .note .plate {
+      order: 2;
+    }
+
+    .note .note__spec {
+      order: 3;
+    }
+
+    .note--1 .note__title {
+      font-size: var(--step-3);
+    }
+
+    .note--0 .plate__legend {
+      padding-right: 1.2rem;
+    }
+
+    .note--3 .note__summary {
+      margin-inline: 0;
+    }
+  }
+
+  @media (max-width: 36rem) {
+    .note__spec tbody th {
+      width: 40%;
+    }
+  }
+</style>

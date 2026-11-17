@@ -1,0 +1,156 @@
+---
+import Arrow from './Arrow.astro';
+import Character from './Character.astro';
+import Slot from './Slot.astro';
+import BopText from './BopText.astro';
+import { site, layerNames, type LayerId } from '../data/site';
+
+const crew: LayerId[] = ['hardware', 'security', 'ml'];
+const year = new Date().getFullYear();
+---
+
+<section id="contact" class="close" aria-labelledby="contact-title">
+  <div class="seam" aria-hidden="true" style="--prev: var(--stock)"></div>
+  <div class="wrap close__in">
+    <div class="close__crew" aria-hidden="true">
+      {
+        crew.map((id) => (
+          <div class={`close__mate close__mate--${id}`} data-crew={id}>
+            <Slot id={`character-${id}`} alt={`The ${layerNames[id].toLowerCase()} character`}>
+              <Character layer={id} />
+            </Slot>
+          </div>
+        ))
+      }
+    </div>
+
+    <h2 id="contact-title" class="close__title" data-fx="wave">
+      <BopText text="Hiring for work that crosses the stack?" amount={1.6} />
+    </h2>
+    <p class="lede close__lede">
+      Email me about a role or a project. I am based in Juja, Kenya, and work with teams anywhere.
+    </p>
+
+    <div class="close__actions">
+      <a class="btn btn--big btn--yuzu" href={`mailto:${site.email}`}>
+        Email Philip
+        <span class="btn__dot"><Arrow /></span>
+      </a>
+      <p class="close__address">
+        or write to <a href={`mailto:${site.email}`}>{site.email}</a>
+      </p>
+    </div>
+
+    <ul class="close__links">
+      <li><a class="btn btn--plain" href={site.github}>GitHub</a></li>
+      <li><a class="btn btn--plain" href={site.linkedin}>LinkedIn</a></li>
+    </ul>
+  </div>
+
+  <footer class="foot">
+    <div class="wrap foot__in">
+      <p>&copy; {year} {site.name}</p>
+      <p>Built with Astro, Three.js and GSAP.</p>
+    </div>
+  </footer>
+</section>
+
+<style>
+  .close {
+    padding-top: var(--band-pad);
+    background-color: var(--yuzu);
+    background-image: radial-gradient(circle, var(--yuzu-deep) 2.4px, transparent 2.9px);
+    background-size: 26px 26px;
+  }
+
+  .close__in {
+    display: grid;
+    justify-items: center;
+    gap: 1.4rem;
+    padding-bottom: var(--band-pad);
+    text-align: center;
+  }
+
+  /* The three characters regroup here at the end of the page. */
+  .close__crew {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: clamp(0.75rem, 3vw, 2.5rem);
+    margin-bottom: 0.5rem;
+  }
+
+  .close__mate {
+    width: clamp(6rem, 14vw, 10rem);
+  }
+
+  .close__title {
+    max-width: 18ch;
+    font-size: var(--step-4);
+    color: var(--stock);
+    -webkit-text-stroke: 8px var(--ink);
+    paint-order: stroke fill;
+    letter-spacing: 0.02em;
+    text-shadow:
+      1px 1px 0 var(--ramune),
+      2px 2px 0 var(--ramune),
+      3px 3px 0 var(--ramune),
+      4px 4px 0 var(--ramune),
+      5px 5px 0 var(--ramune),
+      6px 6px 0 var(--ink),
+      7px 7px 0 var(--ink);
+  }
+
+  .close__lede {
+    font-weight: 700;
+  }
+
+  .close__actions {
+    display: grid;
+    justify-items: center;
+    gap: 0.9rem;
+    margin-top: 0.5rem;
+  }
+
+  .close__address {
+    font-weight: 700;
+  }
+
+  .close__address a {
+    overflow-wrap: anywhere;
+  }
+
+  .close__links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.9rem;
+    margin-top: 0.5rem;
+  }
+
+  .foot {
+    background: var(--ink);
+    color: var(--stock);
+  }
+
+  .foot__in {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.5rem 2rem;
+    padding-block: 1.4rem;
+    font-size: var(--step--1);
+    font-weight: 700;
+  }
+
+  @media (max-width: 30rem) {
+    .close__title {
+      -webkit-text-stroke-width: 5px;
+      text-shadow:
+        1px 1px 0 var(--ramune),
+        2px 2px 0 var(--ramune),
+        3px 3px 0 var(--ink),
+        4px 4px 0 var(--ink);
+    }
+  }
+</style>

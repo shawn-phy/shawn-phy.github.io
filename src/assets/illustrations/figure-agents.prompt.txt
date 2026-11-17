@@ -1,0 +1,34 @@
+Use case: illustration-story
+Asset type: production illustration for an existing Astro engineering portfolio.
+
+Pop-art print illustration for a personal engineering portfolio, like a panel from a 1960s comic or a vintage toy catalogue, with kawaii character design. Technical subject, playful treatment.
+
+Line: one uniform, thick, warm-black outline (#17130F) around every shape, the same weight everywhere, about 2.5% of the canvas width. Rounded joins and caps. No sketchy, doubled, tapered or broken lines.
+
+Colour: flat fills taken strictly from this palette and nothing else:
+- warm black #17130F (outlines, eyes, mouths)
+- off-white #FFFBF0 (highlights, pins, paper)
+- yuzu yellow #FFD23F
+- matcha green #6FD08C
+- strawberry pink #FF6B9A
+- ramune blue #5CC8F5
+- blush pink #FF8FB0 (cheeks only)
+Shading is printed, never painted: shadows are Ben-Day halftone dots in warm black (#17130F) on the shape's own colour, in a regular grid whose dots grow toward the shadow side. No gradients, glow, gloss, noise or soft airbrushed shading.
+
+Faces: two solid oval eyes, each with one small round off-white glint in the upper right; two flat blush ovals; a small simple mouth. The face is placed low on the body. Eyes and blush are the same size and spacing in every character.
+
+Light: a single light source from the upper left for every object.
+
+Composition: one subject, centred, three-quarter front view, filling about 75% of the canvas. Fully transparent background. A small flat warm-black contact shadow directly below, offset slightly down and to the right. Nothing cropped by the canvas edge.
+
+Do not include: text, letters, numbers, logos, watermarks or signatures; extra limbs, fingers or eyes; sparkles, stars, hearts, confetti or floating particles unless asked for below; photographic or 3D-rendered surfaces; lens blur, bokeh, depth of field or vignettes; background scenery; drop shadows other than the contact shadow.
+
+Subject:
+Three small robot heads in a row, each a rounded square with a single antenna and a happy face: ramune blue on the left, off-white in the middle, strawberry pink on the right. They pass a single off-white document card from left to right along a line of thick warm-black arrows. The document carries two short outlined bars in place of writing, and no letters. The scene reads as teamwork. Landscape composition.
+
+Production constraints:
+Canvas: exactly 1536 x 1024 pixels, landscape PNG with real alpha. Use the referenced green chip as a STYLE REFERENCE ONLY: same ink and flat print vocabulary, rounded geometry, face construction and regular halftone grid. Exactly three separate robot heads in a level left-to-right row: blue, off-white, pink; one antenna and two eyes per head, each smiling. Exactly ONE document card, not one per robot. Two short hollow rounded rectangular bars on the card, without writing. Exactly two unequivocal right-pointing arrows form the left-to-right handoff. Keep the arrows and card distinct from faces and eyes. No arms or hands. Entire group fits with clear transparent margins.
+
+Print finish: mechanically clean silhouettes and smooth curves; strictly flat solid fills with NO gradients or glossy edge highlights. Shadows only use precise separate circular Ben-Day dots on a regular grid, clipped inside the object. No hand-drawn wobble, scratch texture, random stipple, flecks, sparkles, pseudo-text or additional ornament. Outside the subject and its small flat contact shadow every pixel is fully transparent. Preserve crisp alpha edges without a white or grey matte. Reference images, when supplied, establish style only and must never appear as an additional subject.
+
+REVISION — Image 1 is the EDIT TARGET. Preserve the three heads' positions, blue/cream/pink order, antennae, faces and single cream document. REMOVE every pin protruding from the sides of the heads. REMOVE all feet and legs below the heads. They are smooth rounded-square ROBOT HEADS, with no ears, arms, side pins or bodies. Change the two yellow arrows to solid warm-black #17130F right-pointing arrows. The antenna bulbs remain yellow. Keep exactly one document with two outlined empty bars and no writing. Remove ALL exterior haze, glow and soft shadows: every exterior pixel must be completely transparent except one small flat hard-edged warm-black contact ellipse directly under the group. Flat opaque spot-colour fills only. Keep coherent regular Ben-Day dots clipped inside each shape. Exact 1536 x 1024 PNG on true transparency.

@@ -1,0 +1,114 @@
+---
+import Arrow from './Arrow.astro';
+import { site } from '../data/site';
+
+const links = [
+  { href: '/#layers', label: 'Layers' },
+  { href: '/#applications', label: 'Projects' },
+  { href: '/#history', label: 'Experience' },
+  { href: '/#contact', label: 'Contact' },
+];
+---
+
+<header class="bar">
+  <div class="wrap bar__in">
+    <a class="bar__name" href="/">{site.name}</a>
+    <nav class="bar__nav" aria-label="Sections">
+      <ul>
+        {links.map((link) => (
+          <li>
+            <a href={link.href}>{link.label}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+    <a class="btn btn--yuzu bar__cta" href={`mailto:${site.email}`}>
+      Email Philip
+      <span class="btn__dot"><Arrow /></span>
+    </a>
+  </div>
+</header>
+
+<style>
+  .bar {
+    position: sticky;
+    top: 0;
+    z-index: var(--z-header);
+    background: var(--stock);
+  }
+
+  /* The bar's lower edge is printed as a fringe of dots rather than a hard rule. */
+  .bar::after {
+    content: '';
+    position: absolute;
+    inset: 100% 0 auto;
+    height: 12px;
+    background: radial-gradient(circle, var(--stock) 3.4px, transparent 3.9px) 0 -4px / 11px 11px;
+    pointer-events: none;
+  }
+
+  .bar__in {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.75rem, 2vw, 2rem);
+    min-height: 4.5rem;
+  }
+
+  .bar__name {
+    margin-right: auto;
+    font: 700 var(--step-1) / 1 var(--font-display);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .bar__nav ul {
+    display: flex;
+    gap: clamp(0.25rem, 1.2vw, 1rem);
+  }
+
+  .bar__nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding-inline: 0.7em;
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: 999px;
+    transition: background-color 150ms var(--ease-out);
+  }
+
+  @media (hover: hover) {
+    .bar__nav a:hover {
+      background: var(--yuzu);
+    }
+  }
+
+  .bar__cta {
+    min-height: 44px;
+    font-size: 1rem;
+  }
+
+  @media (max-width: 56rem) {
+    .bar__nav {
+      display: none;
+    }
+  }
+
+  @media (max-width: 30rem) {
+    .bar__name {
+      font-size: 1.0625rem;
+    }
+
+    .bar__cta {
+      padding-left: 0.9em;
+    }
+
+    .bar__cta .btn__dot {
+      display: none;
+    }
+
+    .bar__cta {
+      padding-right: 0.9em;
+    }
+  }
+</style>

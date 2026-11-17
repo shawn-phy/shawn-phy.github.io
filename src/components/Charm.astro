@@ -1,0 +1,81 @@
+---
+// Decora charms: small clay electronic parts clipped onto cards the way decora
+// fashion clips charms into hair. Purely decorative.
+interface Props {
+  kind: 'led' | 'resistor' | 'capacitor';
+  class?: string;
+}
+
+const { kind, class: className } = Astro.props;
+const uid = `charm-${kind}-${Math.round(Math.random() * 1e6)}`;
+---
+
+<span class:list={['charm', `charm--${kind}`, className]} aria-hidden="true">
+  {
+    kind === 'led' && (
+      <svg viewBox="0 0 44 72" width="44" height="72">
+        <defs>
+          <radialGradient id={`${uid}-g`} cx="35%" cy="28%" r="75%">
+            <stop offset="0" stop-color="#ffd1e0" />
+            <stop offset="0.45" stop-color="#ff6b9a" />
+            <stop offset="1" stop-color="#d93a6c" />
+          </radialGradient>
+        </defs>
+        <path d="M17 44v24M27 44v14l5 6v4" fill="none" stroke="#8c8579" stroke-width="3" stroke-linecap="round" />
+        <path d="M8 26a14 14 0 0 1 28 0v14H8z" fill={`url(#${uid}-g)`} />
+        <rect x="5" y="38" width="34" height="7" rx="3.5" fill="#d93a6c" />
+        <ellipse cx="16" cy="20" rx="4" ry="6" fill="#fff" opacity="0.8" />
+      </svg>
+    )
+  }
+  {
+    kind === 'resistor' && (
+      <svg viewBox="0 0 96 30" width="96" height="30">
+        <defs>
+          <linearGradient id={`${uid}-g`} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#fbe9c4" />
+            <stop offset="0.55" stop-color="#ecd09a" />
+            <stop offset="1" stop-color="#cfae6f" />
+          </linearGradient>
+        </defs>
+        <path d="M2 15h20M74 15h20" stroke="#8c8579" stroke-width="3" stroke-linecap="round" />
+        <rect x="20" y="4" width="56" height="22" rx="11" fill={`url(#${uid}-g)`} />
+        <rect x="32" y="4" width="5" height="22" fill="#6fd08c" />
+        <rect x="42" y="4" width="5" height="22" fill="#5cc8f5" />
+        <rect x="52" y="4" width="5" height="22" fill="#17130f" />
+        <rect x="64" y="4" width="4" height="22" fill="#f2b90f" />
+        <rect x="26" y="7" width="44" height="4" rx="2" fill="#fff" opacity="0.55" />
+      </svg>
+    )
+  }
+  {
+    kind === 'capacitor' && (
+      <svg viewBox="0 0 44 70" width="44" height="70">
+        <defs>
+          <linearGradient id={`${uid}-g`} x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#2fb0e8" />
+            <stop offset="0.35" stop-color="#9fe0fb" />
+            <stop offset="1" stop-color="#2fb0e8" />
+          </linearGradient>
+        </defs>
+        <path d="M16 48v20M28 48v16" stroke="#8c8579" stroke-width="3" stroke-linecap="round" />
+        <rect x="6" y="4" width="32" height="46" rx="10" fill={`url(#${uid}-g)`} />
+        <rect x="27" y="4" width="7" height="46" fill="#17130f" opacity="0.75" />
+        <ellipse cx="22" cy="7" rx="14" ry="3" fill="#fff" opacity="0.5" />
+      </svg>
+    )
+  }
+</span>
+
+<style>
+  .charm {
+    position: absolute;
+    z-index: 2;
+    pointer-events: none;
+    filter: drop-shadow(0 6px 6px rgb(23 19 15 / 0.22));
+  }
+
+  .charm svg {
+    display: block;
+  }
+</style>

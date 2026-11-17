@@ -1,0 +1,42 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import About from '../components/About.astro';
+import LayerBand from '../components/LayerBand.astro';
+import Pins from '../components/Pins.astro';
+import Applications from '../components/Applications.astro';
+import History from '../components/History.astro';
+import Contact from '../components/Contact.astro';
+import { layers } from '../data/site';
+import { frontmatter as about } from '../content/about.md';
+
+// The colour each layer's halftone seam dissolves from: the section above it.
+const aboutShown = about.draft === false || import.meta.env.DEV;
+const prevOf = {
+  hardware: aboutShown ? 'var(--sakura)' : 'var(--yuzu)',
+  security: 'var(--matcha)',
+  ml: 'var(--ichigo)',
+};
+---
+
+<Base>
+  <Header />
+  <main id="main" tabindex="-1">
+    <Hero />
+    <About />
+    <div id="layers">
+      {layers.map((layer, i) => <LayerBand layer={layer} flip={i % 2 === 1} prev={prevOf[layer.id]} />)}
+    </div>
+    <Pins />
+    <Applications />
+    <History />
+    <Contact />
+  </main>
+</Base>
+
+<style>
+  main:focus {
+    outline: none;
+  }
+</style>

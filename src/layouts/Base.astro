@@ -1,0 +1,48 @@
+---
+import '@fontsource-variable/dynapuff/index.css';
+import '@fontsource/zen-maru-gothic/latin-500.css';
+import '@fontsource/zen-maru-gothic/latin-700.css';
+import '@fontsource/zen-maru-gothic/latin-900.css';
+import '@fontsource-variable/m-plus-code-latin/index.css';
+import '../styles/global.css';
+import { site } from '../data/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title = site.title, description = site.description } = Astro.props;
+const canonical = new URL(Astro.url.pathname, site.url).href;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content="#ffd23f" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <script is:inline>
+      // Entrances only start hidden when motion is allowed and scripts run.
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.documentElement.classList.add('will-animate');
+      }
+    </script>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <canvas id="scene" aria-hidden="true"></canvas>
+    <slot />
+    <script>
+      import '../scripts/app';
+    </script>
+  </body>
+</html>

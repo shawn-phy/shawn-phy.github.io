@@ -1,0 +1,88 @@
+---
+// Authored stand-ins for the three layer characters. Each is replaced by a supplied
+// illustration when a file named after its slot is added to src/assets/illustrations/.
+import type { LayerId } from '../data/site';
+
+interface Props {
+  layer: LayerId;
+}
+
+const { layer } = Astro.props;
+const labels: Record<LayerId, string> = {
+  hardware: 'A smiling green microchip character with pins along both sides',
+  security: 'A pink padlock character with a keyhole for a mouth',
+  ml: 'A round blue character with two antennae',
+};
+const bd = `bd-${layer}-${Math.random().toString(36).slice(2, 8)}`;
+---
+
+<svg class="character" viewBox="0 0 240 240" role="img" aria-label={labels[layer]}>
+  <defs><pattern id={bd} width="9" height="9" patternUnits="userSpaceOnUse"><circle cx="4.5" cy="4.5" r="2.6" fill="#17130f" /></pattern></defs>
+  <g stroke="#17130f" stroke-width="6" stroke-linejoin="round" stroke-linecap="round">
+    {
+      layer === 'hardware' && (
+        <>
+          <rect x="56" y="62" width="144" height="124" rx="28" fill={`url(#${bd})`} stroke="none" />
+          {[0, 1, 2, 3].map((i) => (
+            <>
+              <rect x="20" y={76 + i * 26} width="32" height="14" rx="6" fill="#fffbf0" />
+              <rect x="184" y={76 + i * 26} width="32" height="14" rx="6" fill="#fffbf0" />
+            </>
+          ))}
+          <rect x="46" y="52" width="144" height="124" rx="28" fill="#6fd08c" />
+          <circle cx="70" cy="76" r="5" fill="#17130f" stroke="none" />
+          <ellipse cx="96" cy="112" rx="8" ry="10" fill="#17130f" stroke="none" />
+          <ellipse cx="140" cy="112" rx="8" ry="10" fill="#17130f" stroke="none" />
+          <circle cx="99" cy="108" r="3" fill="#fffbf0" stroke="none" />
+          <circle cx="143" cy="108" r="3" fill="#fffbf0" stroke="none" />
+          <ellipse cx="76" cy="134" rx="11" ry="6" fill="#ff8fb0" stroke="none" />
+          <ellipse cx="160" cy="134" rx="11" ry="6" fill="#ff8fb0" stroke="none" />
+          <path d="M108 130q10 11 20 0" fill="none" />
+        </>
+      )
+    }
+    {
+      layer === 'security' && (
+        <>
+          <rect x="58" y="104" width="140" height="112" rx="26" fill={`url(#${bd})`} stroke="none" />
+          <path d="M82 100V78a36 36 0 0 1 72 0v22" fill="none" stroke-width="24" />
+          <path d="M82 100V78a36 36 0 0 1 72 0v22" fill="none" stroke="#fffbf0" stroke-width="12" />
+          <rect x="48" y="94" width="140" height="112" rx="26" fill="#ff6b9a" />
+          <ellipse cx="94" cy="136" rx="8" ry="10" fill="#17130f" stroke="none" />
+          <ellipse cx="142" cy="136" rx="8" ry="10" fill="#17130f" stroke="none" />
+          <circle cx="97" cy="132" r="3" fill="#fffbf0" stroke="none" />
+          <circle cx="145" cy="132" r="3" fill="#fffbf0" stroke="none" />
+          <ellipse cx="72" cy="158" rx="11" ry="6" fill="#ffd6e3" stroke="none" />
+          <ellipse cx="164" cy="158" rx="11" ry="6" fill="#ffd6e3" stroke="none" />
+          <circle cx="118" cy="160" r="8" fill="#17130f" stroke="none" />
+          <path d="M113 162h10l3 20h-16z" fill="#17130f" stroke="none" />
+        </>
+      )
+    }
+    {
+      layer === 'ml' && (
+        <>
+          <path d="M96 74 84 38m60 36 12-36" fill="none" />
+          <circle cx="84" cy="32" r="11" fill="#ffd23f" />
+          <circle cx="156" cy="32" r="11" fill="#ffd23f" />
+          <ellipse cx="128" cy="142" rx="80" ry="72" fill={`url(#${bd})`} stroke="none" />
+          <ellipse cx="118" cy="132" rx="80" ry="72" fill="#5cc8f5" />
+          <ellipse cx="94" cy="124" rx="8" ry="10" fill="#17130f" stroke="none" />
+          <ellipse cx="142" cy="124" rx="8" ry="10" fill="#17130f" stroke="none" />
+          <circle cx="97" cy="120" r="3" fill="#fffbf0" stroke="none" />
+          <circle cx="145" cy="120" r="3" fill="#fffbf0" stroke="none" />
+          <ellipse cx="70" cy="146" rx="11" ry="6" fill="#ff8fb0" stroke="none" />
+          <ellipse cx="166" cy="146" rx="11" ry="6" fill="#ff8fb0" stroke="none" />
+          <ellipse cx="118" cy="148" rx="7" ry="9" fill="#17130f" stroke="none" />
+        </>
+      )
+    }
+  </g>
+</svg>
+
+<style>
+  .character {
+    width: 100%;
+    height: auto;
+  }
+</style>
