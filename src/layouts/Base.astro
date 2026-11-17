@@ -30,19 +30,10 @@ const canonical = new URL(Astro.url.pathname, site.url).href;
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    <script is:inline>
-      // Entrances only start hidden when motion is allowed and scripts run.
-      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        document.documentElement.classList.add('will-animate');
-      }
-    </script>
   </head>
   <body>
     <a class="skip" href="#main">Skip to content</a>
-    <canvas id="scene" aria-hidden="true"></canvas>
+    <slot name="motion" />
     <slot />
-    <script>
-      import '../scripts/app';
-    </script>
   </body>
 </html>

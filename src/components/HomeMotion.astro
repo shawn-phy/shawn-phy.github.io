@@ -1,0 +1,9 @@
+<script is:inline>
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.documentElement.classList.add('will-animate');
+  }
+</script>
+<canvas id="scene" aria-hidden="true"></canvas>
+<script>
+  import '../scripts/app';
+</script>

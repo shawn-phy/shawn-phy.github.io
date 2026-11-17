@@ -1,0 +1,49 @@
+---
+import WebsitePreview from './WebsitePreview.astro';
+import laxmi from '../assets/projects/atomio/laxmi-group-website.png';
+import safeharbor from '../assets/projects/atomio/safeharbor-website.png';
+import seniorpark from '../assets/projects/seniorpark/seniorpark-website.png';
+
+interface Props {
+  kind: 'atomio' | 'agents';
+}
+
+const { kind } = Astro.props;
+const websites = kind === 'atomio' ? [
+  {
+    title: 'Laxmi Group',
+    url: 'https://www.laxmigroup.co.ke/',
+    image: laxmi,
+    alt: 'Laxmi Group website About page, with team, construction and community project photographs.',
+  },
+  {
+    title: 'SafeHarbor Consulting',
+    url: 'https://safeharbor.co.ke/',
+    image: safeharbor,
+    alt: 'SafeHarbor Consulting website homepage, with its health, safety and risk management services.',
+  },
+] : [
+  {
+    title: 'Seniorpark · public website',
+    url: 'https://seniorpark.io',
+    image: seniorpark,
+    alt: 'Seniorpark public homepage with its senior care facility search.',
+  },
+];
+const sizes = kind === 'atomio'
+  ? '(max-width: 960px) calc(100vw - 48px), 608px'
+  : '(max-width: 960px) calc(100vw - 48px), 816px';
+---
+
+<div class:list={['websites', { 'websites--pair': kind === 'atomio' }]}>
+  {websites.map((website) => <WebsitePreview {...website} sizes={sizes} />)}
+</div>
+
+<style>
+  .websites { display: grid; gap: clamp(1.25rem, 2.5vw, 2rem); }
+  .websites--pair { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+  @media (max-width: 60rem) {
+    .websites--pair { grid-template-columns: minmax(0, 1fr); }
+  }
+</style>

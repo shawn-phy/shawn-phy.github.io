@@ -43,6 +43,8 @@ One engineer who works across the full range: firmware and hardware, through sec
 - The patent filing may be mentioned.
 - The fintech pentest may be mentioned.
 - Atomio may be named, as a company Philip co-founded.
+- Philip confirmed on 2026-11-17 that Atomio built the Laxmi Group and SafeHarbor Consulting websites and asked to showcase them. Their names, linked page captures and branding within those captures may appear.
+- Philip also supplied Seniorpark as the public product associated with his multi-agent workflow and asked to link it. This authorizes the product name and public website preview; it does not change the privacy rules for employer names.
 - Other employer names stay off the site: Neverest, Wezeshanet and MCB are described by role and sector, never named.
 - His phone number stays off the site. Email is the contact route.
 - Referee names and phone numbers are never published.
@@ -69,7 +71,10 @@ One engineer who works across the full range: firmware and hardware, through sec
 
 - Current CV: `docs/Philip Oyuga – ML Engineer CV.pdf`. It is the source of truth for roles, projects, dates and achievements.
 - Old content data: `_data/*.yml` and `_config.yml`. Stale; use only to cross-check.
-- Philip says he has hardware photos or video, public code repositories and write-ups. None are in the repository yet.
+- Greenhouse photographs supplied by Philip are in `design/greenhouse/`; four selected originals are copied to `src/assets/projects/greenhouse/` for the project gallery. Their scope and the greenhouse claim audit are recorded in `design/greenhouse/claims.md`.
+- Philip supplied the greenhouse report, **Smart Farm Solutions Using Precision Agriculture** (May 2025), and confirmed his work on the IoT network and parts of the ML pipeline. Selected original report diagrams are in `src/assets/projects/greenhouse/`. The report and his explicit confirmation take precedence over the older CV summary for greenhouse technical claims; the claim audit records page references and conflicts.
+- Philip says he has further hardware photos or video, public code repositories and write-ups. These have not been supplied yet.
+- Website captures and source URLs for Laxmi Group, SafeHarbor Consulting and Seniorpark are recorded in `design/website-evidence.md`. These show the public sites; a screenshot is not proof of private implementation details or performance.
 
 **Facts the CV supports**
 

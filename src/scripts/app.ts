@@ -5,6 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
 import { createLeaders, type Provider } from './leaders';
 import { initTextFx } from './text-fx';
+import { initDecks } from './proof-deck';
 import { runEntrance } from './entrance';
 import type { LayerId } from './scene';
 
@@ -14,11 +15,6 @@ const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const desktop = matchMedia('(min-width: 56.01rem)').matches;
 const header = document.querySelector<HTMLElement>('.bar');
 const headerH = () => header?.offsetHeight ?? 0;
-if (header) {
-  new ResizeObserver(() => {
-    document.documentElement.style.setProperty('--header-height', `${headerH()}px`);
-  }).observe(header);
-}
 
 // ---- Smooth scrolling ----------------------------------------------------------
 let lenis: Lenis | null = null;
@@ -164,5 +160,6 @@ if (stage) {
   }
 }
 
+initDecks(reduced);
 runEntrance();
 window.addEventListener('load', () => ScrollTrigger.refresh());
