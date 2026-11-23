@@ -3,10 +3,14 @@
 //   assembled   in the hero, stacked like a block diagram;
 //   exploded    the hero pins and the stack separates into an exploded view while the
 //               camera dolly-zooms, and the callouts follow the parts;
-//   explained   each character settles inside a reserved project or layer slot;
-//   reassembled all three land together beside the closing email button.
+//   explained   each character visits its stations in page order (project perches,
+//               its layer band), dropping out from under the masthead into each one;
+//   reassembled all three land together beside the closing email button, bottom first.
 // The canvas is fixed over the page and maps CSS pixels to the z = 0 plane, so each
-// character can stand exactly where a placeholder element sits in the layout.
+// character can stand exactly where a placeholder element sits in the layout. The
+// sticky masthead prints above the canvas, so it is the wings of this stage: between
+// stations a character travels hidden behind it, and it only falls into view once the
+// lane between the masthead and its next station holds no text.
 import * as THREE from 'three';
 import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js';
 import gsap from 'gsap';
@@ -26,6 +30,15 @@ interface Pose {
   s: number; // CSS px per model unit
   ry: number;
   rx: number;
+  ground?: number; // contact shadow strength, 1 when standing on something
+}
+
+// A stop on a character's route after the hero.
+interface Station {
+  el: HTMLElement;
+  drop: number; // scroll position where the fall starts, from under the masthead
+  land: number; // scroll position where it lands
+  fromX: number; // CSS px from the station's centre to where the arc starts
 }
 
 interface Key {
@@ -64,8 +77,13 @@ const STACKED_H: Record<LayerId, number> = { hardware: 1.1, security: 1.3, ml: 1
 const BASE: Record<LayerId, number> = { hardware: 0, security: 1.1, ml: 2.4 };
 const LIFT: Record<LayerId, number> = { hardware: 0, security: 1.0, ml: 2.1 };
 const STACK_H = 4.36;
-const FAN: Record<LayerId, number> = { hardware: -0.32, security: 0.3, ml: 0.05 };
+// How far each character swings sideways (in viewport widths) as it flies off the hero.
+// The fan opens away from the hero copy, which sits left of the stage on wide screens.
+const FAN: Record<LayerId, number> = { hardware: -0.1, security: 0.3, ml: 0.08 };
 const K = 0.02; // world units per CSS pixel on the z = 0 plane
+// The shortest time a fall may take. Slow scrolling scrubs a fall exactly; a fling
+// lets it play at this pace instead of snapping, so the drop always reads.
+const MIN_FALL = 0.5;
 
 const ease = {
   inOut: gsap.parseEase('power2.inOut'),
@@ -279,10 +297,19 @@ export function mountScene(o: SceneOptions): boolean {
   const spin = { v: 0 }; // drag rotation of the assembled stack
   const intro = {} as Record<LayerId, { y: number }>;
   const gaze = {} as Record<LayerId, { x: number; y: number }>;
-  const occupied = new Map<LayerId, HTMLElement>();
+  // Which station each character is falling into (el, and its place k in the route),
+  // how far it has fallen (p), whether it has squashed on landing there, and the
+  // scroll position it was last placed at (sy). The element, not the place, says
+  // which station it is: a re-measure can add or drop stations and shift every place
+  // after them.
+  const fall = {} as Record<
+    LayerId,
+    { el: HTMLElement | null; k: number; p: number; landed: boolean; sy: number }
+  >;
   for (const id of IDS) {
     intro[id] = { y: 0 };
     gaze[id] = { x: 0, y: 0 };
+    fall[id] = { el: null, k: -1, p: 0, landed: false, sy: 0 };
   }
   const pointer = { x: -1, y: -1, active: false };
   let W = window.innerWidth;
@@ -359,29 +386,209 @@ export function mountScene(o: SceneOptions): boolean {
     return list;
   }
 
-  function evaluate(id: LayerId, sy: number): Pose {
-    if (sy >= o.heroRange().end) {
-      // Pick a reserved slot currently in view, without travelling across copy.
-      // This also works when project sections are moved ahead of the layer bands.
-      const headerBottom = document.querySelector('header.bar')?.getBoundingClientRect().bottom ?? 0;
-      const candidates = [...o.perches[id], o.slots[id], o.crew[id]]
-        .filter((el): el is HTMLElement => !!el)
-        .map((el) => ({ el, rect: el.getBoundingClientRect() }))
-        .filter(({ rect }) => rect.bottom > headerBottom && rect.top < H)
-        .sort((a, b) => Math.abs(a.rect.top + a.rect.height / 2 - H / 2) - Math.abs(b.rect.top + b.rect.height / 2 - H / 2));
-      const target = candidates[0]?.el;
-      if (!target) {
-        occupied.delete(id);
-        return { x: 0, y: 0, s: 0, ry: 0, rx: 0 };
-      }
-      if (occupied.get(id) !== target) {
-        occupied.set(id, target);
-        pop(id);
-      }
-      return slotPose(id, target);
-    }
+  // ---- Route: each character's stations after the hero, in page order -----------
+  const masthead = document.querySelector<HTMLElement>('header.bar');
+  const mastBottom = () => masthead?.getBoundingClientRect().bottom ?? 0;
+  const route = {} as Record<LayerId, Station[]>;
+  for (const id of IDS) route[id] = [];
+  let routeDirty = true;
 
-    occupied.delete(id);
+  // Lines of text, in document px, that a falling character must never pass over.
+  // The hero is left out: the stack owns that stage and its callouts follow it.
+  interface Line {
+    top: number;
+    bottom: number;
+    left: number;
+    right: number;
+    node: Node;
+  }
+  function textLines(sy: number): Line[] {
+    const lines: Line[] = [];
+    const root = document.querySelector('main') ?? document.body;
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    const range = document.createRange();
+    for (let n = walker.nextNode(); n; n = walker.nextNode()) {
+      if (!n.textContent?.trim()) continue;
+      const el = n.parentElement;
+      if (!el || el.closest('.hero, [data-slot-for], [data-crew]')) continue;
+      // On a proof deck the top card covers the cards under it, all but their tabs,
+      // and its own tab is faded out.
+      const card = el.closest<HTMLElement>('.deck__card');
+      const tab = !!el.closest('.deck__tab');
+      if (card && (card.dataset.depth === '0' ? tab : !tab)) continue;
+      // Screen-reader-only text sits in a clipped 1px box but reports its full width.
+      const box = el.getBoundingClientRect();
+      if (box.width <= 1 || box.height <= 1) continue;
+      range.selectNodeContents(n);
+      for (const r of range.getClientRects()) {
+        if (r.width < 2 || r.height < 2) continue; // visually hidden labels
+        lines.push({ top: r.top + sy, bottom: r.bottom + sy, left: r.left, right: r.right, node: n });
+      }
+    }
+    return lines;
+  }
+
+  function stickyOf(el: HTMLElement): HTMLElement | null {
+    for (let a = el.parentElement; a && a !== document.body; a = a.parentElement) {
+      if (getComputedStyle(a).position === 'sticky') return a;
+    }
+    return null;
+  }
+
+  // Builds every route from the layout as it stands. Stations are sorted by where
+  // they sit in the document, so the route follows the page whatever order its
+  // sections are in. For each station this finds the moment the lane above it is
+  // clear: every line of text above it, across the width the character and its arc
+  // need, has scrolled under the masthead. The fall starts there and lands while the
+  // station is still well inside the screen.
+  function measure() {
+    routeDirty = false;
+    const sy = window.scrollY;
+    const hb = mastBottom();
+    // The masthead's lower edge is a fringe of dots that text shows through, so a line
+    // only counts as gone once it is past the fringe too.
+    const fringe = masthead ? parseFloat(getComputedStyle(masthead, '::after').height) || 0 : 0;
+    const all = IDS.flatMap((id) => [o.slots[id], ...o.perches[id], o.crew[id]]).filter(
+      (el): el is HTMLElement => !!el,
+    );
+    // A sticky column (the band's character column) is measured where it sits in
+    // the flow; how far it can then be carried down is worked out from its parent.
+    const holds = [...new Set(all.map(stickyOf).filter((el): el is HTMLElement => !!el))];
+    const inset = new Map(holds.map((el) => [el, parseFloat(getComputedStyle(el).top) || 0]));
+    const saved = holds.map((el) => el.style.position);
+    holds.forEach((el) => (el.style.position = 'static'));
+    const lines = textLines(sy);
+    const rects = new Map(all.map((el) => [el, el.getBoundingClientRect()]));
+    const holdRects = new Map(
+      holds.map((el) => [el, { self: el.getBoundingClientRect(), parent: el.parentElement!.getBoundingClientRect() }]),
+    );
+    holds.forEach((el, i) => (el.style.position = saved[i]));
+
+    const heroEnd = o.heroRange().end;
+    const stagger = Math.min(48, H * 0.05);
+    for (const id of IDS) {
+      const els = [o.slots[id], ...o.perches[id], o.crew[id]]
+        .filter((el): el is HTMLElement => !!el)
+        .sort((a, b) => (a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1));
+      const exit = stackPose(id, 1);
+      let prevX = exit.x + FAN[id] * W; // where it left the hero
+      let gone = heroEnd; // when the previous station has carried it out of view
+      const list: Station[] = [];
+      for (const el of els) {
+        const r = rects.get(el)!;
+        if (r.width < 1 || r.height < 1) continue;
+        const s = Math.min((r.height * 0.8) / SIZE[id].h, (r.width * 0.8) / SIZE[id].w);
+        const w = SIZE[id].w * s;
+        const h = SIZE[id].h * s;
+        const cx = r.left + r.width / 2;
+        const top = r.top + sy + r.height / 2 - h / 2; // the character's top, in the flow
+        const hold = stickyOf(el);
+        let carry = 0;
+        let stickAt = Infinity;
+        if (hold) {
+          const hr = holdRects.get(hold)!;
+          carry = Math.max(0, hr.parent.bottom - hr.self.bottom);
+          stickAt = hr.self.top + sy - inset.get(hold)!;
+        }
+        // Where the character's top sits on screen at scroll position v.
+        const topAt = (v: number) => top - v + Math.min(carry, Math.max(0, v - stickAt));
+        // Text above the character (or beside its column while a sticky column
+        // carries it) between x0 and x1; the lane is clear once the lowest of it has
+        // gone under the masthead.
+        const limit = top + h + carry;
+        const clearAt = (x0: number, x1: number) => {
+          let bottom = -Infinity;
+          for (const l of lines) {
+            if (l.right <= x0 || l.left >= x1 || l.top >= limit) continue;
+            if (hold?.contains(l.node)) continue; // its own toolkit rides below it
+            if (l.bottom > bottom) bottom = l.bottom;
+          }
+          return Math.max(bottom - hb - fringe, gone, heroEnd);
+        };
+        const pad = 10;
+        let drop = clearAt(cx - w / 2 - pad, cx + w / 2 + pad);
+        if (el === o.crew[id]) drop += IDS.indexOf(id) * stagger; // bottom of the stack first
+        const lane = topAt(drop) - hb;
+        if (lane < 12) continue; // no clear moment to drop in; ride on to the next station
+        // The arc starts toward where the character came from, as wide as the clear
+        // lane allows without shortening the fall by more than a quarter.
+        let fromX = 0;
+        const want = Math.min(Math.abs(prevX - cx), W * 0.34) * Math.sign(prevX - cx);
+        for (const f of [1, 0.7, 0.45, 0.25]) {
+          const off = want * f;
+          if (Math.abs(off) < 8) break;
+          let d = clearAt(Math.min(cx, cx + off) - w / 2 - pad, Math.max(cx, cx + off) + w / 2 + pad);
+          if (el === o.crew[id]) d += IDS.indexOf(id) * stagger;
+          if (topAt(d) - hb >= lane * 0.75) {
+            fromX = off;
+            drop = d;
+            break;
+          }
+        }
+        const fallLen = Math.min(H * 0.42, Math.max(24, (topAt(drop) - hb) * 0.62));
+        list.push({ el, drop, land: drop + fallLen, fromX });
+        prevX = cx;
+        gone = top + h + carry - hb;
+      }
+      route[id] = list;
+    }
+  }
+
+  function evaluate(id: LayerId, sy: number, dt: number): Pose {
+    const stations = route[id];
+    let at = -1;
+    for (let i = 0; i < stations.length; i++) if (stations[i].drop <= sy) at = i;
+    const f = fall[id];
+    if (at < 0) {
+      f.el = null;
+      f.sy = sy;
+      f.k = -1;
+      f.p = 0;
+      f.landed = false;
+      return heroPose(id, sy);
+    }
+    const st = stations[at];
+    const target = clamp01((sy - st.drop) / Math.max(1, st.land - st.drop));
+    if (f.el !== st.el) {
+      // A station further on starts its fall from the top; going back up the page
+      // returns to a station it had already reached.
+      const was = f.el ? stations.findIndex((s) => s.el === f.el) : -1;
+      f.p = at > was ? 0 : target;
+      f.landed = f.p >= 1;
+      f.el = st.el;
+    }
+    f.k = at;
+    // Rising back up follows the scroll exactly, so the character is back under the
+    // masthead before the text above its station comes back into view. Only the
+    // reader scrolling up lifts it: a re-measure that moves the station's timing
+    // later never pulls a character back off where it already stands.
+    const up = sy < f.sy;
+    f.sy = sy;
+    if (target < f.p) {
+      if (up) f.p = target;
+    } else f.p = Math.min(target, f.p + dt / MIN_FALL);
+    const end = slotPose(id, st.el);
+    if (f.p >= 1) {
+      if (!f.landed) {
+        f.landed = true;
+        const onScreen = end.y - SIZE[id].h * end.s > mastBottom() - 4 && end.y < H;
+        if (onScreen) pop(id);
+      }
+      return end;
+    }
+    if (f.p < 0.85) f.landed = false;
+    // A thrown arc: steady sideways, accelerating down, so the path is a parabola
+    // that starts under the masthead and ends on the station.
+    const t = f.p;
+    return {
+      ...end,
+      x: end.x + st.fromX * (1 - t),
+      y: lerp(mastBottom() - 4, end.y, t * t),
+      ground: clamp01((t - 0.8) / 0.2) ** 2,
+    };
+  }
+
+  function heroPose(id: LayerId, sy: number): Pose {
     const list = keys(id);
     let k = -1;
     for (let i = 0; i < list.length; i++) if (list[i].at <= sy) k = i;
@@ -498,12 +705,28 @@ export function mountScene(o: SceneOptions): boolean {
     W = window.innerWidth;
     H = window.innerHeight;
     renderer.setSize(W, H, false);
+    routeDirty = true;
   }
   window.addEventListener('resize', resize);
   resize();
+  // Any change to the page's size (fonts arriving, images loading, the hero pin)
+  // can move a station or the text around it.
+  new ResizeObserver(() => (routeDirty = true)).observe(document.body);
+  window.addEventListener('load', () => (routeDirty = true));
+  // A proof deck bringing another card to the top uncovers the text on the card that
+  // was on top; measure again once the cards have settled (their move is 600ms).
+  const decks = new MutationObserver(() => window.setTimeout(() => (routeDirty = true), 650));
+  for (const deck of document.querySelectorAll('[data-deck]')) {
+    decks.observe(deck, { attributes: true, attributeFilter: ['data-front'] });
+  }
 
   let cleared = false;
+  let last = performance.now();
   function frame() {
+    const now = performance.now();
+    const dt = Math.min(0.1, Math.max(0, (now - last) / 1000));
+    last = now;
+    if (routeDirty) measure();
     const sy = window.scrollY;
     const { start: A, end: C } = o.heroRange();
     const B = A + (C - A) * 0.5;
@@ -529,7 +752,7 @@ export function mountScene(o: SceneOptions): boolean {
 
     let visible = false;
     for (const id of IDS) {
-      const p = evaluate(id, sy);
+      const p = evaluate(id, sy, dt);
       current[id] = p;
       const rig = rigs[id];
       rig.root.visible = p.s > 0;
@@ -549,7 +772,7 @@ export function mountScene(o: SceneOptions): boolean {
       rig.root.rotation.set(p.rx + g.y, p.ry + g.x + toLens, 0);
       // Upper parts of the stack only cast a shadow once they lift off.
       const stacked = id !== 'hardware' && inHero ? e : 1;
-      (rig.shadow.material as THREE.MeshBasicMaterial).opacity = stacked;
+      (rig.shadow.material as THREE.MeshBasicMaterial).opacity = stacked * (p.ground ?? 1);
       const out = inHero ? Math.max(0.001, e) : 1;
       if (rig.shackle) {
         rig.shackle.scale.y += (out - rig.shackle.scale.y) * 0.18;
@@ -574,6 +797,9 @@ export function mountScene(o: SceneOptions): boolean {
   frame();
   document.documentElement.classList.add('scene-live');
   o.leaders?.use(leaderProvider);
+  if (import.meta.env.DEV) {
+    (window as unknown as Record<string, unknown>).__scene = { route, current, fall, measure };
+  }
 
   // Opening: the three characters drop onto each other, bottom first.
   IDS.forEach((id, i) => {

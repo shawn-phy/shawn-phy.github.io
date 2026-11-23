@@ -74,8 +74,10 @@ const proofs: Record<string, Proof[]> = {
   ],
 };
 
-// The 3D chip stands on the car's drawing; it is the one note without a deck.
-const perches: Record<string, string> = { car: 'hardware' };
+// After the hero, a 3D character drops onto a project it built: the chip onto the
+// car, the ML character onto the agents and the greenhouse. On a deck it stands on
+// whichever card is on top, so it stays put while the cards change under it.
+const perches: Record<string, string> = { agents: 'ml', car: 'hardware', greenhouse: 'ml' };
 ---
 
 <section id="applications" class="apps on-ink" aria-labelledby="apps-title">
@@ -116,6 +118,11 @@ const perches: Record<string, string> = { car: 'hardware' };
                     ))}
                   </div>
                   <div class="deck__cards">
+                    {perches[f.figure] && (
+                      <span class="deck__floor" aria-hidden="true">
+                        <span class="perch" data-perch-for={perches[f.figure]} />
+                      </span>
+                    )}
                     <FigurePlate
                       class="deck__card"
                       flagship={f}
@@ -286,6 +293,27 @@ const perches: Record<string, string> = { car: 'hardware' };
     grid-row: 3;
     margin-top: 0.75rem;
     text-align: left;
+  }
+
+  /* The top card's stage, traced in the deck's grid cell: the top card always sits
+     there untransformed, so a character standing here is on whichever card is on top.
+     The margin is the sticker's border, which insets the stage. */
+  .deck__floor {
+    position: relative;
+    grid-area: 1 / 1;
+    align-self: start;
+    aspect-ratio: 320 / 220;
+    margin: var(--line) var(--line) 0;
+    pointer-events: none;
+  }
+
+  /* The same footprint as a perch on a single plate (FigurePlate.astro). */
+  .perch {
+    position: absolute;
+    left: 2%;
+    bottom: 0;
+    width: 25%;
+    height: 38%;
   }
 
   .note__head {
